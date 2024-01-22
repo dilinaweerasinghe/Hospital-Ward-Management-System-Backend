@@ -36,19 +36,18 @@ public class User {
     @Column(nullable = false)
     @Size(min = 8, max = 20)
     private String password;
-//    @Column(nullable = false)
-//    private LocalDate dob;
-//    @Column(nullable = false)
-//    private LocalDate serviceStartedDate;
-//    @Column(nullable = false)
-//    @Email
-//    private String email;
-//    @Column(nullable = false)
+    @Column(nullable = false)
+    private LocalDate dob;
+    @Column(nullable = false)
+    private LocalDate serviceStartedDate;
+    @Column(nullable = false)
+    @Email
+    private String email;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole Position;
-//    @Column(nullable = false)
-//    private String leaveNum;
-//    @Column(nullable = false)
-//    private int mobileNo;
+    private String leaveNum;
+    @Column(nullable = false)
+    private String mobileNo;
 
 }
