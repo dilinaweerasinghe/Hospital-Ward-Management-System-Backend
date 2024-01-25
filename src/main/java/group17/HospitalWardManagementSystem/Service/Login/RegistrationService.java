@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -40,7 +41,10 @@ public class RegistrationService {
         user.setNic("200025800891");
         user.setUsername("Dilina123");
         user.setPassword(getEncodedPassword("Dilina@123"));
-
+        user.setDob(LocalDate.of(2000,9,14));
+      //  user.setServiceStartedDate(LocalDate.of(2020,02,15));
+        user.setEmail("dilinaweerasinghe123@gmail.com");
+        user.setMobileNo("0775521608");
         userRepository.save(user);
 
     }
