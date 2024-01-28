@@ -34,4 +34,8 @@ public class Staff {
     @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
     //@Column(nullable = false)
     private Ward wardNo;
+    @Column(nullable = false)
+    private int remainingCasualLeaves;
+    @Column(nullable = false)
+    private int remainingVacationLeave;
 }
