@@ -16,15 +16,16 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Staff {
-
     @Id
-    private String nic;
+    @OneToOne
+    @JoinColumn(name = "nic", referencedColumnName = "nic")
+    private User user;
 
     @Column(nullable = false)
     private LocalDate serviceStartedDate;
 
     @Column(nullable = false)
-    private String leaveNo;
+    private String leaveNum;
 
     @OneToMany(mappedBy = "staff")
     private Set<RequestLeave> leaveRequests = new HashSet<>();
@@ -33,5 +34,8 @@ public class Staff {
     @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
     //@Column(nullable = false)
     private Ward wardNo;
-
+    @Column(nullable = false)
+    private int remainingCasualLeaves;
+    @Column(nullable = false)
+    private int remainingVacationLeave;
 }
