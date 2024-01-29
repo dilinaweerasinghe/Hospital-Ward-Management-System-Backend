@@ -1,6 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
-import group17.HospitalWardManagementSystem.Model.Dto.RequestLeave.UserDto;
+//import group17.HospitalWardManagementSystem.Model.Dto.RequestLeave.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,9 @@ public class RequestLeave {
     private int leaveId;
 
     @ManyToOne
-    @JoinColumn(name = "staff_nic",referencedColumnName = "nic")
+    @JoinColumns({
+            @JoinColumn(name = "staff_nic", referencedColumnName = "nic")
+    })
     private Staff staff;
 
     @Column(nullable = false)
