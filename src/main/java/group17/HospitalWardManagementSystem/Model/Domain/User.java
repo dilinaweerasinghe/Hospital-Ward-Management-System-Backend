@@ -21,7 +21,6 @@ import java.time.LocalDate;
 @Table(name = "users")
 public class User {
 
-
     @Id
     private String nic;
     @Column(nullable = false)
