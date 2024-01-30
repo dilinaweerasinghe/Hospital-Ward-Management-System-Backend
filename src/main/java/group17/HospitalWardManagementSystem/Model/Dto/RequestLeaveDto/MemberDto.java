@@ -1,7 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto;
 
-import group17.HospitalWardManagementSystem.Model.Domain.User;
-import group17.HospitalWardManagementSystem.Model.Domain.Ward;
+import group17.HospitalWardManagementSystem.Model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +10,12 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StaffDto {
-    private String leaveNo;
+public class MemberDto {
+    private String fullName;
     private String nic;
-    //private User user;
+    private UserRole position;
+    private String leaveNo;
+    private int numberOfTakenCasualLeaves;
+    private int numberOfTakenVacationLeaves;
 }
 

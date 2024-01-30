@@ -17,9 +17,7 @@ import java.util.Set;
 public class Matron {
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "nic", referencedColumnName = "nic")
-    private User user;
+    private String nic;
 
     @OneToMany(mappedBy = "matron")
     private Set<Ward> wards =new HashSet<>();

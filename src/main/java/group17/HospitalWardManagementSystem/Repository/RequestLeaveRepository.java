@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Repository.RequestLeave;
+package group17.HospitalWardManagementSystem.Repository;
 
 import group17.HospitalWardManagementSystem.Model.Domain.RequestLeave;
 import org.springframework.data.jpa.repository.JpaRepository;
