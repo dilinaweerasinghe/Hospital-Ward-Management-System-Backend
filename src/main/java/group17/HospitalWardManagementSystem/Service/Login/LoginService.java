@@ -2,7 +2,7 @@ package group17.HospitalWardManagementSystem.Service.Login;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.LoginDto;
-import group17.HospitalWardManagementSystem.Repository.Login.UserRepository;
+import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.crypto.password.PasswordEncoder;

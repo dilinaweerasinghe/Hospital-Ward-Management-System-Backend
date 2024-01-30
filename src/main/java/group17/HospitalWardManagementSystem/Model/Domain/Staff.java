@@ -17,9 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class  Staff {
     @Id
-    @OneToOne
-    @JoinColumn(name = "nic", referencedColumnName = "nic")
-    private User user;
+    private String nic;
 
     @Column(nullable = false)
     private LocalDate serviceStartedDate;

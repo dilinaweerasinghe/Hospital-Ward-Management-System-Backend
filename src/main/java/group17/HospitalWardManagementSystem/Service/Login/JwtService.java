@@ -4,7 +4,7 @@ import group17.HospitalWardManagementSystem.Config.JwtUtil;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtRequest;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtResponse;
-import group17.HospitalWardManagementSystem.Repository.Login.UserRepository;
+import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
