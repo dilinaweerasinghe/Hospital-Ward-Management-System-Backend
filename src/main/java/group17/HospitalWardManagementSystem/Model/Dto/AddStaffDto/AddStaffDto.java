@@ -28,7 +28,7 @@ public class AddStaffDto {
     private String password;
     private LocalDate dob;
     private String email;
-    private UserRole Position;
+    private String position;
 
 
     private String mobileNo;
