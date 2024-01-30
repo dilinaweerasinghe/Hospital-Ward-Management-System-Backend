@@ -29,6 +29,7 @@ public class JwtService implements UserDetailsService {
 
     @Autowired
     private JwtUtil jwtUtil;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 

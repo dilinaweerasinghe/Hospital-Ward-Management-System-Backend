@@ -17,7 +17,7 @@ public class JwtUtil {
     private final static String SECRETE_KEY = "Ward_Management_System_@_Matara";
     private static final int TOKEN_VALIDITY = 3600 * 5;
 
-    public String getUsernameFromTaken(String token){
+    public String getUsernameFromToken(String token){
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -32,7 +32,7 @@ public class JwtUtil {
     }
 
     public boolean validateToken(String token, UserDetails userDetails){
-        String username = getUsernameFromTaken(token);
+        String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

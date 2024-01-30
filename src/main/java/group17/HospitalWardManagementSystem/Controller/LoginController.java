@@ -39,4 +39,11 @@ public class LoginController {
     public void initAdmin(){
         registrationService.initUser();
     }
+
+    @GetMapping("/send")
+    public String Send(){
+        return "Correct";
+    }
+
+
 }
