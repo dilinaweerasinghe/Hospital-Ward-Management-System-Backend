@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Staff {
+public class  Staff {
     @Id
     @OneToOne
     @JoinColumn(name = "nic", referencedColumnName = "nic")
