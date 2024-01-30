@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Model.Dto;
+package group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import jakarta.persistence.*;

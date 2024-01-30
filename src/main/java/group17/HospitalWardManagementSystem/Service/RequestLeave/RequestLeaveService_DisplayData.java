@@ -26,8 +26,8 @@ public class RequestLeaveService_DisplayData {
         if(staff.isPresent()){
             staffMem = staff.get();
             memberDto.setLeaveNo(staffMem.getLeaveNum());
-            memberDto.setNumberOfTakenCasualLeaves(24 - staffMem.getRemainingCasualLeaves());
-            memberDto.setNumberOfTakenVacationLeaves(22 - staffMem.getRemainingVacationLeave());
+            memberDto.setNumberOfTakenCasualLeaves(21 - staffMem.getRemainingCasualLeaves());
+            memberDto.setNumberOfTakenVacationLeaves(21 - staffMem.getRemainingVacationLeave());
 
         }else{
 

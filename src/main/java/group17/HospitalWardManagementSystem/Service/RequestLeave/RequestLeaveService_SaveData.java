@@ -16,9 +16,9 @@ public class RequestLeaveService_SaveData {
     @Autowired
     private RequestLeaveRepository requestLeaveRepository;
 
+
     public void saveLeaveData(Staff staff, LocalDate leaveBeginDate, LocalDate leaveEndDate,LocalDateTime requestedDateAndTime,String reason){
         RequestLeave requestLeave = new RequestLeave();
-
         requestLeave.setStaff(staff);
         requestLeave.setLeaveBeginDate(leaveBeginDate);
         requestLeave.setLeaveEndDate(leaveEndDate);
