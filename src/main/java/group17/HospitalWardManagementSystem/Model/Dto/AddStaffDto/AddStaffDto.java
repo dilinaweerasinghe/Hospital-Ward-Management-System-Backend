@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Dto.AddStaffDto;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -29,8 +30,10 @@ public class AddStaffDto {
     private LocalDate dob;
     private String email;
     private String position;
-
-
     private String mobileNo;
+    private LocalDate serviceStartedDate;
+    private String leaveNum;
+    private int remainingCasualLeaves;
+    private int remainingVacationLeave;
 
 }

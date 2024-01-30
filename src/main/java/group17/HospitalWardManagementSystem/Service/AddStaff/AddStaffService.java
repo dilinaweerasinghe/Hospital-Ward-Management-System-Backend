@@ -1,9 +1,13 @@
 package group17.HospitalWardManagementSystem.Service.AddStaff;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.AddStaffDto.AddStaffDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
+import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
+import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import group17.HospitalWardManagementSystem.Service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,10 +24,17 @@ public class AddStaffService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    public AddUserRepository addUserRepository;
+
+    @Autowired
+    public WardRepository wardRepository;
+
     public String staffSave(AddStaffDto addStaffDto){
 
         User user=new User();
-
+        Staff staff=new Staff();
+        Ward ward=new Ward();
 
         user.setNic(addStaffDto.getNic());
         user.setFullName(addStaffDto.getFullName());
@@ -42,10 +53,16 @@ public class AddStaffService {
         }else if(addStaffDto.getPosition().equals("Nurse")){
             user.setPosition(UserRole.Nurse);
         }
-
         user.setMobileNo(addStaffDto.getMobileNo());
 
-        addStaffRepository.save(user);
+        staff.setNic(addStaffDto.getNic());
+        staff.setServiceStartedDate(addStaffDto.getServiceStartedDate());
+        staff.setLeaveNum(addStaffDto.getLeaveNum());
+        staff.setRemainingCasualLeaves(addStaffDto.getRemainingCasualLeaves());
+        staff.setRemainingVacationLeave(addStaffDto.getRemainingVacationLeave());
+
+        addUserRepository.save(user);
+        addStaffRepository.save(staff);
 
         return addStaffDto.getFullName();
     }
