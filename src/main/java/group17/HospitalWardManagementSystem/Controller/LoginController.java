@@ -4,6 +4,7 @@ package group17.HospitalWardManagementSystem.Controller;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtRequest;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtResponse;
+import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.Login.JwtService;
 import group17.HospitalWardManagementSystem.Service.Login.RegistrationService;
 import group17.HospitalWardManagementSystem.Service.Login.UserInfoService;
@@ -28,18 +29,17 @@ public class LoginController {
     @Autowired
     private RegistrationService registrationService;
     @Autowired
-    private UserInfoService userInfoService;
+    private UserRepository userRepository;
 
 
     @PostMapping("/authenticate")
-    public String createJwtToken(@RequestBody JwtRequest jwtRequest) throws Exception{
+    public JwtResponse createJwtToken(@RequestBody JwtRequest jwtRequest) throws Exception{
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword()));
         if(authenticate.isAuthenticated()){
             System.out.println("Here");
             String token =  jwtService.generateToken(jwtRequest.getUsername());
-            Optional<User> user = userInfoService.getUser(jwtRequest.getUsername());
-            return token;
-
+            User user =  userRepository.findByUsername(jwtRequest.getUsername());
+            return new JwtResponse(user, token);
         }else {
             throw new UsernameNotFoundException("Invalid user request");
         }
