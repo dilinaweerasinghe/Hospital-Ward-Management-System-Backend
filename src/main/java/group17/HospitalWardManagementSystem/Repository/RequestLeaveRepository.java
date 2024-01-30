@@ -1,12 +1,9 @@
 package group17.HospitalWardManagementSystem.Repository;
 
-import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Domain.RequestLeave;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
-    User findByUsername(String username);
-
+public interface RequestLeaveRepository extends JpaRepository<RequestLeave, Integer> {
 }
-

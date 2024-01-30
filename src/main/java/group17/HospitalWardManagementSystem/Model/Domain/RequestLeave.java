@@ -25,9 +25,6 @@ public class RequestLeave {
     private Staff staff;
 
     @Column(nullable = false)
-    private int noOfRequestedDates;
-
-    @Column(nullable = false)
     private LocalDate leaveBeginDate;
 
     @Column(nullable = false)
@@ -39,6 +36,4 @@ public class RequestLeave {
     @Column(nullable = false)
     private String reason;
 
-    @Column(nullable = false)
-    private LocalDate dueDate;
 }
