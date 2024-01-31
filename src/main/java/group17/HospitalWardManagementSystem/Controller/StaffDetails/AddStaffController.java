@@ -1,7 +1,7 @@
-package group17.HospitalWardManagementSystem.Controller;
+package group17.HospitalWardManagementSystem.Controller.StaffDetails;
 
-import group17.HospitalWardManagementSystem.Model.Dto.AddStaffDto.AddStaffDto;
-import group17.HospitalWardManagementSystem.Service.AddStaff.AddStaffService;
+import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
+import group17.HospitalWardManagementSystem.Service.StaffDetails.AddStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

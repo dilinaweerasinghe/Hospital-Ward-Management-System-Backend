@@ -1,13 +1,5 @@
-package group17.HospitalWardManagementSystem.Model.Dto.AddStaffDto;
+package group17.HospitalWardManagementSystem.Model.Dto.StaffDto;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Ward;
-import group17.HospitalWardManagementSystem.Model.UserRole;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

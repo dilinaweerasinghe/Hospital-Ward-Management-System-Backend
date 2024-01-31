@@ -1,19 +1,16 @@
-package group17.HospitalWardManagementSystem.Service.AddStaff;
+package group17.HospitalWardManagementSystem.Service.StaffDetails;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
-import group17.HospitalWardManagementSystem.Model.Dto.AddStaffDto.AddStaffDto;
+import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
 import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
-import group17.HospitalWardManagementSystem.Service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AddStaffService {
