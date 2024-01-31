@@ -27,7 +27,7 @@ public class ShowStaffService {
         dto.setPassword(userRepository.findByUsername(username).getPassword());
         dto.setDob(userRepository.findByUsername(username).getDob());
         dto.setEmail(userRepository.findByUsername(username).getEmail());
-        if(userRepository.findByUsername(username).equals(UserRole.Admin)){
+        if(userRepository.findByUsername(username).getPosition().equals(UserRole.Admin)){
             dto.setPosition("Admin");};
         dto.setMobileNo(userRepository.findByUsername(username).getMobileNo());
 
@@ -38,8 +38,6 @@ public class ShowStaffService {
         dto.setLeaveNum(staff.getLeaveNum());
         dto.setRemainingCasualLeaves(staff.getRemainingCasualLeaves());
         dto.setRemainingVacationLeave(staff.getRemainingVacationLeave());
-
-
 
         return dto;
     }
