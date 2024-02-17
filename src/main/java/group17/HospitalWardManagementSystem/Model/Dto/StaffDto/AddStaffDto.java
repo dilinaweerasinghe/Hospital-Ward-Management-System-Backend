@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Dto.StaffDto;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

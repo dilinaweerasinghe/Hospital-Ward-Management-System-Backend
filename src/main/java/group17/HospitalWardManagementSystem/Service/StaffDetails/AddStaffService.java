@@ -54,6 +54,7 @@ public class AddStaffService {
 
         staff.setNic(addStaffDto.getNic());
         staff.setServiceStartedDate(addStaffDto.getServiceStartedDate());
+        //staff.setWardNo(ward);
         staff.setLeaveNum(addStaffDto.getLeaveNum());
         staff.setRemainingCasualLeaves(addStaffDto.getRemainingCasualLeaves());
         staff.setRemainingVacationLeave(addStaffDto.getRemainingVacationLeave());

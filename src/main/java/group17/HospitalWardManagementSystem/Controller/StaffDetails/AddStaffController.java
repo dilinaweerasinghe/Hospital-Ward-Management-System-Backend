@@ -14,7 +14,7 @@ public class AddStaffController {
     public AddStaffService addStaffService;
 
     @RequestMapping("/add-staff")
-    public String addStaff(@RequestBody AddStaffDto addStaffDto){
+    public String addStaff(@RequestBody  AddStaffDto addStaffDto){
 
         String fullN=addStaffService.staffSave(addStaffDto);
         return fullN;
