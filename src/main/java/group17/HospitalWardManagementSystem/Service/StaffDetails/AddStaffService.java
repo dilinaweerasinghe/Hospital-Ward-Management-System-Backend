@@ -27,6 +27,7 @@ public class AddStaffService {
     @Autowired
     public WardRepository wardRepository;
 
+
     public String staffSave(AddStaffDto addStaffDto){
 
         User user=new User();
@@ -51,14 +52,18 @@ public class AddStaffService {
             user.setPosition(UserRole.Nurse);
         }
         user.setMobileNo(addStaffDto.getMobileNo());
-
         staff.setNic(addStaffDto.getNic());
+        ward.setWardNo(addStaffDto.getWardNo());
+        ward.setWardName(wardRepository.findByWardNo(addStaffDto.getWardNo()).getWardName());
+
+        wardRepository.save(ward);
+        staff.setWardNo(ward);
         staff.setServiceStartedDate(addStaffDto.getServiceStartedDate());
-        //staff.setWardNo(ward);
         staff.setLeaveNum(addStaffDto.getLeaveNum());
         staff.setRemainingCasualLeaves(addStaffDto.getRemainingCasualLeaves());
         staff.setRemainingVacationLeave(addStaffDto.getRemainingVacationLeave());
 
+         //new add
         addUserRepository.save(user);
         addStaffRepository.save(staff);
 

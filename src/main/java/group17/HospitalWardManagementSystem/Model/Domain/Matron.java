@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,6 @@ public class Matron {
     private String nic;
 
     @OneToMany(mappedBy = "matron")
+    @JsonBackReference
     private Set<Ward> wards =new HashSet<>();
 }

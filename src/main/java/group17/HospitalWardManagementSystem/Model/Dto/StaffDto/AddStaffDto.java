@@ -25,6 +25,7 @@ public class AddStaffDto {
     private String position;
     private String mobileNo;
     private LocalDate serviceStartedDate;
+    private String wardNo;//new add
     private String leaveNum;
     private int remainingCasualLeaves;
     private int remainingVacationLeave;
