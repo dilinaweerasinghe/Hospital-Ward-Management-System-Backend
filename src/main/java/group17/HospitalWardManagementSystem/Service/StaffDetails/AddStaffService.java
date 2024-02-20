@@ -4,6 +4,7 @@ import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
+import group17.HospitalWardManagementSystem.Model.Dto.WardDto.AddWardDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
 import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
@@ -53,11 +54,7 @@ public class AddStaffService {
         }
         user.setMobileNo(addStaffDto.getMobileNo());
         staff.setNic(addStaffDto.getNic());
-        ward.setWardNo(addStaffDto.getWardNo());
-        ward.setWardName(wardRepository.findByWardNo(addStaffDto.getWardNo()).getWardName());
-
-        wardRepository.save(ward);
-        staff.setWardNo(ward);
+        staff.setWardNo(findWard(addStaffDto));
         staff.setServiceStartedDate(addStaffDto.getServiceStartedDate());
         staff.setLeaveNum(addStaffDto.getLeaveNum());
         staff.setRemainingCasualLeaves(addStaffDto.getRemainingCasualLeaves());
@@ -71,6 +68,10 @@ public class AddStaffService {
     }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public Ward findWard(AddStaffDto addStaffDto){
+        return wardRepository.findByWardNo(addStaffDto.getWardNo());
     }
 }
 

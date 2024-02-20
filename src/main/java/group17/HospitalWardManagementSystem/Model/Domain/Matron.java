@@ -21,6 +21,5 @@ public class Matron {
     private String nic;
 
     @OneToMany(mappedBy = "matron")
-    @JsonBackReference
     private Set<Ward> wards =new HashSet<>();
 }

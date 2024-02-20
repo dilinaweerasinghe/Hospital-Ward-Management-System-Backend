@@ -20,10 +20,10 @@ public class AddWardService {
 
     public String saveWard(AddWardDto addWardDto){
         Ward ward=new Ward();
-        Matron matron=new Matron();
 
         ward.setWardNo(addWardDto.getWardNo());
         ward.setWardName(addWardDto.getWardName());
+
         ward.setMatron(findMatron(addWardDto));
         ward.setNumberOfNurses(addWardDto.getNumberOfNurses());
         ward.setMorningShift(addWardDto.getMorningShift());
@@ -31,12 +31,12 @@ public class AddWardService {
         ward.setNightShift(addWardDto.getNightShift());
 
         wardRepository.save(ward);
-        return "Successfully added ward";
+        return findMatron(addWardDto).getNic();
     }
 
     public Matron findMatron(AddWardDto addWardDto){
 
-        return matronRepository.findByNic(addWardDto.getMatronID());
+        return  matronRepository.findByNic(addWardDto.getMatron());
     }
 
 }

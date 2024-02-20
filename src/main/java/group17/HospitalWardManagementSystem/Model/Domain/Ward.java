@@ -24,7 +24,6 @@ public class Ward {
     private String wardName;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name="matron",referencedColumnName = "nic")
 
     //@Column(nullable = false)
