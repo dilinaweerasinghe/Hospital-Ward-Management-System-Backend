@@ -24,16 +24,19 @@ public class AddWardService {
 
         ward.setWardNo(addWardDto.getWardNo());
         ward.setWardName(addWardDto.getWardName());
-        matron.setNic(addWardDto.getMatron());
-        ward.setMatron(matron);//new added
+        ward.setMatron(findMatron(addWardDto));
         ward.setNumberOfNurses(addWardDto.getNumberOfNurses());
         ward.setMorningShift(addWardDto.getMorningShift());
         ward.setEveningShift(addWardDto.getEveningShift());
         ward.setNightShift(addWardDto.getNightShift());
 
         wardRepository.save(ward);
-        matronRepository.save(matron);
         return "Successfully added ward";
+    }
+
+    public Matron findMatron(AddWardDto addWardDto){
+
+        return matronRepository.findByNic(addWardDto.getMatronID());
     }
 
 }

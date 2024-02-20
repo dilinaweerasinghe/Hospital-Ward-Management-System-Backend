@@ -15,7 +15,7 @@ public class AddWardDto {
 
     private String wardName;
 
-    private String matron;
+    private String matronID;
 
     private int numberOfNurses;
 

@@ -5,6 +5,7 @@ import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtRequest;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtResponse;
 import group17.HospitalWardManagementSystem.Service.Login.JwtService;
+import group17.HospitalWardManagementSystem.Service.MatronDetails.RegisterMatronService;
 import group17.HospitalWardManagementSystem.Service.RegistrationService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RegisterMatronService registerMatronService;
+
 
     @PostMapping("/authenticate")
     public JwtResponse createJwtToken(@RequestBody JwtRequest jwtRequest) throws Exception{
@@ -53,6 +57,9 @@ public class LoginController {
     public void initAdmin(){
         registrationService.initUser();
     }
+
+    @PostConstruct
+    public void initMatron(){registerMatronService.RegisterMatron();}
 
     @GetMapping("/send")
     public String Send(){
