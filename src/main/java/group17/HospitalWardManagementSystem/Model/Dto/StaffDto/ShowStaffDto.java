@@ -14,16 +14,7 @@ import java.time.LocalDate;
 public class ShowStaffDto {
     private String nic;
     private String fullName;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private LocalDate dob;
     private String email;
-    private String Position;
     private String mobileNo;
-    private LocalDate serviceStartedDate;
-    private String leaveNum;
-    private int remainingCasualLeaves;
-    private int remainingVacationLeave;
+
 }

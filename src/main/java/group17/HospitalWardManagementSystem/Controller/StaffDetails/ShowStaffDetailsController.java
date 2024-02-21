@@ -7,15 +7,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ShowStaffDetailsController {
     @Autowired
     public ShowStaffService showStaffService;
 
-    @RequestMapping("/show-staff/{username}")
-    public ShowStaffDto retriveStaffData(@PathVariable String username){
+    @RequestMapping("/show-staff/{wardNo}")
+    public List<ShowStaffDto> showStaffData(@PathVariable String wardNo){
 
-        return showStaffService.getStaff(username);
+        return showStaffService.showStaff(wardNo);
     }
 
 }
