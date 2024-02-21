@@ -30,7 +30,7 @@ public class EditWardService {
 
         wardRepository.save(willUpdateWard);
 
-        return "Successfully Updated the Ward";
+        return "Ward Details are successfully Updated";
     }
 
     public Matron findMatron(EditWardDto editWardDto){
