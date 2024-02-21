@@ -13,7 +13,9 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+
     User findByUsername(String username);
+    User findByNic(String username);
 
     @Query("SELECT A.fullName FROM User A INNER JOIN Staff B ON B.nic=A.nic WHERE B.wardNo=:wardNo AND A.Position='Sister'")
     String findBy(@Param("wardNo") Ward wardNo);

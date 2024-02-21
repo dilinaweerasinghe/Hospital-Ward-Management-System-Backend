@@ -20,48 +20,41 @@ public class UpdateStaffService {
 
     public String updateCustomer(UpdateDto updateDto){
 
+        Staff staff=new Staff();
+        User user=new User();
 
+        Staff targetStaff=findStaff(updateDto.getNic());
+        User targetUser=findUser(updateDto.getNic());
 
-        if(userRepository.existsById(updateDto.getNic())){
-            User user=new User();
-            Staff staff=new Staff();
-
-
-            user.setNic(updateDto.getNic());
-            user.setFullName(updateDto.getFullName());
-            user.setFirstName(updateDto.getFirstName());
-            user.setLastName(updateDto.getLastName());
-            user.setUsername(updateDto.getUsername());
-            user.setPassword(updateDto.getPassword());
-            user.setDob(updateDto.getDob());
-            user.setEmail(updateDto.getEmail());
-            if(updateDto.getPosition().equals("Admin")){
-                user.setPosition(UserRole.Admin);
-            }else if(updateDto.getPosition().equals("Metron")){
-                user.setPosition(UserRole.Matron);
-            }else if(updateDto.getPosition().equals("Nurse")){
-                user.setPosition(UserRole.Nurse);
-            }else if(updateDto.getPosition().equals("Sister")){
-                user.setPosition(UserRole.Sister);
-            }
-            user.setMobileNo(updateDto.getMobileNo());
-
-            staff.setNic(updateDto.getNic());
-            staff.setServiceStartedDate(updateDto.getServiceStartedDate());
-            staff.setLeaveNum(updateDto.getLeaveNum());
-            staff.setRemainingCasualLeaves(updateDto.getRemainingCasualLeaves());
-            staff.setRemainingVacationLeave(updateDto.getRemainingVacationLeave());
-
-            userRepository.save(user);
-            staffRepository.save(staff);
-
-            return "Updated Successfully";
-
-        }else
-        {
-            return "User Nic No does not exist";
+        targetUser.setFirstName(updateDto.getFirstName());
+        targetUser.setLastName(updateDto.getLastName());
+        targetUser.setFullName(updateDto.getFullName());
+        if(updateDto.getPosition().equals(UserRole.Admin)){
+            targetUser.setPosition(UserRole.Admin);
+        } else if (updateDto.getPosition().equals(UserRole.Sister)) {
+            targetUser.setPosition(UserRole.Sister);
+        } else if (updateDto.getPosition().equals(UserRole.Nurse)) {
+            targetUser.setPosition(UserRole.Nurse);
+        }else if(updateDto.getPosition().equals(UserRole.Matron)){
+            targetUser.setPosition(UserRole.Matron);
         }
+        targetUser.setDob(updateDto.getDob());
+        targetUser.setMobileNo(updateDto.getMobileNo());
+        targetUser.setEmail(updateDto.getEmail());
+        targetStaff.setServiceStartedDate(updateDto.getServiceStartedDate());
+        targetStaff.setLeaveNum(updateDto.getLeaveNum());
 
+        userRepository.save(targetUser);
+        staffRepository.save(targetStaff);
 
+        return "Successfully Updated the Staff";
+    }
+
+    public Staff findStaff(String nic){
+        return staffRepository.findByNic(nic);
+    }
+
+    public User findUser(String nic){
+        return userRepository.findByNic(nic);
     }
 }

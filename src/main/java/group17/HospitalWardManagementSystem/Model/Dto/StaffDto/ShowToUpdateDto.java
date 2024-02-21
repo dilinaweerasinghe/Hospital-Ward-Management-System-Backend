@@ -7,11 +7,11 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateDto {
+public class ShowToUpdateDto {
     private String nic;
     private String fullName;
     private String firstName;
