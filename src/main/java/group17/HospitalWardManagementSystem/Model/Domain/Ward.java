@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Ward {
 
     @ManyToOne
     @JoinColumn(name="matron",referencedColumnName = "nic")
+
     //@Column(nullable = false)
     private Matron matron;
 

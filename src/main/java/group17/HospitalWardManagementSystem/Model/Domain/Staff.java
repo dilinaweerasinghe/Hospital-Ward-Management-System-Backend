@@ -15,7 +15,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Staff {
+public class  Staff {
+
     @Id
     private String nic;
 
@@ -30,7 +31,6 @@ public class Staff {
 
     @ManyToOne
     @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
-    //@Column(nullable = false)
     private Ward wardNo;
     @Column(nullable = false)
     private int remainingCasualLeaves;
