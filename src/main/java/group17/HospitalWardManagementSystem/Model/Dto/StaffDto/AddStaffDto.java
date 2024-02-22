@@ -18,8 +18,6 @@ public class AddStaffDto {
     private String fullName;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
     private LocalDate dob;
     private String email;
     private String position;
