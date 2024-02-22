@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

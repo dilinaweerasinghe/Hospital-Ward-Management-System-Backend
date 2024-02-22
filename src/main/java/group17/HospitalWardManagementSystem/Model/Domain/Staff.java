@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Staff {
+public class  Staff {
 
     @Id
     private String nic;
