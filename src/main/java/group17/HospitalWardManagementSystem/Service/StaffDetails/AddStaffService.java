@@ -4,6 +4,7 @@ import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
+import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.AddWardDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
@@ -12,6 +13,8 @@ import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @Service
 public class AddStaffService {
@@ -28,6 +31,9 @@ public class AddStaffService {
     @Autowired
     public WardRepository wardRepository;
 
+    @Autowired
+    public MailService mailService;
+
 
     public String staffSave(AddStaffDto addStaffDto){
 
@@ -35,12 +41,17 @@ public class AddStaffService {
         Staff staff=new Staff();
         Ward ward=new Ward();
 
+        String password=passwordGenerate();
+
+        String username=generateUsername(addStaffDto.getEmail());
+
+
         user.setNic(addStaffDto.getNic());
         user.setFullName(addStaffDto.getFullName());
         user.setFirstName(addStaffDto.getFirstName());
         user.setLastName(addStaffDto.getLastName());
-        user.setUsername(addStaffDto.getUsername());
-        user.setPassword(getEncodedPassword(addStaffDto.getPassword()));
+        user.setUsername(username);
+        user.setPassword(getEncodedPassword(password));
         user.setDob(addStaffDto.getDob());
         user.setEmail(addStaffDto.getEmail());
         if(addStaffDto.getPosition().equals("Admin")){
@@ -64,7 +75,14 @@ public class AddStaffService {
         addUserRepository.save(user);
         addStaffRepository.save(staff);
 
-        return addStaffDto.getFullName();
+        MailDto mailDto=new MailDto();
+
+        mailDto.setUsername(username);
+        mailDto.setPassword(password);
+
+        mailService.sendMail(user.getEmail(),mailDto);
+
+        return "Successfully added ward Details";
     }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
@@ -72,6 +90,35 @@ public class AddStaffService {
 
     public Ward findWard(AddStaffDto addStaffDto){
         return wardRepository.findByWardNo(addStaffDto.getWardNo());
+    }
+
+    public String passwordGenerate(){
+        String upper="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lower="abcdefghijklmnopqrstuvwxyz";
+        String num="0123456789";
+        String specialChars="<>,/?}{][*%^#@&";
+        String combination=upper+lower+num+specialChars;
+        int len=8;
+
+        char[] password=new char[len];
+
+        Random r=new Random();
+
+        for (int i=0;i<8;i++){
+            password[i]=combination.charAt(r.nextInt(combination.length()));
+        }
+
+        return new String(password);
+    }
+
+    public String generateUsername(String email){
+        int atIndex=email.indexOf("@");
+
+        if (atIndex != -1) {
+            return email.substring(0, atIndex);
+        } else {
+            return null;
+        }
     }
 }
 
