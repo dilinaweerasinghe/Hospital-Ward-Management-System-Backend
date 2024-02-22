@@ -4,6 +4,7 @@ import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
+import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.AddWardDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
@@ -27,6 +28,9 @@ public class AddStaffService {
 
     @Autowired
     public WardRepository wardRepository;
+
+    @Autowired
+    public MailService mailService;
 
 
     public String staffSave(AddStaffDto addStaffDto){
@@ -63,6 +67,13 @@ public class AddStaffService {
          //new add
         addUserRepository.save(user);
         addStaffRepository.save(staff);
+
+        MailDto mailDto=new MailDto();
+
+        mailDto.setUsername(addStaffDto.getUsername());
+        mailDto.setPassword(addStaffDto.getPassword());
+
+        mailService.sendMail(user.getEmail(),mailDto);
 
         return addStaffDto.getFullName();
     }
