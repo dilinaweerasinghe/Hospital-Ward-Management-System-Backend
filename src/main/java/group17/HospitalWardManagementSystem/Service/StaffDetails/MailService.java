@@ -1,11 +1,17 @@
 package group17.HospitalWardManagementSystem.Service.StaffDetails;
 
+import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class MailService {
@@ -15,6 +21,8 @@ public class MailService {
 
     @Value("${spring.mail.username}")
     private String fromMail;
+
+
 
     public String sendMail(String email, MailDto mailDto){
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
@@ -26,5 +34,24 @@ public class MailService {
 
         javaMailSender.send(simpleMailMessage);
         return "Mail send successfully";
+    }
+
+    public void sendPasswordResetVerificationEmail(String url,User user) throws MessagingException, UnsupportedEncodingException {
+
+        String subject = "Password Reset Request Verification";
+        String senderName = "User Registration Portal Service";
+        String mailContent = "<p> Hi, "+ user.getFirstName()+ ", </p>"+
+                "<p><b>You recently requested to reset your password,</b>"+"" +
+                "Please, follow the link below to complete the action.</p>"+
+                "<a href=\"" +url+ "\">Reset password</a>"+
+                "<p> Users Registration Portal Service";
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        var messageHelper = new MimeMessageHelper(message);
+        messageHelper.setFrom(fromMail);
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(mailContent, true);
+        javaMailSender.send(message);
     }
 }
