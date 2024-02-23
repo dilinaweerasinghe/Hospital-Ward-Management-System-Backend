@@ -1,12 +1,6 @@
-package group17.HospitalWardManagementSystem.Model.Dto.AddStaffDto;
+package group17.HospitalWardManagementSystem.Model.Dto.StaffDto;
 
-import group17.HospitalWardManagementSystem.Model.UserRole;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,13 +18,14 @@ public class AddStaffDto {
     private String fullName;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
     private LocalDate dob;
     private String email;
     private String position;
-
-
     private String mobileNo;
+    private LocalDate serviceStartedDate;
+    private String wardNo;//new add
+    private String leaveNum;
+    private int remainingCasualLeaves;
+    private int remainingVacationLeave;
 
 }
