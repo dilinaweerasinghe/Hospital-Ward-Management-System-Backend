@@ -6,6 +6,8 @@ import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddMatronDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
 import group17.HospitalWardManagementSystem.Service.StaffDetails.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +23,15 @@ public class MatronService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private UsernameGenerateService usernameGenerateService;
+    @Autowired
+    private PasswordGenerateService passwordGenerateService;
 
 
     public Boolean AddMatron(AddMatronDto addMatronDto){
         User user = new User();
         Matron matron = new Matron();
-        String password = null;
-        String username = null;
         try{
             //Add matron
             matron.setNic(addMatronDto.getNic());
@@ -42,10 +46,12 @@ public class MatronService {
             user.setDob(addMatronDto.getDob());
             user.setEmail(addMatronDto.getEmail());
             user.setMobileNo(addMatronDto.getMobileNo());
-            user.setUsername(username);
-            user.setPassword(password);
+            user.setUsername(usernameGenerateService.generateUsername(addMatronDto.getEmail()));
+            user.setPassword(passwordEncoder.encode(passwordGenerateService.passwordGenerate()));
+            // Need rto delete
+            System.out.println(user.getPassword());
 
-
+            userRepository.save(user);
             return true;
 
         }catch (Exception e){
