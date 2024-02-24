@@ -2,29 +2,49 @@ package group17.HospitalWardManagementSystem.Service.RequestLeave;
 
 import group17.HospitalWardManagementSystem.Model.Domain.RequestLeave;
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
+import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.MemberDto;
+import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.RequestLeaveDto;
 import group17.HospitalWardManagementSystem.Repository.RequestLeaveRepository;
-import jakarta.persistence.*;
+import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
 public class RequestLeaveService_SaveData {
 
     @Autowired
-    private RequestLeaveRepository requestLeaveRepository;
+    RequestLeaveRepository requestLeaveRepository;
+
+    @Autowired
+    StaffRepository staffRepository;
+    public boolean saveLeave(RequestLeaveDto leaveRequestDTO) {
+
+        try {
+            RequestLeave requestLeave = new RequestLeave();
+
+            requestLeave.setLeaveBeginDate(leaveRequestDTO.getLeaveBeginDate());
+            requestLeave.setStaff(findStaff(leaveRequestDTO.getNic()));
+            requestLeave.setLeaveEndDate(leaveRequestDTO.getLeaveEndDate());
+            requestLeave.setRequestedDateAndTime(LocalDateTime.now());
+            requestLeave.setReason(leaveRequestDTO.getReason());
+
+            // Save the requestLeave object
+            requestLeaveRepository.save(requestLeave);
+
+            // If the save operation completes without exceptions, return true
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
 
 
-    public void saveLeaveData(Staff staff, LocalDate leaveBeginDate, LocalDate leaveEndDate,LocalDateTime requestedDateAndTime,String reason){
-        RequestLeave requestLeave = new RequestLeave();
-        requestLeave.setStaff(staff);
-        requestLeave.setLeaveBeginDate(leaveBeginDate);
-        requestLeave.setLeaveEndDate(leaveEndDate);
-        requestLeave.setRequestedDateAndTime(requestedDateAndTime);
-        requestLeave.setReason(reason);
 
-        requestLeaveRepository.save(requestLeave);
+    }
+
+    public Staff findStaff(String nic){
+        return staffRepository.findByNic(nic);
     }
 }
