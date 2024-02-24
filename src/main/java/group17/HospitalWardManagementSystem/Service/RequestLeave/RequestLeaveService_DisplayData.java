@@ -13,10 +13,14 @@ import java.util.Optional;
 @Service
 public class RequestLeaveService_DisplayData {
 
+    private final UserRepository userRepository;
+    private final StaffRepository staffRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private StaffRepository staffRepository;
+    public RequestLeaveService_DisplayData(UserRepository userRepository, StaffRepository staffRepository) {
+        this.userRepository = userRepository;
+        this.staffRepository = staffRepository;
+    }
     public MemberDto provideAutoFilings(String username){
         MemberDto memberDto = new MemberDto();
         User user = userRepository.findByUsername(username);
@@ -26,8 +30,8 @@ public class RequestLeaveService_DisplayData {
         if(staff.isPresent()){
             staffMem = staff.get();
             memberDto.setLeaveNo(staffMem.getLeaveNum());
-            memberDto.setNumberOfTakenCasualLeaves(21 - staffMem.getRemainingCasualLeaves());
-            memberDto.setNumberOfTakenVacationLeaves(21 - staffMem.getRemainingVacationLeave());
+            memberDto.setNumberOfTakenCasualLeaves(24 - staffMem.getRemainingCasualLeaves());
+            memberDto.setNumberOfTakenVacationLeaves(22 - staffMem.getRemainingVacationLeave());
 
         }else{
 
@@ -39,4 +43,5 @@ public class RequestLeaveService_DisplayData {
         return memberDto;
     }
 }
+
 
