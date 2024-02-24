@@ -34,8 +34,7 @@ public class MatronService {
         Matron matron = new Matron();
         try{
             //Add matron
-            matron.setNic(addMatronDto.getNic());
-            matronRepository.save(matron);
+
 
             //Add matron as a user
             user.setNic(addMatronDto.getNic());
@@ -47,11 +46,15 @@ public class MatronService {
             user.setEmail(addMatronDto.getEmail());
             user.setMobileNo(addMatronDto.getMobileNo());
             user.setUsername(usernameGenerateService.generateUsername(addMatronDto.getEmail()));
-            user.setPassword(passwordEncoder.encode(passwordGenerateService.passwordGenerate()));
+            String password = passwordGenerateService.passwordGenerate();
+            user.setPassword(passwordEncoder.encode(password));
             // Need rto delete
-            System.out.println(user.getPassword());
+            System.out.println(password);
 
             userRepository.save(user);
+
+            matron.setNic(addMatronDto.getNic());
+            matronRepository.save(matron);
             return true;
 
         }catch (Exception e){

@@ -49,6 +49,20 @@ public class RegistrationService {
         admin.setMobileNo("1234567890");
         users.add(admin);
 
+        User user1 = new User();
+        user1.setNic("990823099V");
+        user1.setFirstName("Dilina");
+        user1.setFullName("K L D K T Weerasinghe");
+        user1.setLastName("Weerasinghe");
+        user1.setUsername("Dilina123");
+        user1.setPassword(getEncodedPassword("Dilina@123"));
+        user1.setEmail("Kasun@gmail.com");
+        user1.setPosition(UserRole.Admin);
+        user1.setMobileNo("0775128310");
+        user1.setDob(LocalDate.of(2000,9,14));
+
+        users.add(user1);
+
         User user = new User();
         user.setFullName("Admin Full Name");
         user.setFirstName("Admin First Name");
@@ -56,7 +70,7 @@ public class RegistrationService {
         user.setPosition(UserRole.Nurse);
         user.setNic("Admin NIC");
         user.setUsername("user123");
-        user.setPassword(getEncodedPassword("user@123"));
+        user.setPassword(getEncodedPassword("user1@123"));
         user.setDob(LocalDate.of(2000, 1, 1)); // Set admin's date of birth
         user.setEmail("admin@example.com");
         user.setMobileNo("1234567890");
