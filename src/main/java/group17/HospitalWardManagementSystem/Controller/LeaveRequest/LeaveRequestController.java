@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Controller;
+package group17.HospitalWardManagementSystem.Controller.LeaveRequest;
 
 import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.MemberDto;
 import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.RequestLeaveDto;
