@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Service.Login;
+package group17.HospitalWardManagementSystem.Service;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.UserRole;
