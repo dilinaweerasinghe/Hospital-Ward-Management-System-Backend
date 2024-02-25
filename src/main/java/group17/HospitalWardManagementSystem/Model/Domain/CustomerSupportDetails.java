@@ -18,8 +18,5 @@ public class CustomerSupportDetails {
     private String username;
     private String email;
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
 }
