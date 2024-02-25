@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByUsername(String username);
     User findByNic(String username);
 
+    Optional<User>findByNicOp(String nic);
+
     Optional<User> findByEmail(String email);
 
     @Query("SELECT A.fullName FROM User A INNER JOIN Staff B ON B.nic=A.nic WHERE B.wardNo=:wardNo AND A.Position='Sister'")
