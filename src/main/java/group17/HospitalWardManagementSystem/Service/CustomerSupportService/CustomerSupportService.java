@@ -21,7 +21,7 @@ public class CustomerSupportService {
 
     public String saveCustomerSupport(CustomerSupportDetailsDto customerSupportDetailsDto){
 
-        if(findUserByNic(customerSupportDetailsDto.getNic()).isPresent()){
+        if(find(customerSupportDetailsDto.getNic()).isPresent()){
             CustomerSupportDetails customerSupportDetails=new CustomerSupportDetails();
 
             customerSupportDetails.setNic(customerSupportDetailsDto.getNic());
@@ -37,8 +37,8 @@ public class CustomerSupportService {
 
     }
 
-    public Optional<User> findUserByNic(String nic){
-        return userRepository.findByNicOp(nic);
+    public Optional<User> find(String nic){
+        return userRepository.findByNic(nic);
     }
 
 }
