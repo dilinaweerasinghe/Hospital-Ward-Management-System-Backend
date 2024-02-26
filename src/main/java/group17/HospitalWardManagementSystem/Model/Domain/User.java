@@ -12,6 +12,7 @@ import org.hibernate.annotations.CollectionId;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -50,5 +51,9 @@ public class User {
     @Column(nullable = false)
 
     private String mobileNo;
+
+    @OneToMany(mappedBy = "user")
+    private List<ServiceDetails> serviceDetails;
+
 
 }
