@@ -55,6 +55,6 @@ public class UpdateStaffService {
     }
 
     public User findUser(String nic){
-        return userRepository.findByNic(nic);
+        return userRepository.findByNic(nic).get();
     }
 }
