@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,9 @@ public class Matron {
 
     @Id
     private String nic;
+
+    @Column(nullable = false)
+    private LocalDate serviceStartedDate;
 
     @OneToMany(mappedBy = "matron")
     private Set<Ward> wards =new HashSet<>();
