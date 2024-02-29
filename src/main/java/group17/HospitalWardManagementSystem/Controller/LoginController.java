@@ -4,18 +4,20 @@ package group17.HospitalWardManagementSystem.Controller;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtRequest;
 import group17.HospitalWardManagementSystem.Model.Dto.JwtResponse;
-import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.Login.JwtService;
+import group17.HospitalWardManagementSystem.Service.MatronDetails.RegisterMatronService;
 import group17.HospitalWardManagementSystem.Service.RegistrationService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import group17.HospitalWardManagementSystem.Repository.UserRepository;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 public class LoginController {
@@ -29,6 +31,9 @@ public class LoginController {
     private RegistrationService registrationService;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RegisterMatronService registerMatronService;
 
 
     @PostMapping("/authenticate")
