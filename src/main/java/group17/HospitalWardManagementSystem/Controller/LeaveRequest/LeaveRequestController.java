@@ -19,7 +19,6 @@ public class LeaveRequestController {
     @Autowired
     private RequestLeaveService_SaveData requestLeaveServiceSaveData;
 
-
     @GetMapping("/get-user/{username}")
     public MemberDto getUserDetails(@PathVariable String username){
         return requestLeaveService.provideAutoFilings(username);
