@@ -10,4 +10,6 @@ public class PasswordResetRequestDto {
     private String newPassword;
 
     private String confirmPassword;
+
+    private String otp;
 }
