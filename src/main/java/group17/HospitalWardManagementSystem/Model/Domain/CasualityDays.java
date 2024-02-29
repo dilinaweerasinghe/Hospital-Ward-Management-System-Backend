@@ -13,6 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CasualityDays {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @OneToOne
     @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
     private Ward wardNo;
