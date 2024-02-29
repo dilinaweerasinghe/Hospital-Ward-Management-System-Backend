@@ -11,12 +11,13 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddMatronDto {
+public class MatronDto {
     private String nic;
     private String fullName;
     private String firstName;
     private String lastName;
     private LocalDate dob;
+    private LocalDate serviceDate;
     private String email;
     private String mobileNo;
 }
