@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Service.StaffDetails;
+package group17.HospitalWardManagementSystem.Service.GeneralServices;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
