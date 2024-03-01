@@ -2,7 +2,7 @@ package group17.HospitalWardManagementSystem.Service.AdminServices;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Matron;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
-import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MatronDto;
+import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
