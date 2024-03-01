@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Service.AdminServices;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Matron;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Dto.Matron.GetMatronDto;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.MatronRepository;
@@ -67,14 +68,14 @@ public class MatronService {
         }
     }
 
-    public List<MatronDto> getMatronDetailService() {
-        List<MatronDto> matronDetails = new ArrayList<>();
+    public List<GetMatronDto> getMatronDetailService() {
+        List<GetMatronDto> matronDetails = new ArrayList<>();
         try {
             List<Matron> matrons = matronRepository.findAll();
             for (Matron matron : matrons) {
                 Optional<User> user = userRepository.findByNic(matron.getNic());
                 if (user.isPresent()) {
-                    MatronDto matronDto = getMatronDto(matron, user.get());
+                    GetMatronDto matronDto = getMatronDto(user.get());
 
                     matronDetails.add(matronDto);
                 } else {
@@ -88,14 +89,11 @@ public class MatronService {
         }
     }
 
-    private static MatronDto getMatronDto(Matron matron, User user) {
-        MatronDto matronDto = new MatronDto();
+    private static GetMatronDto getMatronDto(User user) {
+        GetMatronDto matronDto = new GetMatronDto();
         matronDto.setNic(user.getNic());
-        matronDto.setFullName(user.getFullName());
         matronDto.setFirstName(user.getFirstName());
         matronDto.setLastName(user.getLastName());
-        matronDto.setServiceDate(matron.getServiceStartedDate());
-        matronDto.setDob(user.getDob());
         matronDto.setEmail(user.getEmail());
         matronDto.setMobileNo(user.getMobileNo());
         return matronDto;
