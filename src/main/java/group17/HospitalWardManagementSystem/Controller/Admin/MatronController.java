@@ -1,6 +1,6 @@
 package group17.HospitalWardManagementSystem.Controller.Admin;
 
-import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MatronDto;
+import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
 import group17.HospitalWardManagementSystem.Service.AdminServices.MatronService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

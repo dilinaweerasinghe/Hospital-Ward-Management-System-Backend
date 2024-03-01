@@ -3,7 +3,7 @@ package group17.HospitalWardManagementSystem.Controller.ResetPassword;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.PassWord.PasswordResetRequestDto;
 import group17.HospitalWardManagementSystem.Service.PasswordResetTokenService;
-import group17.HospitalWardManagementSystem.Service.StaffDetails.MailService;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.Service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
