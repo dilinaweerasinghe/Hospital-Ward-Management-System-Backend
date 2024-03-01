@@ -21,19 +21,21 @@ public class LeaveRequestController {
 
     @GetMapping("/get-user/{username}")
     public MemberDto getUserDetails(@PathVariable String username){
+        System.out.println(requestLeaveService.provideAutoFilings(username));
         return requestLeaveService.provideAutoFilings(username);
     }
 
     @PostMapping("/request-leave")
-    public ResponseEntity<String> requestLeave (@RequestBody RequestLeaveDto requestLeaveDto){
+    public Boolean requestLeave (@RequestBody RequestLeaveDto requestLeaveDto){
 
         boolean saveSuccessful = requestLeaveServiceSaveData.saveLeave(requestLeaveDto);
 
         if (saveSuccessful) {
-            return ResponseEntity.ok("Leave requested successfully");
+            return true;
         } else {
+            return false;
             // If the save operation fails, you might want to return an appropriate error message
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to request leave");
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to request leave");
         }
     }
 }

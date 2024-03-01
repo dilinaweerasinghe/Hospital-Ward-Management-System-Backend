@@ -29,7 +29,7 @@ public class RequestLeaveService_DisplayData {
 
         if(staff.isPresent()){
             staffMem = staff.get();
-            memberDto.setLeaveNo(staffMem.getLeaveNum());
+            memberDto.setLeaveNum(staffMem.getLeaveNum());
             memberDto.setNumberOfTakenCasualLeaves(24 - staffMem.getRemainingCasualLeaves());
             memberDto.setNumberOfTakenVacationLeaves(22 - staffMem.getRemainingVacationLeave());
 
@@ -40,7 +40,10 @@ public class RequestLeaveService_DisplayData {
         memberDto.setFullName(user.getFullName());
         memberDto.setPosition(user.getPosition());
 
+
         return memberDto;
+
+
     }
 }
 
