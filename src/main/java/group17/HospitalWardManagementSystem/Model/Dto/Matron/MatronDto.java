@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Model.Dto.StaffDto;
+package group17.HospitalWardManagementSystem.Model.Dto.Matron;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
