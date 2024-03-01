@@ -8,7 +8,7 @@ import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
-import group17.HospitalWardManagementSystem.Service.StaffDetails.MailService;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

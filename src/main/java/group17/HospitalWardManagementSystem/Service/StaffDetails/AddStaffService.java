@@ -5,18 +5,16 @@ import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
-import group17.HospitalWardManagementSystem.Model.Dto.WardDto.AddWardDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
 import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Random;
 
 @Service
 public class AddStaffService {
