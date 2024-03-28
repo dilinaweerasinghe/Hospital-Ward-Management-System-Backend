@@ -27,6 +27,8 @@ public class RequestLeaveService_DisplayData {
         Optional<Staff> staff = staffRepository.findById(user.getNic());
         Staff staffMem;
 
+
+
         if(staff.isPresent()){
             staffMem = staff.get();
             memberDto.setLeaveNum(staffMem.getLeaveNum());

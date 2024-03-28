@@ -34,8 +34,7 @@ public class LeaveRequestController {
             return true;
         } else {
             return false;
-            // If the save operation fails, you might want to return an appropriate error message
-            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to request leave");
+
         }
     }
 }
