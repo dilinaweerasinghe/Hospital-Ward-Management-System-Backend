@@ -1,6 +1,5 @@
 package group17.HospitalWardManagementSystem.Repository;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.ShowStaffDto;
@@ -20,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByNic(String nic);
 
     Optional<User> findByEmail(String email);
+
+    void deleteUserByNic(String nic);
 
     @Query("SELECT A.fullName FROM User A INNER JOIN Staff B ON B.nic=A.nic WHERE B.wardNo=:wardNo AND A.Position='Sister'")
     String findBy(@Param("wardNo") Ward wardNo);
