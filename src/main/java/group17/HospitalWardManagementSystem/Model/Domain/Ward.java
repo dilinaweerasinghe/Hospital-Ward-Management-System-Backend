@@ -43,6 +43,8 @@ public class Ward {
     @Column(nullable = false)
     private int nightShift;
 
+    @ManyToMany(mappedBy = "wards")
+    private Set<ServiceDetails> serviceDetails = new HashSet<>();
 
 
 }
