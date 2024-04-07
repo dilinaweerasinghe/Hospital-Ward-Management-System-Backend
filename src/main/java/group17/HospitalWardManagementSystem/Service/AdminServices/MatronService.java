@@ -12,7 +12,6 @@ import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGene
 import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.ServiceInterfaces.AdminService.IMatronService;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.sql.ast.spi.SqlAliasBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class MatronService implements IMatronService {
     private final MatronRepository matronRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private MailService mailService;
+    private final MailService mailService;
     private final UsernameGenerateService usernameGenerateService;
     private final PasswordGenerateService passwordGenerateService;
 
