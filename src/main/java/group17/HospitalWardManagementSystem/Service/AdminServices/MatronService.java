@@ -10,7 +10,8 @@ import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
-import group17.HospitalWardManagementSystem.ServiceInterfaces.AdminService.IMatronService;
+import group17.HospitalWardManagementSystem.ServiceInterfaces.IMatronService;
+import group17.HospitalWardManagementSystem.ServiceInterfaces.IServiceDetails;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,14 +32,17 @@ public class MatronService implements IMatronService {
     private final UsernameGenerateService usernameGenerateService;
     private final PasswordGenerateService passwordGenerateService;
 
+    private final IServiceDetails serviceDetails;
+
     @Autowired
-    public MatronService(MatronRepository matronRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, MailService mailService, UsernameGenerateService usernameGenerateService, PasswordGenerateService passwordGenerateService) {
+    public MatronService(MatronRepository matronRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, MailService mailService, UsernameGenerateService usernameGenerateService, PasswordGenerateService passwordGenerateService, IServiceDetails serviceDetails) {
         this.matronRepository = matronRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
         this.usernameGenerateService = usernameGenerateService;
         this.passwordGenerateService = passwordGenerateService;
+        this.serviceDetails = serviceDetails;
     }
 
     @Override
@@ -102,6 +106,8 @@ public class MatronService implements IMatronService {
         // Find the matron by NIC
         Matron matron = matronRepository.findById(nic)
                 .orElseThrow(() -> new EntityNotFoundException("Matron not found with NIC: " + nic));
+
+        serviceDetails.addServiceDetails(matron.getNic());
 
         // Delete the matron
         matronRepository.delete(matron);
