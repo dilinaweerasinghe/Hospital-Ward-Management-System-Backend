@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.ServiceInterfaces.AdminService;
+package group17.HospitalWardManagementSystem.ServiceInterfaces;
 
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.GetMatronDto;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;

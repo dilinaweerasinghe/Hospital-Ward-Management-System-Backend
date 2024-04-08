@@ -3,7 +3,7 @@ package group17.HospitalWardManagementSystem.Controller.Admin;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.GetMatronDto;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
 import group17.HospitalWardManagementSystem.Service.AdminServices.MatronService;
-import group17.HospitalWardManagementSystem.ServiceInterfaces.AdminService.IMatronService;
+import group17.HospitalWardManagementSystem.ServiceInterfaces.IMatronService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
