@@ -1,16 +1,16 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Calendar;
 import java.util.Date;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class PasswordResetToken {
     @Id
