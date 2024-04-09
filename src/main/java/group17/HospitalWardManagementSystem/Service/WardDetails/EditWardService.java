@@ -18,7 +18,7 @@ public class EditWardService {
     private WardRepository wardRepository;
 
     public String EditWard(String wardNo,EditWardDto editWardDto){
-        Ward ward=new Ward();
+        //Ward ward=new Ward();
 
         Ward willUpdateWard=findWard(wardNo);
 

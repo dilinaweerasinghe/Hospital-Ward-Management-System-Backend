@@ -14,7 +14,7 @@ public class EditWardController {
     @Autowired
     private EditWardService editWardService;
 
-    @PutMapping("/edit-ward/{wardNo}")
+    @PutMapping("/edit-ward/{wardNo}") //wardNo- which ward and editWardDto - data need to change
     public String editWard(@PathVariable String wardNo, @RequestBody EditWardDto editWardDto){
         return editWardService.EditWard(wardNo,editWardDto);
     }

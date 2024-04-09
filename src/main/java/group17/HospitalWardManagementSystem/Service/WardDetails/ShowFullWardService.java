@@ -15,6 +15,8 @@ public class ShowFullWardService {
     @Autowired
     public MatronRepository matronRepository;
     public ShowFullWardDto showFullWard(String wardNo){
+
+        //map the domain to the dto
         ShowFullWardDto showFullWardDto=new ShowFullWardDto();
 
         Ward ward=findWard(wardNo);
