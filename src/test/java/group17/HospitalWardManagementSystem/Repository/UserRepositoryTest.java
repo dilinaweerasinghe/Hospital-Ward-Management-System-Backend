@@ -5,8 +5,7 @@ import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.TestConfiguration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -31,7 +31,7 @@ public class UserRepositoryTest {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Before("retrieve_data_test")
+    @BeforeEach
     public void setDummyDataToTest(){
         User user1 = User
                 .builder()
@@ -84,5 +84,14 @@ public class UserRepositoryTest {
         assertEquals("Dilina123", savedUser.getUsername());
 
     }
+
+    @Test
+    public void retrieve_data_test(){
+
+        List<User> users = userRepository.findAll();
+        assertEquals(2, users.size());
+    }
+
+
 
 }
