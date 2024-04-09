@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/ward")
 public class AddWardController {
 
     @Autowired
@@ -16,8 +17,7 @@ public class AddWardController {
 
     @PostMapping("/add-ward")
     public String addWard(@RequestBody AddWardDto addWardDto){
-        String ward=addWardService.saveWard(addWardDto);
 
-        return  ward;
+        return addWardService.saveWard(addWardDto);
     }
 }
