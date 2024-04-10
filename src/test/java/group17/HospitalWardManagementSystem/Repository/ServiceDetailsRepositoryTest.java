@@ -1,10 +1,10 @@
 package group17.HospitalWardManagementSystem.Repository;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.TestConfiguration;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +15,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestConfiguration.class)
-public class UserRepositoryTest {
-    private final UserRepository userRepository;
+public class ServiceDetailsRepositoryTest {
+    private final ServiceDetailsRepository serviceDetailsRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserRepositoryTest(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public ServiceDetailsRepositoryTest(ServiceDetailsRepository serviceDetailsRepository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.serviceDetailsRepository = serviceDetailsRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @BeforeEach
-    public void setupInitialValue(){
+    public void setUpInitialValues(){
         User user1 = User
                 .builder()
                 .nic("200025800891")
@@ -43,7 +43,7 @@ public class UserRepositoryTest {
                 .lastName("Weerasinghe")
                 .fullName("K L D K T Weerasinghe")
                 .mobileNo("0778652280")
-                .Position(UserRole.Admin)
+                .Position(UserRole.Matron)
                 .username("Dilina123")
                 .password(passwordEncoder.encode("Dilina@123")).build();
 
@@ -56,59 +56,19 @@ public class UserRepositoryTest {
                 .lastName("Weerasinghe")
                 .fullName("K L D K T Weerasinghe")
                 .mobileNo("0778652280")
-                .Position(UserRole.Admin)
+                .Position(UserRole.Sister)
                 .username("Dilina1234")
                 .password(passwordEncoder.encode("Dilina@1234")).build();
 
         userRepository.save(user1);
         userRepository.save(user2);
 
-    }
-
-    @Test
-    public void saveDataTest(){
-        User user = User
-                .builder()
-                .nic("200025800891")
-                .email("weerasinghe.dilina@gmail.com")
-                .dob(LocalDate.parse("2000-09-14"))
-                .firstName("Dilina")
-                .lastName("Weerasinghe")
-                .fullName("K L D K T Weerasinghe")
-                .mobileNo("0778652280")
-                .Position(UserRole.Admin)
-                .username("Dilina123")
-                .password(passwordEncoder.encode("Dilina@123")).build();
-
-        User savedUser = userRepository.save(user);
-        assertNotNull(savedUser);
-        assertEquals("Dilina123", savedUser.getUsername());
-    }
-
-    @Test
-    public void retrieveDataTest(){
-
-        List<User> users = userRepository.findAll();
-        assertEquals(2, users.size(),"Size should be return 2");
-        assertNotNull(users);
-        assertEquals(users.getFirst().getNic(), "200025800891", "Nic did not match");
-        assertEquals(users.get(1).getNic(), "200025800892");
-    }
-
-    @Test
-    public void findByUsernameTest(){
-        User user = userRepository.findByUsername("Dilina123");
-        assertNotNull(user);
-    }
-
-//    User findByUsername(String username);
+//        Ward ward = Ward.builder().
 //
-//    Optional<User> findByNic(String nic);
-//
-//    Optional<User> findByEmail(String email);
-//
-//    void deleteUserByNic(String nic);
+//        Staff staff = Staff.builder().nic("200025800892").serviceStartedDate(LocalDate.parse("2010-12-12")).leaveNum("L001").build();
 
 
+    }
 
+    
 }
