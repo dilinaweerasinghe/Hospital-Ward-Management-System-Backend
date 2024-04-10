@@ -9,6 +9,7 @@ import group17.HospitalWardManagementSystem.Model.Dto.WardDto.AddWardDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
 import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
+import group17.HospitalWardManagementSystem.Repository.ServiceDetailsRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
@@ -41,6 +42,9 @@ public class AddStaffService {
 
     @Autowired
     private UsernameGenerateService usernameGenerateService;
+
+    @Autowired
+    private ServiceDetailsRepository serviceDetailsRepository;
 
     public String staffSave(AddStaffDto addStaffDto){
 
