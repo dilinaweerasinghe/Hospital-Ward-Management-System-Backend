@@ -34,4 +34,6 @@ public class  Staff {
     private int remainingCasualLeaves;
     @Column(nullable = false)
     private int remainingVacationLeave;
+    @ManyToMany(mappedBy = "staff")
+    private Set<Duty> duties = new HashSet<>();
 }
