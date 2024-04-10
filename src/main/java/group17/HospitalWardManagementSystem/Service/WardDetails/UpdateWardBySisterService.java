@@ -14,7 +14,7 @@ public class UpdateWardBySisterService {
 
     public String UpdateWardBySister(UpdateWardBySisterDto updateWardBySisterDto){
 
-        UpdateWardBySisterDto updateWardBySisterDto1=new UpdateWardBySisterDto();
+        //UpdateWardBySisterDto updateWardBySisterDto1=new UpdateWardBySisterDto();
 
         Ward targetWard=findWard(updateWardBySisterDto.getWardNo());
 

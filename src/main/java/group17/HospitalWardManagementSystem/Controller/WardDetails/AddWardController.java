@@ -15,7 +15,7 @@ public class AddWardController {
     @Autowired
     public AddWardService addWardService;
 
-    @PostMapping("/add")
+    @PostMapping("/add-ward")
     public String addWard(@RequestBody AddWardDto addWardDto){
 
         return addWardService.saveWard(addWardDto);
