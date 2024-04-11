@@ -37,11 +37,11 @@ public class RegistrationService {
 
         // Add admin
         User admin = new User();
-        admin.setFullName("Admin Full Name");
-        admin.setFirstName("Admin First Name");
-        admin.setLastName("Admin Last Name");
+        admin.setFullName("Dilki Hansapani");
+        admin.setFirstName("Dilki");
+        admin.setLastName("Hansapani");
         admin.setPosition(UserRole.Admin);
-        admin.setNic("Admin NIC");
+        admin.setNic("9912121212v");
         admin.setUsername("admin123");
         admin.setPassword(getEncodedPassword("admin@123"));
         admin.setDob(LocalDate.of(2000, 1, 1)); // Set admin's date of birth
@@ -50,79 +50,20 @@ public class RegistrationService {
         users.add(admin);
 
         User user1 = new User();
-        user1.setNic("990823099V");
+        user1.setNic("200025800891");
         user1.setFirstName("Dilina");
         user1.setFullName("K L D K T Weerasinghe");
         user1.setLastName("Weerasinghe");
         user1.setUsername("Dilina123");
         user1.setPassword(getEncodedPassword("Dilina@123"));
-        user1.setEmail("Kasun@gmail.com");
+        user1.setEmail("weerasinghe.dilina683@gmail.com");
         user1.setPosition(UserRole.Admin);
-        user1.setMobileNo("0775128310");
+        user1.setMobileNo("0715848081");
         user1.setDob(LocalDate.of(2000,9,14));
 
         users.add(user1);
 
-        User user = new User();
-        user.setFullName("Admin Full Name");
-        user.setFirstName("Admin First Name");
-        user.setLastName("Admin Last Name");
-        user.setPosition(UserRole.Nurse);
-        user.setNic("Admin NIC");
-        user.setUsername("user123");
-        user.setPassword(getEncodedPassword("user1@123"));
-        user.setDob(LocalDate.of(2000, 1, 1)); // Set admin's date of birth
-        user.setEmail("admin@example.com");
-        user.setMobileNo("1234567890");
-        users.add(user);
 
-        // Add matrons
-        for (int i = 1; i <= 2; i++) {
-            User matron = new User();
-            matron.setFullName("Matron " + i + " Full Name");
-            matron.setFirstName("Matron " + i + " First Name");
-            matron.setLastName("Matron " + i + " Last Name");
-            matron.setPosition(UserRole.Matron);
-            matron.setNic("Matron " + i + " NIC");
-            matron.setUsername("matron" + i + "123");
-            matron.setPassword(getEncodedPassword("matron" + i + "@123"));
-            matron.setDob(LocalDate.of(1990, 1, 1)); // Set matron's date of birth
-            matron.setEmail("matron" + i + "@example.com");
-            matron.setMobileNo("123456789" + i);
-            users.add(matron);
-        }
-
-        // Add sisters
-        for (int i = 1; i <= 3; i++) {
-            User sister = new User();
-            sister.setFullName("Sister " + i + " Full Name");
-            sister.setFirstName("Sister " + i + " First Name");
-            sister.setLastName("Sister " + i + " Last Name");
-            sister.setPosition(UserRole.Sister);
-            sister.setNic("Sister " + i + " NIC");
-            sister.setUsername("sister" + i + "123");
-            sister.setPassword(getEncodedPassword("sister" + i + "@123"));
-            sister.setDob(LocalDate.of(1980, 1, 1)); // Set sister's date of birth
-            sister.setEmail("sister" + i + "@example.com");
-            sister.setMobileNo("123456789" + i);
-            users.add(sister);
-        }
-
-        // Add nurses
-        for (int i = 1; i <= 6; i++) {
-            User nurse = new User();
-            nurse.setFullName("Nurse " + i + " Full Name");
-            nurse.setFirstName("Nurse " + i + " First Name");
-            nurse.setLastName("Nurse " + i + " Last Name");
-            nurse.setPosition(UserRole.Nurse);
-            nurse.setNic("Nurse " + i + " NIC");
-            nurse.setUsername("nurse" + i + "123");
-            nurse.setPassword(getEncodedPassword("nurse" + i + "@123"));
-            nurse.setDob(LocalDate.of(1970, 1, 1)); // Set nurse's date of birth
-            nurse.setEmail("nurse" + i + "@example.com");
-            nurse.setMobileNo("123456789" + i);
-            users.add(nurse);
-        }
 
         // Save all users to the database
         userRepository.saveAll(users);

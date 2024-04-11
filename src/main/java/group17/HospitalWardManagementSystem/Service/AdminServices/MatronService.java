@@ -2,37 +2,50 @@ package group17.HospitalWardManagementSystem.Service.AdminServices;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Matron;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
-import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MatronDto;
+import group17.HospitalWardManagementSystem.Model.Dto.Matron.GetMatronDto;
+import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
-import group17.HospitalWardManagementSystem.Service.StaffDetails.MailService;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
+import group17.HospitalWardManagementSystem.ServiceInterfaces.IMatronService;
+import group17.HospitalWardManagementSystem.ServiceInterfaces.IServiceDetails;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MatronService {
-    @Autowired
-    private MatronRepository matronRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private MailService mailService;
-    @Autowired
-    private UsernameGenerateService usernameGenerateService;
-    @Autowired
-    private PasswordGenerateService passwordGenerateService;
+public class MatronService implements IMatronService {
+    private final MatronRepository matronRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
+    private final UsernameGenerateService usernameGenerateService;
+    private final PasswordGenerateService passwordGenerateService;
 
+    private final IServiceDetails serviceDetails;
 
+    @Autowired
+    public MatronService(MatronRepository matronRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, MailService mailService, UsernameGenerateService usernameGenerateService, PasswordGenerateService passwordGenerateService, IServiceDetails serviceDetails) {
+        this.matronRepository = matronRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
+        this.usernameGenerateService = usernameGenerateService;
+        this.passwordGenerateService = passwordGenerateService;
+        this.serviceDetails = serviceDetails;
+    }
+
+    @Override
     public Boolean AddMatron(MatronDto matronDto){
         User user = new User();
         Matron matron = new Matron();
@@ -66,20 +79,19 @@ public class MatronService {
             return false;
         }
     }
-
-    public List<MatronDto> getMatronDetailService() {
-        List<MatronDto> matronDetails = new ArrayList<>();
+    @Override
+    public List<GetMatronDto> getMatronDetailService() {
+        List<GetMatronDto> matronDetails = new ArrayList<>();
         try {
             List<Matron> matrons = matronRepository.findAll();
             for (Matron matron : matrons) {
                 Optional<User> user = userRepository.findByNic(matron.getNic());
                 if (user.isPresent()) {
-                    MatronDto matronDto = getMatronDto(matron, user.get());
+                    GetMatronDto matronDto = getMatronDto(user.get());
 
                     matronDetails.add(matronDto);
                 } else {
-
-                    System.out.println("User not found for matron with NIC: " + matron.getNic());
+                    throw new RuntimeException("User not found for matron with NIC: " + matron.getNic());
                 }
             }
             return matronDetails;
@@ -88,14 +100,37 @@ public class MatronService {
         }
     }
 
-    private static MatronDto getMatronDto(Matron matron, User user) {
-        MatronDto matronDto = new MatronDto();
+    @Override
+    @Transactional
+    public String deleteMatronService(String nic) throws SQLException {
+        // Find the matron by NIC
+        Matron matron = matronRepository.findById(nic)
+                .orElseThrow(() -> new EntityNotFoundException("Matron not found with NIC: " + nic));
+
+        serviceDetails.addServiceDetails(matron.getNic());
+
+        // Delete the matron
+        matronRepository.delete(matron);
+
+        // Find the associated user
+        User user = userRepository.findByNic(nic)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cannot find user details related to the matron with NIC: " + nic));
+
+        // Delete the user
+        userRepository.deleteUserByNic(nic);
+
+        // Return the name of the deleted matron/user as confirmation
+        return user.getFirstName() + " " + user.getLastName();
+    }
+
+
+
+    private static GetMatronDto getMatronDto(User user) {
+        GetMatronDto matronDto = new GetMatronDto();
         matronDto.setNic(user.getNic());
-        matronDto.setFullName(user.getFullName());
         matronDto.setFirstName(user.getFirstName());
         matronDto.setLastName(user.getLastName());
-        matronDto.setServiceDate(matron.getServiceStartedDate());
-        matronDto.setDob(user.getDob());
         matronDto.setEmail(user.getEmail());
         matronDto.setMobileNo(user.getMobileNo());
         return matronDto;

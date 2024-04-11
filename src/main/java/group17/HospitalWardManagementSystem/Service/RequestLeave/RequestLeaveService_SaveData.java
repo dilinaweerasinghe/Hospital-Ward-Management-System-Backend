@@ -20,7 +20,6 @@ public class RequestLeaveService_SaveData {
     @Autowired
     StaffRepository staffRepository;
     public boolean saveLeave(RequestLeaveDto leaveRequestDTO) {
-
         try {
             RequestLeave requestLeave = new RequestLeave();
 
@@ -39,11 +38,7 @@ public class RequestLeaveService_SaveData {
             System.out.println(e.getMessage());
             return false;
         }
-
-
-
     }
-
     public Staff findStaff(String nic){
         return staffRepository.findByNic(nic);
     }
