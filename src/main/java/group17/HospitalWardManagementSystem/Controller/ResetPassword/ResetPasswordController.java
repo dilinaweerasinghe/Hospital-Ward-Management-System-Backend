@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Controller.ResetPassword;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.PassWord.PasswordResetRequestDto;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.PasswordResetTokenService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.Service.UserService;
@@ -31,13 +32,17 @@ public class ResetPasswordController {
     @Autowired
     private PasswordResetTokenService passwordResetTokenService;
 
+    @Autowired
+    private PasswordGenerateService passwordGenerateService;
+
     @PostMapping("/password-reset-request")
     public String resetPasswordRequest(@RequestBody PasswordResetRequestDto passwordResetRequestDto,
                                        final HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         Optional<User> user=userService.findByEmail(passwordResetRequestDto.getEmail());
         String passwordResetURL="";
 
-        String passwordResetToken= UUID.randomUUID().toString();
+        //String passwordResetToken= UUID.randomUUID().toString();
+        String passwordResetToken=passwordGenerateService.passwordGenerate();
 
         if(user.isPresent()){
 
@@ -52,7 +57,7 @@ public class ResetPasswordController {
 
     private String passwordResetEmailLink(User user, String applicationURL, String passwordResetToken) throws MessagingException, UnsupportedEncodingException {
         String url = applicationURL+"/register/reset-password?token="+passwordResetToken;
-        mailService.sendPasswordResetVerificationEmail(url,user);
+        mailService.sendPasswordResetVerificationEmail(passwordResetToken,user);
         log.info("Click the link to reset your password :  {}", url);
         return  url;
     }
@@ -63,8 +68,9 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@RequestBody PasswordResetRequestDto passwordResetRequestDto,
-                                @RequestParam("token") String passwordResetToken){
+    public String resetPassword(@RequestBody PasswordResetRequestDto passwordResetRequestDto
+                                ){
+        String passwordResetToken=passwordResetRequestDto.getOtp();
         String validatePasswordResetTokenResult=passwordResetTokenService.validatePasswordResetToken(passwordResetToken);
 
         if(validatePasswordResetTokenResult.equalsIgnoreCase("valid")){
