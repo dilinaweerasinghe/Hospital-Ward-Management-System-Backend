@@ -19,9 +19,8 @@ public class News {
     private String newsHeader;
     @Column(nullable = false)
     private String newsDescription;
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "news_adder", referencedColumnName = "nic")
+    @JoinColumn(name = "news_adder")
     private User newsAdder;
     @Column(nullable = false)
     private LocalDate pushedDate;
