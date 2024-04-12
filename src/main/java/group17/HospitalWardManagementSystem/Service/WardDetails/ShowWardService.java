@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,36 +22,52 @@ public class ShowWardService {
     private WardRepository wardRepository;
 
     @Autowired
+    private StaffRepository staffRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
-
-
-    public ShowWardDto showWardDetails(String wardNo){
-        Ward ward=new Ward();
-        User user=new User();
-        Staff staff=new Staff();
+    public ShowWardDto showWardDetails(String wardName){
 
         ShowWardDto wardDto=new ShowWardDto();
 
-        Ward targetWard=findWard(wardNo);
+        Ward targetWard=findWard(wardName);
 
         wardDto.setWardNo(targetWard.getWardNo());
         wardDto.setWardName(targetWard.getWardName());
         wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
-        wardDto.setNic(findUser(targetWard));
+        wardDto.setSisterName(findSister(targetWard));
 
         return wardDto;
 
     }
 
-    public Ward findWard(String wardNo){
-        return wardRepository.findByWardNo(wardNo);
+    public Ward findWard(String wardName){
+        return wardRepository.findByWardName(wardName);
     }
 
-    public String findUser(Ward wardNo){
-        return userRepository.findBy(wardNo);
+    public String findSister(Ward wardNo){
+        Staff staff = staffRepository.findSisterByWard(wardNo);
+        if (staff != null) {
+            return findSisterName(staff.getNic());
+        } else {
+            System.out.println("FindSister error");
+            return null; // or handle the case where staff is null
+        }
     }
 
 
+    public String findSisterName(String nic){
+        Optional<User> user = userRepository.findByNic(nic);
+        if(user.isPresent()){
+            User user1 = user.get();
+            return user1.getFullName();
+        }
+        else{
+            System.out.println("user is null");
+            return null;
+
+        }
+    }
 
 }
