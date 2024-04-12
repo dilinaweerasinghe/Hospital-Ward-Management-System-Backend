@@ -1,7 +1,9 @@
 package group17.HospitalWardManagementSystem.Service;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Matron;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.UserRole;
+import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +17,16 @@ import java.util.List;
 @Service
 public class RegistrationService {
 
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MatronRepository matronRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.matronRepository = matronRepository;
+    }
 
     public void registerUser(User userdto) {
         User user = new User();
@@ -66,7 +74,43 @@ public class RegistrationService {
 
 
         // Save all users to the database
+
+
+        User user3 = User
+                .builder()
+                .nic("200025800893")
+                .email("weerasinghe.dilina@gmail.com")
+                .dob(LocalDate.parse("2000-09-14"))
+                .firstName("Dilina")
+                .lastName("Weerasinghe")
+                .fullName("K L D K T Weerasinghe")
+                .mobileNo("0778652280")
+                .Position(UserRole.Matron)
+                .username("Dilina123")
+                .password(passwordEncoder.encode("Dilina@123")).build();
+
+        User user4 = User
+                .builder()
+                .nic("200025800894")
+                .email("weerasinghe.dilina@gmail.com")
+                .dob(LocalDate.parse("2000-09-14"))
+                .firstName("Dilina")
+                .lastName("Weerasinghe")
+                .fullName("K L D K T Weerasinghe")
+                .mobileNo("0778652280")
+                .Position(UserRole.Matron)
+                .username("Dilina1234")
+                .password(passwordEncoder.encode("Dilina@1234")).build();
+
+        ;
+        users.add(user3);
+        users.add(user4);
         userRepository.saveAll(users);
+
+        Matron matron1 = Matron.builder().nic("200025800891").serviceStartedDate(LocalDate.parse("2010-10-10")).build();
+        Matron matron2 = Matron.builder().nic("200025800892").serviceStartedDate(LocalDate.parse("2010-10-10")).build();
+        matronRepository.save(matron1);
+        matronRepository.save(matron2);
     }
 
     public List<User> getAllUsers() {
