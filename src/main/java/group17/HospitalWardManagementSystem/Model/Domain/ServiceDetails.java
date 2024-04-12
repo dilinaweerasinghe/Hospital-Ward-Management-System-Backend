@@ -2,16 +2,16 @@ package group17.HospitalWardManagementSystem.Model.Domain;
 
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceDetails {
@@ -28,10 +28,11 @@ public class ServiceDetails {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @ManyToOne
-    @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
-    private Ward ward;
-
+    @ManyToMany
+    @JoinTable(name = "serviceDetails_wards",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "wardNo"))
+    private Set<Ward> wards = new HashSet<>();
 
 
 }
