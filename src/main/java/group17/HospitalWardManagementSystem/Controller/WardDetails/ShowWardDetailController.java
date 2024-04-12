@@ -14,9 +14,9 @@ public class ShowWardDetailController {
     @Autowired
     private ShowWardService showWardService;
 
-    @GetMapping("/show-ward/{wardNo}")
-    public ShowWardDto showWardDetails(@PathVariable String wardNo){
-        return showWardService.showWardDetails(wardNo);
+    @GetMapping("/show-ward/{wardName}")
+    public ShowWardDto showWardDetails(@PathVariable String wardName){
+        return showWardService.showWardDetails(wardName);
     }
 
 }
