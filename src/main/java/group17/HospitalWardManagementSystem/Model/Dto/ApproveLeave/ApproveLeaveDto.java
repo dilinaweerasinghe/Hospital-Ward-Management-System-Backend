@@ -1,23 +1,20 @@
-package group17.HospitalWardManagementSystem.Model.Dto;
+package group17.HospitalWardManagementSystem.Model.Dto.ApproveLeave;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Staff;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 public class ApproveLeaveDto {
     private int leaveId;
 
     private String leaveNo;
+
     private String name;
 
     private LocalDate leaveBeginDate;
