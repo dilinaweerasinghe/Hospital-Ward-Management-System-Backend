@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatronRepository extends JpaRepository<Matron,String> {
     Matron findByNic(String nic);
-    void deleteMatronByNic(String nic);
 }
