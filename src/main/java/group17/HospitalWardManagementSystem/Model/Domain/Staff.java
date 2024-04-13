@@ -1,10 +1,7 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -13,6 +10,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class  Staff {
@@ -36,4 +34,6 @@ public class  Staff {
     private int remainingCasualLeaves;
     @Column(nullable = false)
     private int remainingVacationLeave;
+    @ManyToMany(mappedBy = "staff")
+    private Set<Duty> duties = new HashSet<>();
 }

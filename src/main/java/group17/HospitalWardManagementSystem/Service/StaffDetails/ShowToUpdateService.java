@@ -60,7 +60,7 @@ public class ShowToUpdateService {
     }
 
     public User findUser(String nic){
-        return userRepository.findByNic(nic);
+        return userRepository.findByNic(nic).get();
     }
 
 

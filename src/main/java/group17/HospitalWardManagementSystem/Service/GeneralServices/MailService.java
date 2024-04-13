@@ -1,4 +1,4 @@
-package group17.HospitalWardManagementSystem.Service.StaffDetails;
+package group17.HospitalWardManagementSystem.Service.GeneralServices;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
@@ -36,14 +36,15 @@ public class MailService {
         return "Mail send successfully";
     }
 
-    public void sendPasswordResetVerificationEmail(String url,User user) throws MessagingException, UnsupportedEncodingException {
+    public void sendPasswordResetVerificationEmail(String token,User user) throws MessagingException, UnsupportedEncodingException {
 
         String subject = "Password Reset Request Verification";
         String senderName = "User Registration Portal Service";
         String mailContent = "<p> Hi, "+ user.getFirstName()+ ", </p>"+
                 "<p><b>You recently requested to reset your password,</b>"+"" +
-                "Please, follow the link below to complete the action.</p>"+
-                "<a href=\"" +url+ "\">Reset password</a>"+
+                "Please, use this code to reset your password,</p><h1>"+token+"<h1>"+
+                //"<a href=\"" +token+ "\">Reset password</a>"+
+
                 "<p> Users Registration Portal Service";
 
         MimeMessage message = javaMailSender.createMimeMessage();

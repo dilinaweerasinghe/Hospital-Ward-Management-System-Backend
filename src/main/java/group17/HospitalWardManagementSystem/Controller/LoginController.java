@@ -58,9 +58,6 @@ public class LoginController {
         registrationService.initUser();
     }
 
-    @PostConstruct
-    public void initMatron(){registerMatronService.RegisterMatron();}
-
     @GetMapping("/send")
     public String Send(){
         return "Correct";

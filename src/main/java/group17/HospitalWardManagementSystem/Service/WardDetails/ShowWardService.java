@@ -3,12 +3,16 @@ package group17.HospitalWardManagementSystem.Service.WardDetails;
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
+import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.WardNumbersDto;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardDto;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShowWardService {
@@ -46,5 +50,7 @@ public class ShowWardService {
     public String findUser(Ward wardNo){
         return userRepository.findBy(wardNo);
     }
+
+
 
 }

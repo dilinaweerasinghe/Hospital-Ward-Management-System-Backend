@@ -14,7 +14,7 @@ public class MemberDto {
     private String fullName;
     private String nic;
     private UserRole position;
-    private String leaveNo;
+    private String leaveNum;
     private int numberOfTakenCasualLeaves;
     private int numberOfTakenVacationLeaves;
 }

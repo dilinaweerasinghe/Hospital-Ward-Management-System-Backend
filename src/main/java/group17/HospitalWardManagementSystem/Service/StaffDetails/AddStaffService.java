@@ -5,16 +5,19 @@ import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
-import group17.HospitalWardManagementSystem.Model.Dto.WardDto.AddWardDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
 import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
+import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddStaffService {
@@ -34,6 +37,11 @@ public class AddStaffService {
     @Autowired
     public MailService mailService;
 
+    @Autowired
+    private PasswordGenerateService passwordGenerateService;
+
+    @Autowired
+    private UsernameGenerateService usernameGenerateService;
 
     public String staffSave(AddStaffDto addStaffDto){
 
@@ -41,9 +49,10 @@ public class AddStaffService {
         Staff staff=new Staff();
         Ward ward=new Ward();
 
-        String password=passwordGenerate();
 
-        String username=generateUsername(addStaffDto.getEmail());
+        String password=passwordGenerateService.passwordGenerate();
+
+        String username=usernameGenerateService.generateUsername(addStaffDto.getEmail());
 
 
         user.setNic(addStaffDto.getNic());
@@ -92,34 +101,40 @@ public class AddStaffService {
         return wardRepository.findByWardNo(addStaffDto.getWardNo());
     }
 
-    public String passwordGenerate(){
-        String upper="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lower="abcdefghijklmnopqrstuvwxyz";
-        String num="0123456789";
-        String specialChars="<>,/?}{][*%^#@&";
-        String combination=upper+lower+num+specialChars;
-        int len=8;
-
-        char[] password=new char[len];
-
-        Random r=new Random();
-
-        for (int i=0;i<8;i++){
-            password[i]=combination.charAt(r.nextInt(combination.length()));
-        }
-
-        return new String(password);
+    //======retrieve all ward numbers==============
+    public List<String> findAllWardNumbers(){
+        List<Ward> wards = wardRepository.findAll();
+        return wards.stream().map(Ward::getWardNo).collect(Collectors.toList());
     }
 
-    public String generateUsername(String email){
-        int atIndex=email.indexOf("@");
+//    public String passwordGenerate(){
+//        String upper="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//        String lower="abcdefghijklmnopqrstuvwxyz";
+//        String num="0123456789";
+//        String specialChars="<>,/?}{][*%^#@&";
+//        String combination=upper+lower+num+specialChars;
+//        int len=8;
+//
+//        char[] password=new char[len];
+//
+//        Random r=new Random();
+//
+//        for (int i=0;i<8;i++){
+//            password[i]=combination.charAt(r.nextInt(combination.length()));
+//        }
+//
+//        return new String(password);
+//    }
 
-        if (atIndex != -1) {
-            return email.substring(0, atIndex);
-        } else {
-            return null;
-        }
-    }
+//    public String generateUsername(String email){
+//        int atIndex=email.indexOf("@");
+//
+//        if (atIndex != -1) {
+//            return email.substring(0, atIndex);
+//        } else {
+//            return null;
+//        }
+//    }
 }
 
 
