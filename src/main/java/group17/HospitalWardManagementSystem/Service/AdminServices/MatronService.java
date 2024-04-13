@@ -108,28 +108,28 @@ public class MatronService implements IMatronService {
 
     @Override
     @Transactional
-    public String deleteMatronService(String nic) throws SQLException {
+    public String deleteMatronService(String nic) {
 
-        // Find the matron by NIC
         Matron matron = matronRepository.findById(nic)
                 .orElseThrow(() -> new EntityNotFoundException("Matron not found with NIC: " + nic));
 
-        serviceDetails.addServiceDetails(matron.getNic());
+        if(matron.getWards().isEmpty()){
+            matronRepository.delete(matron);
 
-        // Delete the matron
-        matronRepository.delete(matron);
+            User user = userRepository.findByNic(nic)
+                    .orElseThrow(() ->
+                            new EntityNotFoundException("Cannot find user details related to the matron with NIC: " + nic));
 
-        // Find the associated user
-        User user = userRepository.findByNic(nic)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Cannot find user details related to the matron with NIC: " + nic));
+            userRepository.updatePositionByNic(nic, UserRole.Currently_None);
+            // Return the name of the deleted matron/user as confirmation
+            return user.getFirstName() + " " + user.getLastName();
+        }else{
+            throw new IllegalStateException("Cannot Delete Still Works in some wards. Update them before Delete!");
+        }
 
 
-        // Delete the user
-//        userRepository.updatePositionByNic(nic, UserRole.Currently_None);
 
-        // Return the name of the deleted matron/user as confirmation
-        return user.getFirstName() + " " + user.getLastName();
+
     }
 
 

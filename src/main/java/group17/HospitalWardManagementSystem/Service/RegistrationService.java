@@ -78,7 +78,7 @@ public class RegistrationService {
 
         User user3 = User
                 .builder()
-                .nic("200025800893")
+                .nic("200025800891")
                 .email("weerasinghe.dilina@gmail.com")
                 .dob(LocalDate.parse("2000-09-14"))
                 .firstName("Dilina")
@@ -91,7 +91,7 @@ public class RegistrationService {
 
         User user4 = User
                 .builder()
-                .nic("200025800894")
+                .nic("200025800892")
                 .email("weerasinghe.dilina@gmail.com")
                 .dob(LocalDate.parse("2000-09-14"))
                 .firstName("Dilina")

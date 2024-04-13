@@ -27,8 +27,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE User u SET u.Position = ?2 WHERE u.nic = ?1")
-    int updatePositionByNic(String nic, UserRole position);
+    @Query("UPDATE User u SET u.Position = :position WHERE u.nic = :nic")
+    void updatePositionByNic(@Param("nic") String nic,@Param("position") UserRole position);
 
     @Query("SELECT A.fullName FROM User A INNER JOIN Staff B ON B.nic=A.nic WHERE B.wardNo=:wardNo AND A.Position='Sister'")
     String findBy(@Param("wardNo") Ward wardNo);
