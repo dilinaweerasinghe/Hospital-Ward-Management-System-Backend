@@ -49,6 +49,7 @@ public class LeaveRequestController {
         }
     }
 
+    @PostMapping("/request-leave/getAll")
     public ResponseEntity<?> getRequestedLeaveList(){
         try{
             return ResponseEntity.ok(requestLeaveService.getRequestedLeaveList());
