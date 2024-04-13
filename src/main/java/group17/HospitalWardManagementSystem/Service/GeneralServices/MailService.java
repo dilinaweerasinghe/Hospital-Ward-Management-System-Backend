@@ -41,7 +41,7 @@ public class MailService {
         String subject = "Password Reset Request Verification";
         String senderName = "User Registration Portal Service";
         String mailContent = "<p> Hi, "+ user.getFirstName()+ ", </p>"+
-                "<p><b>You recently requested to reset your password,</b>"+"" +
+                "<p><b>You recently requested to reset your password,</b>"+
                 "Please, use this code to reset your password,</p><h1>"+token+"<h1>"+
                 //"<a href=\"" +token+ "\">Reset password</a>"+
 

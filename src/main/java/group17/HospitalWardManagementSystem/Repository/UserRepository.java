@@ -24,7 +24,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByEmail(String email);
 
-    void deleteUserByNic(String nic);
 
     @Modifying
     @Transactional

@@ -34,7 +34,7 @@ public class MatronController {
     }
 
     @DeleteMapping("/matron/delete/{nic}")
-    public ResponseEntity<?> deleteMatron(@PathVariable String nic) throws SQLException {
+    public ResponseEntity<?> deleteMatron(@PathVariable String nic) {
         try {
             String result = matronService.deleteMatronService(nic);
 
