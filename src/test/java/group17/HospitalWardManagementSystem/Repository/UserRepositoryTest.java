@@ -101,6 +101,13 @@ public class UserRepositoryTest {
         assertNotNull(user);
     }
 
+    @Test
+    public void changePositionById(){
+        userRepository.updatePositionByNic("200025800892", UserRole.Currently_None);
+
+        assertEquals(UserRole.Currently_None, userRepository.findById("200025800892").get().getPosition());
+    }
+
 //    User findByUsername(String username);
 //
 //    Optional<User> findByNic(String nic);
