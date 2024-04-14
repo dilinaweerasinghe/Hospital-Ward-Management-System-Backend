@@ -1,8 +1,14 @@
 package group17.HospitalWardManagementSystem.Service;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Matron;
+import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.UserRole;
+import group17.HospitalWardManagementSystem.Repository.MatronRepository;
+import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
+import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,11 +22,17 @@ public class TemporyDumyDataAddingService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MatronRepository matronRepository;
+    private final WardRepository wardRepository;
+    private final StaffRepository staffRepository;
 
     @Autowired
-    public TemporyDumyDataAddingService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public TemporyDumyDataAddingService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository, WardRepository wardRepository, StaffRepository staffRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.matronRepository = matronRepository;
+        this.wardRepository = wardRepository;
+        this.staffRepository = staffRepository;
     }
 
     public void addNursesData(){
@@ -83,7 +95,7 @@ public class TemporyDumyDataAddingService {
         userRepository.saveAll(sisters);
     }
 
-    public void addNurseMatron(){
+    public void addMatronData(){
         List<User> matrons = new ArrayList<>();
 
         // Add all 5 matron data records
@@ -96,4 +108,125 @@ public class TemporyDumyDataAddingService {
         // Save all matrons
         userRepository.saveAll(matrons);
     }
+
+    public void addMatronsToMatronTable(){
+        List<Matron> matrons = new ArrayList<>();
+
+        Matron matron1 = new Matron();
+        matron1.setNic("200025800895");
+        matron1.setServiceStartedDate(LocalDate.parse("1995-05-10"));
+
+        Matron matron2 = new Matron();
+        matron2.setNic("198312040789");
+        matron2.setServiceStartedDate(LocalDate.parse("1995-03-25"));
+
+        Matron matron3 = new Matron();
+        matron3.setNic("198111190167");
+        matron3.setServiceStartedDate(LocalDate.parse("2004-03-25"));
+
+        Matron matron4 = new Matron();
+        matron4.setNic("199707110986");
+        matron4.setServiceStartedDate(LocalDate.parse("2006-03-25"));
+
+        Matron matron5 = new Matron();
+        matron5.setNic("199303031703");
+        matron5.setServiceStartedDate(LocalDate.parse("2003-03-25"));
+
+        matrons.add(matron1);
+        matrons.add(matron2);
+        matrons.add(matron3);
+        matrons.add(matron4);
+        matrons.add(matron5);
+
+        matronRepository.saveAll(matrons);
+    }
+
+    public void addStaffDetails() {
+        List<Staff> staffList = new ArrayList<>();
+
+        // Adding nursing staff members with updated service started dates between 2000-12-12 and 2022-12-12
+        staffList.add(Staff.builder().nic("198511120367").leaveNum("L001").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2005-05-15")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("199601280278").leaveNum("L002").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2001-03-20")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("199803150256").leaveNum("L003").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2004-09-10")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("198502020202").leaveNum("L004").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2003-11-28")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("199707070707").leaveNum("L005").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2010-12-01")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("199504300378").leaveNum("L006").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2006-07-17")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("199909090909").leaveNum("L007").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2015-03-03")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("199606060606").leaveNum("L008").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2009-08-20")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("199012250394").leaveNum("L009").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2012-04-12")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("199701010101").leaveNum("L010").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2002-12-15")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("198806060606").leaveNum("L011").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2008-01-25")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("199409040404").leaveNum("L012").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2010-10-10")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("198803030303").leaveNum("L013").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2000-12-20")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("199404040404").leaveNum("L014").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2018-02-28")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("199808080808").leaveNum("L015").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2009-06-15")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("199009090909").leaveNum("L016").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2011-03-03")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("199709070707").leaveNum("L017").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2019-05-20")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("198602020202").leaveNum("L018").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2005-02-22")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("199701010101").leaveNum("L019").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2007-08-18")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("198805080808").leaveNum("L020").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2004-12-12")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("199703030303").leaveNum("L021").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2001-04-15")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("199303030303").leaveNum("L022").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2022-12-12")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("199712121212").leaveNum("L023").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2011-02-25")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("198710101010").leaveNum("L024").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2006-11-11")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("199010101010").leaveNum("L025").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2003-07-20")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("199503030303").leaveNum("L026").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2015-09-09")).wardNo(wardRepository.findByWardNo("W013")).build());
+        staffList.add(Staff.builder().nic("198412121212").leaveNum("L027").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2009-01-01")).wardNo(wardRepository.findByWardNo("W010")).build());
+        staffList.add(Staff.builder().nic("199212121212").leaveNum("L028").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2008-03-03")).wardNo(wardRepository.findByWardNo("W005")).build());
+        staffList.add(Staff.builder().nic("199706060606").leaveNum("L029").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2012-06-16")).wardNo(wardRepository.findByWardNo("W012")).build());
+        staffList.add(Staff.builder().nic("198910111213").leaveNum("L030").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2010-10-10")).wardNo(wardRepository.findByWardNo("W013")).build());
+
+        // Saving all staff members to the repository
+        staffRepository.saveAll(staffList);
+    }
+
+
+    public void addWards() {
+        List<Ward> wards = new ArrayList<>();
+
+        // Inserting ward data
+        wards.add(Ward.builder().wardNo("W001").wardName("General Medicine").matron(matronRepository.findByNic("198312040789")).numberOfNurses(20).morningShift(5).eveningShift(5).nightShift(5).build());
+        wards.add(Ward.builder().wardNo("W002").wardName("Cardiology").matron(matronRepository.findByNic("198312040789")).numberOfNurses(15).morningShift(5).eveningShift(5).nightShift(5).build());
+        wards.add(Ward.builder().wardNo("W003").wardName("Oncology").matron(matronRepository.findByNic("198111190167")).numberOfNurses(12).morningShift(4).eveningShift(4).nightShift(4).build());
+        wards.add(Ward.builder().wardNo("W004").wardName("Pediatrics").matron(matronRepository.findByNic("198111190167")).numberOfNurses(18).morningShift(6).eveningShift(6).nightShift(6).build());
+        wards.add(Ward.builder().wardNo("W005").wardName("Neurology").matron(matronRepository.findByNic("199707110986")).numberOfNurses(10).morningShift(3).eveningShift(3).nightShift(4).build());
+        wards.add(Ward.builder().wardNo("W006").wardName("Orthopedics").matron(matronRepository.findByNic("199707110986")).numberOfNurses(22).morningShift(7).eveningShift(7).nightShift(8).build());
+        wards.add(Ward.builder().wardNo("W007").wardName("Gastroenterology").matron(matronRepository.findByNic("199303031703")).numberOfNurses(8).morningShift(2).eveningShift(3).nightShift(3).build());
+        wards.add(Ward.builder().wardNo("W008").wardName("Maternity").matron(matronRepository.findByNic("199303031703")).numberOfNurses(25).morningShift(8).eveningShift(8).nightShift(9).build());
+        wards.add(Ward.builder().wardNo("W009").wardName("Psychiatry").matron(matronRepository.findByNic("200025800895")).numberOfNurses(12).morningShift(4).eveningShift(4).nightShift(4).build());
+        wards.add(Ward.builder().wardNo("W010").wardName("Dermatology").matron(matronRepository.findByNic("200025800895")).numberOfNurses(6).morningShift(2).eveningShift(2).nightShift(2).build());
+        wards.add(Ward.builder().wardNo("W011").wardName("Emergency").matron(matronRepository.findByNic("198312040789")).numberOfNurses(30).morningShift(10).eveningShift(10).nightShift(10).build());
+        wards.add(Ward.builder().wardNo("W012").wardName("ENT").matron(matronRepository.findByNic("198111190167")).numberOfNurses(7).morningShift(2).eveningShift(2).nightShift(3).build());
+        wards.add(Ward.builder().wardNo("W013").wardName("Urology").matron(matronRepository.findByNic("199707110986")).numberOfNurses(7).morningShift(3).eveningShift(3).nightShift(3).build());
+
+        // Save all wards to the repository
+        wardRepository.saveAll(wards);
+    }
+
+    public void addSistersToTheStaffTable() {
+        List<Staff> sisters = new ArrayList<>();
+
+        sisters.add(Staff.builder().nic("199722350456").leaveNum("LS001").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2002-01-12")).wardNo(wardRepository.findByWardNo("W001")).build());
+        sisters.add(Staff.builder().nic("198808170591").leaveNum("LS002").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("1996-05-20")).wardNo(wardRepository.findByWardNo("W002")).build());
+        sisters.add(Staff.builder().nic("199010050189").leaveNum("LS003").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2001-08-10")).wardNo(wardRepository.findByWardNo("W003")).build());
+        sisters.add(Staff.builder().nic("199212121212").leaveNum("LS004").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("1995-10-18")).wardNo(wardRepository.findByWardNo("W004")).build());
+        sisters.add(Staff.builder().nic("198602060707").leaveNum("LS005").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2003-03-25")).wardNo(wardRepository.findByWardNo("W005")).build());
+        sisters.add(Staff.builder().nic("199706250696").leaveNum("LS006").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("1999-07-10")).wardNo(wardRepository.findByWardNo("W006")).build());
+        sisters.add(Staff.builder().nic("199012251203").leaveNum("LS007").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2005-02-28")).wardNo(wardRepository.findByWardNo("W007")).build());
+        sisters.add(Staff.builder().nic("198702020303").leaveNum("LS008").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2008-09-15")).wardNo(wardRepository.findByWardNo("W008")).build());
+        sisters.add(Staff.builder().nic("199307070404").leaveNum("LS009").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("1994-12-20")).wardNo(wardRepository.findByWardNo("W009")).build());
+        sisters.add(Staff.builder().nic("198101010505").leaveNum("LS010").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2006-11-30")).wardNo(wardRepository.findByWardNo("W010")).build());
+        sisters.add(Staff.builder().nic("199605050606").leaveNum("LS011").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2002-08-15")).wardNo(wardRepository.findByWardNo("W011")).build());
+        sisters.add(Staff.builder().nic("198812120587").leaveNum("LS012").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("1998-04-05")).wardNo(wardRepository.findByWardNo("W012")).build());
+        sisters.add(Staff.builder().nic("199707110986").leaveNum("LS013").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2007-03-15")).wardNo(wardRepository.findByWardNo("W013")).build());
+
+        staffRepository.saveAll(sisters);
+    }
+
+
+
+
+
+
 }
+

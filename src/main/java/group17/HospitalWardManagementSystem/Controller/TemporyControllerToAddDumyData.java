@@ -18,6 +18,10 @@ public class TemporyControllerToAddDumyData {
     public void initNurses(){
         temporyDumyDataAddingService.addNursesData();
         temporyDumyDataAddingService.addSisterData();
-        temporyDumyDataAddingService.addNurseMatron();
+        temporyDumyDataAddingService.addMatronData();
+        temporyDumyDataAddingService.addMatronsToMatronTable();
+        temporyDumyDataAddingService.addWards();
+        temporyDumyDataAddingService.addStaffDetails();
+        temporyDumyDataAddingService.addSistersToTheStaffTable();
     }
 }
