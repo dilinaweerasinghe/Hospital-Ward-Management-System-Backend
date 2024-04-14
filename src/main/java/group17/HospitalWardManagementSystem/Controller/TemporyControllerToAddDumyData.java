@@ -23,5 +23,6 @@ public class TemporyControllerToAddDumyData {
         temporyDumyDataAddingService.addWards();
         temporyDumyDataAddingService.addStaffDetails();
         temporyDumyDataAddingService.addSistersToTheStaffTable();
+        temporyDumyDataAddingService.addRequestLeaves();
     }
 }
