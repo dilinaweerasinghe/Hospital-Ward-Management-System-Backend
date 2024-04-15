@@ -13,8 +13,15 @@ public class ShowFullWardController {
     @Autowired
     public ShowFullWardService showFullWardService;
 
-    @GetMapping("/show-fullward/{wardNo}")
-    public ShowFullWardDto showFullWardDetails(@PathVariable String wardNo){
-        return showFullWardService.showFullWard(wardNo);
+    @GetMapping("/show-fullward/{wardName}")
+    public ShowFullWardDto showFullWardDetails(@PathVariable String wardName){
+        return showFullWardService.showFullWard(wardName);
+    }
+
+    @GetMapping("/show-fullward-By-Sister/{username}")
+    public ShowFullWardDto showFullWardDetailsSister(@PathVariable String username){
+        return showFullWardService.getAllWardDetailsSister(username);
     }
 }
+
+

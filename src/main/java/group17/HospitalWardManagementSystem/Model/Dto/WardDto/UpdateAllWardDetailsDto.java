@@ -9,13 +9,21 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateWardBySisterDto {
+public class UpdateAllWardDetailsDto {
 
     private String wardNo;
+
+    private String wardName;
+
+    private String sisterNic;
+
+    private int numberOfNurses;
 
     private int morningShift;
 
     private int eveningShift;
 
     private int nightShift;
+
+
 }

@@ -14,7 +14,7 @@ public class ShowFullWardDto {
 
     private String wardName;
 
-    private String matron;
+    private String sisterNic;
 
     private int numberOfNurses;
 
