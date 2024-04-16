@@ -37,7 +37,7 @@ public class WebSecurityConfiguration{
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/authenticate","/register/password-reset-request","/register/reset-password")
+                        .requestMatchers("/authenticate","/register/password-reset-request","/register/reset-password","/customer-support")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

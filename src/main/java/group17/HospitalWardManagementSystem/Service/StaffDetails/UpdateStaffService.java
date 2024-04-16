@@ -2,7 +2,6 @@ package group17.HospitalWardManagementSystem.Service.StaffDetails;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
-import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.ShowStaffDto;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.UpdateDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;

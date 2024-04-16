@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Service;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.UserRole;
+import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,63 +16,66 @@ import java.util.List;
 @Service
 public class RegistrationService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MatronRepository matronRepository;
 
-    public void registerUser(User userdto) {
-        User user = new User();
-        user.setFirstName(userdto.getFirstName());
-        user.setLastName(userdto.getLastName());
-        user.setFullName(userdto.getFullName());
-        user.setUsername(userdto.getUsername());
-        user.setNic(userdto.getNic());
-        user.setPassword(getEncodedPassword(userdto.getPassword()));
-        user.setPosition(userdto.getPosition());
-
-        userRepository.save(user);
+    @Autowired
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.matronRepository = matronRepository;
     }
+
     public void initUser() {
         List<User> users = new ArrayList<>();
 
         // Add admin
-        User admin = new User();
-        admin.setFullName("Dilki Hansapani");
-        admin.setFirstName("Dilki");
-        admin.setLastName("Hansapani");
-        admin.setPosition(UserRole.Admin);
-        admin.setNic("9912121212v");
-        admin.setUsername("admin123");
-        admin.setPassword(getEncodedPassword("admin@123"));
-        admin.setDob(LocalDate.of(2000, 1, 1)); // Set admin's date of birth
-        admin.setEmail("admin@example.com");
-        admin.setMobileNo("1234567890");
-        users.add(admin);
+        User admin1 = new User();
+        admin1.setFullName("Dilki Hansapani");
+        admin1.setFirstName("Dilki");
+        admin1.setLastName("Hansapani");
+        admin1.setPosition(UserRole.Admin);
+        admin1.setNic("9912121212v");
+        admin1.setUsername("Dilki123");
+        admin1.setPassword(getEncodedPassword("Dilki@123"));
+        admin1.setDob(LocalDate.of(2000, 1, 1)); // Set admins date of birth
+        admin1.setEmail("admin@example.com");
+        admin1.setMobileNo("1234567890");
+        users.add(admin1);
 
-        User user1 = new User();
-        user1.setNic("200025800891");
-        user1.setFirstName("Dilina");
-        user1.setFullName("K L D K T Weerasinghe");
-        user1.setLastName("Weerasinghe");
-        user1.setUsername("Dilina123");
-        user1.setPassword(getEncodedPassword("Dilina@123"));
-        user1.setEmail("weerasinghe.dilina683@gmail.com");
-        user1.setPosition(UserRole.Admin);
-        user1.setMobileNo("0715848081");
-        user1.setDob(LocalDate.of(2000,9,14));
+        User admin2 = new User();
+        admin2.setNic("200025800891");
+        admin2.setFirstName("Dilina");
+        admin2.setFullName("K L D K T Weerasinghe");
+        admin2.setLastName("Weerasinghe");
+        admin2.setUsername("Dilina123");
+        admin2.setPassword(getEncodedPassword("Dilina@123"));
+        admin2.setEmail("weerasinghe.dilina683@gmail.com");
+        admin2.setPosition(UserRole.Admin);
+        admin2.setMobileNo("0715848081");
+        admin2.setDob(LocalDate.of(2000,9,14));
 
-        users.add(user1);
+        users.add(admin2);
 
 
 
         // Save all users to the database
+
+
+        User admin3 = User.builder().nic("200025800892").email("weerasinghe.dilina@gmail.com").dob(LocalDate.parse("2000-09-14")).firstName("Nipuna").lastName("Heshan").fullName("N Heshan").mobileNo("0778652280").Position(UserRole.Admin).username("Nipuna123").password(passwordEncoder.encode("Nipuna@123")).build();
+
+        User admin4 = User.builder().nic("200025800893").email("weerasinghe.dilina@gmail.com").dob(LocalDate.parse("2000-09-14")).firstName("Vimukthi").lastName("Ranasinghe").fullName("V Ranasinghe").mobileNo("0778652280").Position(UserRole.Admin).username("Vimukthi123").password(passwordEncoder.encode("Vimukthi@1234")).build();
+
+        User admin5 = User.builder().nic("200025800894").email("weerasinghe.dilina@gmail.com").dob(LocalDate.parse("2000-09-14")).firstName("Ahamad").lastName("Sajad").fullName("A Sajad").mobileNo("0778652280").Position(UserRole.Admin).username("Sajad123").password(passwordEncoder.encode("Sajad@1234")).build();
+
+        users.add(admin3);
+        users.add(admin4);
+        users.add(admin5);
         userRepository.saveAll(users);
+
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
     public String getEncodedPassword(String password) {
         return passwordEncoder.encode(password);
     }

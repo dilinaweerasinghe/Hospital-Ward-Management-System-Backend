@@ -11,11 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class EditWardService {
 
-    @Autowired
-    private MatronRepository matronRepository;
+    private final MatronRepository matronRepository;
 
+
+    private final WardRepository wardRepository;
     @Autowired
-    private WardRepository wardRepository;
+    public EditWardService(MatronRepository matronRepository, WardRepository wardRepository) {
+        this.matronRepository = matronRepository;
+        this.wardRepository = wardRepository;
+    }
+
 
     public String EditWard(String wardNo,EditWardDto editWardDto){
         //Ward ward=new Ward();
