@@ -1,12 +1,16 @@
 package group17.HospitalWardManagementSystem.Service.WardDetails;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Matron;
+import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.EditWardDto;
 import group17.HospitalWardManagementSystem.Repository.MatronRepository;
+import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EditWardService {
@@ -16,6 +20,9 @@ public class EditWardService {
 
     @Autowired
     private WardRepository wardRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
 
     public String EditWard(String wardNo,EditWardDto editWardDto){
         //Ward ward=new Ward();
@@ -37,7 +44,10 @@ public class EditWardService {
         return matronRepository.findByNic(editWardDto.getMatron());
     }
 
+
     public Ward findWard(String wardNo){
         return wardRepository.findByWardNo(wardNo);
     }
+
+
 }

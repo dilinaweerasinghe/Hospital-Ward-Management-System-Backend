@@ -12,6 +12,7 @@ import group17.HospitalWardManagementSystem.Repository.WardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -78,5 +79,9 @@ public class ShowFullWardService {
         String nic = user.getNic();
         Staff staff = staffRepository.findByNic(nic);
         return staff;
+    }
+
+    public List<String> findAllSisters(){
+        return userRepository.findAllSisterNics();
     }
 }
