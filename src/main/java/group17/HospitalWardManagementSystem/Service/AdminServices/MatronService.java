@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Service.AdminServices;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Matron;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.GetMatronDto;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MatronService implements IMatronService {
@@ -142,6 +144,7 @@ public class MatronService implements IMatronService {
         matronDto.setMobileNo(user.getMobileNo());
         return matronDto;
     }
+
 
 
 }

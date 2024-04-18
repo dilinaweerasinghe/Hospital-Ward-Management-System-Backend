@@ -1,6 +1,5 @@
 package group17.HospitalWardManagementSystem.Controller.LeaveRequest;
 
-import group17.HospitalWardManagementSystem.Model.Dto.ApproveLeave.ApproveLeaveDto;
 import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.MemberDto;
 import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.RequestLeaveDto;
 import group17.HospitalWardManagementSystem.Service.RequestLeave.RequestLeaveService;
@@ -9,11 +8,10 @@ import group17.HospitalWardManagementSystem.Service.RequestLeave.RequestLeaveSer
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class LeaveRequestController {
@@ -30,12 +28,14 @@ public class LeaveRequestController {
         this.requestLeaveServiceSaveData = requestLeaveServiceSaveData;
     }
 
+    //Get details that are need to autofill in the leave request form
     @GetMapping("/get-user/{username}")
     public MemberDto getUserDetails(@PathVariable String username){
         System.out.println(requestLeaveServiceDisplayData.provideAutoFilings(username));
         return requestLeaveServiceDisplayData.provideAutoFilings(username);
     }
 
+    //save request leave
     @PostMapping("/request-leave")
     public Boolean requestLeave (@RequestBody RequestLeaveDto requestLeaveDto){
 
@@ -49,16 +49,22 @@ public class LeaveRequestController {
         }
     }
 
-    @PostMapping("/request-leave/getAll")
-    public ResponseEntity<?> getRequestedLeaveList(){
-        try{
-            return ResponseEntity.ok(requestLeaveService.getRequestedLeaveList());
-        }catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }catch (DataAccessException e) {
-            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
-        }
+
+    @GetMapping("/request-leave/{nic}")
+    public ResponseEntity<?> getRequestLeaveList(@PathVariable String nic, @RequestParam String positionFilter, @RequestParam String wardFilter) {
+     try{
+         return ResponseEntity.ok(requestLeaveService.getRequestedLeaveByWardAndPosition(nic, positionFilter, wardFilter));
+     }catch (EntityNotFoundException | IllegalArgumentException e){
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+     } catch (DataAccessException e) {
+         return ResponseEntity.internalServerError().body("Database error: Please Contact Admin");
+     } catch (Exception e) {
+         return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+     }
     }
+
+
+
+
+
 }
