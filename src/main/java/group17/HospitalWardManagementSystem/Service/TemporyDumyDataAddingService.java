@@ -1,19 +1,14 @@
 package group17.HospitalWardManagementSystem.Service;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Matron;
-import group17.HospitalWardManagementSystem.Model.Domain.Staff;
-import group17.HospitalWardManagementSystem.Model.Domain.User;
-import group17.HospitalWardManagementSystem.Model.Domain.Ward;
+import group17.HospitalWardManagementSystem.Model.Domain.*;
 import group17.HospitalWardManagementSystem.Model.UserRole;
-import group17.HospitalWardManagementSystem.Repository.MatronRepository;
-import group17.HospitalWardManagementSystem.Repository.StaffRepository;
-import group17.HospitalWardManagementSystem.Repository.UserRepository;
-import group17.HospitalWardManagementSystem.Repository.WardRepository;
+import group17.HospitalWardManagementSystem.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +20,15 @@ public class TemporyDumyDataAddingService {
     private final MatronRepository matronRepository;
     private final WardRepository wardRepository;
     private final StaffRepository staffRepository;
-
+    private final RequestLeaveRepository requestLeaveRepository;
     @Autowired
-    public TemporyDumyDataAddingService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository, WardRepository wardRepository, StaffRepository staffRepository) {
+    public TemporyDumyDataAddingService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository, WardRepository wardRepository, StaffRepository staffRepository, RequestLeaveRepository requestLeaveRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.matronRepository = matronRepository;
         this.wardRepository = wardRepository;
         this.staffRepository = staffRepository;
+        this.requestLeaveRepository = requestLeaveRepository;
     }
 
     public void addNursesData(){
@@ -221,6 +217,58 @@ public class TemporyDumyDataAddingService {
         sisters.add(Staff.builder().nic("199707110986").leaveNum("LS013").remainingVacationLeave(23).remainingCasualLeaves(23).serviceStartedDate(LocalDate.parse("2007-03-15")).wardNo(wardRepository.findByWardNo("W013")).build());
 
         staffRepository.saveAll(sisters);
+    }
+
+
+    public void addRequestLeaves() {
+        List<RequestLeave> requestLeaves = new ArrayList<>();
+
+        // Request 1
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198511120367").get()).leaveBeginDate(LocalDate.parse("2024-04-12")).leaveEndDate(LocalDate.parse("2024-04-15")).requestedDateAndTime(LocalDateTime.parse("2024-04-01T09:40:00")).reason("Reason 1").build());
+
+        // Request 2
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199803150256").get()).leaveBeginDate(LocalDate.parse("2024-04-18")).leaveEndDate(LocalDate.parse("2024-04-20")).requestedDateAndTime(LocalDateTime.parse("2024-04-01T09:30:00")).reason("Reason 2").build());
+
+        // Request 3
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198502020202").get()).leaveBeginDate(LocalDate.parse("2024-05-05")).leaveEndDate(LocalDate.parse("2024-05-07")).requestedDateAndTime(LocalDateTime.parse("2024-04-02T14:45:00")).reason("Reason 3").build());
+
+        // Request 4
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199707070707").get()).leaveBeginDate(LocalDate.parse("2024-05-10")).leaveEndDate(LocalDate.parse("2024-05-12")).requestedDateAndTime(LocalDateTime.parse("2024-04-05T11:20:00")).reason("Reason 4").build());
+
+        // Request 5
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199504300378").get()).leaveBeginDate(LocalDate.parse("2024-05-15")).leaveEndDate(LocalDate.parse("2024-05-17")).requestedDateAndTime(LocalDateTime.parse("2024-04-10T16:00:00")).reason("Reason 5").build());
+
+        // Request 6
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199909090909").get()).leaveBeginDate(LocalDate.parse("2024-05-20")).leaveEndDate(LocalDate.parse("2024-05-22")).requestedDateAndTime(LocalDateTime.parse("2024-04-15T10:30:00")).reason("Reason 6").build());
+
+        // Request 7
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199606060606").get()).leaveBeginDate(LocalDate.parse("2024-05-25")).leaveEndDate(LocalDate.parse("2024-05-27")).requestedDateAndTime(LocalDateTime.parse("2024-04-20T13:15:00")).reason("Reason 7").build());
+
+        // Request 8
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199012250394").get()).leaveBeginDate(LocalDate.parse("2024-05-30")).leaveEndDate(LocalDate.parse("2024-06-01")).requestedDateAndTime(LocalDateTime.parse("2024-04-25T09:00:00")).reason("Reason 8").build());
+
+        // Request 9
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199701010101").get()).leaveBeginDate(LocalDate.parse("2024-06-05")).leaveEndDate(LocalDate.parse("2024-06-07")).requestedDateAndTime(LocalDateTime.parse("2024-05-01T11:45:00")).reason("Reason 9").build());
+
+        // Request 10
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198806060606").get()).leaveBeginDate(LocalDate.parse("2024-06-10")).leaveEndDate(LocalDate.parse("2024-06-12")).requestedDateAndTime(LocalDateTime.parse("2024-05-05T14:30:00")).reason("Reason 10").build());
+
+        // Request 11
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199409040404").get()).leaveBeginDate(LocalDate.parse("2024-06-15")).leaveEndDate(LocalDate.parse("2024-06-17")).requestedDateAndTime(LocalDateTime.parse("2024-05-10T17:20:00")).reason("Reason 11").build());
+
+        // Request 12
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198803030303").get()).leaveBeginDate(LocalDate.parse("2024-06-20")).leaveEndDate(LocalDate.parse("2024-06-22")).requestedDateAndTime(LocalDateTime.parse("2024-05-15T09:45:00")).reason("Reason 12").build());
+
+        // Request 13
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199404040404").get()).leaveBeginDate(LocalDate.parse("2024-06-25")).leaveEndDate(LocalDate.parse("2024-06-27")).requestedDateAndTime(LocalDateTime.parse("2024-05-20T12:00:00")).reason("Reason 13").build());
+
+        // Request 14
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199808080808").get()).leaveBeginDate(LocalDate.parse("2024-07-01")).leaveEndDate(LocalDate.parse("2024-07-03")).requestedDateAndTime(LocalDateTime.parse("2024-05-25T14:15:00")).reason("Reason 14").build());
+
+        // Request 15
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199009090909").get()).leaveBeginDate(LocalDate.parse("2024-07-06")).leaveEndDate(LocalDate.parse("2024-07-08")).requestedDateAndTime(LocalDateTime.parse("2024-05-30T10:00:00")).reason("Reason 15").build());
+
+        requestLeaveRepository.saveAll(requestLeaves);
     }
 
 
