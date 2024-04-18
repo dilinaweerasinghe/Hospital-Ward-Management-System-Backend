@@ -57,7 +57,7 @@ public class SisterService {
         }
     }
 
-    public String saveSisterEditedDetailsForMatron(SisterDtoForMatron sisterDto){
+    public boolean saveSisterEditedDetailsForMatron(SisterDtoForMatron sisterDto){
 
         Optional<User> sister = userRepository.findByNic(sisterDto.getNic());
 
@@ -81,10 +81,10 @@ public class SisterService {
             userRepository.save(editedSister);
             staffRepository.save(staff);
 
-            return "Successfully updated";
+            return true;
         }
         else{
-            return null;
+            return false;
         }
 
 

@@ -17,7 +17,7 @@ public class SisterController {
     }
 
     @PutMapping("/update-sister-details-matron")
-    public String setSisterForMatron(@RequestBody SisterDtoForMatron sisterDtoForMatron){
+    public boolean setSisterForMatron(@RequestBody SisterDtoForMatron sisterDtoForMatron){
         System.out.println(sisterDtoForMatron);
         return sisterService.saveSisterEditedDetailsForMatron(sisterDtoForMatron);
     }
