@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShowFullWardDto {
+public class UpdateAllWardDetailsDto {
+
     private String wardNo;
 
     private String wardName;
@@ -23,4 +24,6 @@ public class ShowFullWardDto {
     private int eveningShift;
 
     private int nightShift;
+
+
 }

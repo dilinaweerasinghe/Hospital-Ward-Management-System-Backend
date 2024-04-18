@@ -7,14 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ShowFullWardController {
 
     @Autowired
     public ShowFullWardService showFullWardService;
 
-    @GetMapping("/show-fullward/{wardNo}")
-    public ShowFullWardDto showFullWardDetails(@PathVariable String wardNo){
-        return showFullWardService.showFullWard(wardNo);
+    @GetMapping("/show-fullward/{wardName}")
+    public ShowFullWardDto showFullWardDetails(@PathVariable String wardName){
+        return showFullWardService.showFullWard(wardName);
+    }
+
+    @GetMapping("/show-fullward-By-Sister/{username}")
+    public ShowFullWardDto showFullWardDetailsSister(@PathVariable String username){
+        return showFullWardService.getAllWardDetailsSister(username);
+    }
+
+    @GetMapping("/show-available-sisters")
+    public List<String> GetAllSisters(){
+        return showFullWardService.findAllSisters();
     }
 }
+
+

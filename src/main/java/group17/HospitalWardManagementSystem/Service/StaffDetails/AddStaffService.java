@@ -47,7 +47,9 @@ public class AddStaffService {
 
         User user=new User();
         Staff staff=new Staff();
-        Ward ward=new Ward();
+        Ward ward= wardRepository.findByWardNo(addStaffDto.getWardNo());
+        ward.setNumberOfNurses(ward.getNumberOfNurses()+1);
+
 
 
         String password=passwordGenerateService.passwordGenerate();
@@ -101,40 +103,13 @@ public class AddStaffService {
         return wardRepository.findByWardNo(addStaffDto.getWardNo());
     }
 
-    //======retrieve all ward numbers==============
+
     public List<String> findAllWardNumbers(){
         List<Ward> wards = wardRepository.findAll();
         return wards.stream().map(Ward::getWardNo).collect(Collectors.toList());
     }
 
-//    public String passwordGenerate(){
-//        String upper="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//        String lower="abcdefghijklmnopqrstuvwxyz";
-//        String num="0123456789";
-//        String specialChars="<>,/?}{][*%^#@&";
-//        String combination=upper+lower+num+specialChars;
-//        int len=8;
-//
-//        char[] password=new char[len];
-//
-//        Random r=new Random();
-//
-//        for (int i=0;i<8;i++){
-//            password[i]=combination.charAt(r.nextInt(combination.length()));
-//        }
-//
-//        return new String(password);
-//    }
 
-//    public String generateUsername(String email){
-//        int atIndex=email.indexOf("@");
-//
-//        if (atIndex != -1) {
-//            return email.substring(0, atIndex);
-//        } else {
-//            return null;
-//        }
-//    }
 }
 
 

@@ -21,11 +21,4 @@ public interface StaffRepository extends JpaRepository<Staff, String> {
     @Query("SELECT s FROM User u INNER JOIN Staff s ON u.nic = s.nic WHERE s.wardNo = :wardNo AND u.Position = 'Sister'")
     Staff findSisterByWard(@Param("wardNo") Ward wardNo);
 
-
-//    @Query("SELECT u.fullName FROM User u " +
-//            "INNER JOIN Staff s ON u.nic = s.nic " +
-//            "INNER JOIN Ward w ON s.wardNo = w.wardNo " +
-//            "WHERE s.wardNo = :wardNo AND u.Position = 'Sister'")
-//    String findSistersFullNameByWardNo(@Param("wardNo") String wardNo);
-
 }

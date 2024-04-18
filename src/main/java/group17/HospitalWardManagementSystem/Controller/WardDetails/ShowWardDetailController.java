@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Controller.WardDetails;
 
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardDto;
+import group17.HospitalWardManagementSystem.Service.WardDetails.ShowLoggedUserWardDetailsService;
 import group17.HospitalWardManagementSystem.Service.AdminServices.MatronService;
 import group17.HospitalWardManagementSystem.Service.WardDetails.ShowWardService;
 import group17.HospitalWardManagementSystem.Service.WardDetails.WardService;
@@ -29,11 +30,18 @@ public class ShowWardDetailController {
         this.wardService = wardService;
     }
 
+    @Autowired
+    private ShowLoggedUserWardDetailsService showLoggedUserWardDetailsService;
+
     @GetMapping("/show-ward/{wardName}")
     public ShowWardDto showWardDetails(@PathVariable String wardName){
         return showWardService.showWardDetails(wardName);
     }
 
+    @GetMapping("/show-logged-user-ward/{username}")
+    public ShowWardDto showLoggedUserWard(@PathVariable String username){
+        return showLoggedUserWardDetailsService.getLoggedUserWardDetails(username);
+    }
     @GetMapping("/show-ward/matron/{nic}")
     public ResponseEntity<?> getWardListByMatron(@PathVariable String nic){
         try {
