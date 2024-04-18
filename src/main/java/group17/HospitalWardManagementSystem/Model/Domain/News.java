@@ -24,7 +24,10 @@ public class News {
     private User newsAdder;
     @Column(nullable = false)
     private LocalDate pushedDate;
+
     private String comment;
+
+    private String imgUrl;
     //
 
 
