@@ -14,4 +14,6 @@ public interface MatronRepository extends JpaRepository<Matron,String> {
 
     @Query("SELECT m.nic FROM Matron m")
     List<String> findAllNic();
+
+    void deleteMatronByNic(String number);
 }
