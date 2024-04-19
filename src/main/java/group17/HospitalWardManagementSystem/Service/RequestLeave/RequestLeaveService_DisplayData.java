@@ -13,14 +13,17 @@ import java.util.Optional;
 @Service
 public class RequestLeaveService_DisplayData {
 
-    private final UserRepository userRepository;
-    private final StaffRepository staffRepository;
-
     @Autowired
-    public RequestLeaveService_DisplayData(UserRepository userRepository, StaffRepository staffRepository) {
-        this.userRepository = userRepository;
-        this.staffRepository = staffRepository;
-    }
+    private UserRepository userRepository;
+    @Autowired
+    private StaffRepository staffRepository;
+
+
+//    @Autowired
+//    public RequestLeaveService_DisplayData(UserRepository userRepository, StaffRepository staffRepository) {
+//        this.userRepository = userRepository;
+//        this.staffRepository = staffRepository;
+//    }
     public MemberDto provideAutoFilings(String username){
         MemberDto memberDto = new MemberDto();
         User user = userRepository.findByUsername(username);

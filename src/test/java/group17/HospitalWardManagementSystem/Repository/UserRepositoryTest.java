@@ -16,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -99,6 +98,13 @@ public class UserRepositoryTest {
     public void findByUsernameTest(){
         User user = userRepository.findByUsername("Dilina123");
         assertNotNull(user);
+    }
+
+    @Test
+    public void changePositionById(){
+        userRepository.updatePositionByNic("200025800892", UserRole.Currently_None);
+
+        assertEquals(UserRole.Currently_None, userRepository.findById("200025800892").get().getPosition());
     }
 
 //    User findByUsername(String username);

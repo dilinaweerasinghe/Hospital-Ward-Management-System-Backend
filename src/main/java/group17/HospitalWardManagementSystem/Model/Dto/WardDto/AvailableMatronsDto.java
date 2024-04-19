@@ -5,17 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateWardBySisterDto {
-
-    private String wardNo;
-
-    private int morningShift;
-
-    private int eveningShift;
-
-    private int nightShift;
+public class AvailableMatronsDto {
+    private Set<String> matronNic;
 }

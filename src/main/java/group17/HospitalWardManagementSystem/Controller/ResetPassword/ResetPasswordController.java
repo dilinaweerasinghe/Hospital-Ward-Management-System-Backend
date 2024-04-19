@@ -1,6 +1,7 @@
 package group17.HospitalWardManagementSystem.Controller.ResetPassword;
 
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Dto.PassWord.NewPwdDto;
 import group17.HospitalWardManagementSystem.Model.Dto.PassWord.PasswordResetRequestDto;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.PasswordResetTokenService;
@@ -35,6 +36,9 @@ public class ResetPasswordController {
     @Autowired
     private PasswordGenerateService passwordGenerateService;
 
+    @Autowired
+    private NewPwdDto newPwdDto;
+
     @PostMapping("/password-reset-request")
     public String resetPasswordRequest(@RequestBody PasswordResetRequestDto passwordResetRequestDto,
                                        final HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
@@ -68,16 +72,16 @@ public class ResetPasswordController {
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@RequestBody PasswordResetRequestDto passwordResetRequestDto
+    public String resetPassword(@RequestBody NewPwdDto newPwdDto
                                 ){
-        String passwordResetToken=passwordResetRequestDto.getOtp();
+        String passwordResetToken=newPwdDto.getOtp();
         String validatePasswordResetTokenResult=passwordResetTokenService.validatePasswordResetToken(passwordResetToken);
 
         if(validatePasswordResetTokenResult.equalsIgnoreCase("valid")){
             Optional<User> theUser = Optional.ofNullable(userService.findUserByPasswordToken(passwordResetToken));
             userService.findUserByPasswordTokenToDelete(passwordResetToken);
             if(theUser.isPresent()){
-                userService.changePassword(theUser.get(), passwordResetRequestDto.getNewPassword());
+                userService.changePassword(theUser.get(), newPwdDto.getNewpassword());
 
                 return "Password has reset successfully!";
             }else{
