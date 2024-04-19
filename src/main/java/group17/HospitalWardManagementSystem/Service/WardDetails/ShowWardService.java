@@ -8,6 +8,7 @@ import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardDto;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,25 @@ public class ShowWardService {
         wardDto.setWardName(targetWard.getWardName());
         wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
         wardDto.setSisterName(findSister(targetWard));
+        wardDto.setMatronName(findMatronName(targetWard.getMatron().getNic()));
+
+        return wardDto;
+
+    }
+
+    public ShowWardDto showWardDetailsByWardNo(String wardNo){
+
+        ShowWardDto wardDto=new ShowWardDto();
+
+        Ward targetWard=wardRepository.findById(wardNo).orElseThrow(() ->
+                new EntityNotFoundException("Cannot find ward details with ward No: " + wardNo
+                        + ". Contact admin to resolve!"));
+
+        wardDto.setWardNo(targetWard.getWardNo());
+        wardDto.setWardName(targetWard.getWardName());
+        wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
+        wardDto.setSisterName(findSister(targetWard));
+        wardDto.setMatronName(findMatronName(targetWard.getMatron().getNic()));
 
         return wardDto;
 
@@ -70,6 +90,13 @@ public class ShowWardService {
             return null;
 
         }
+    }
+
+    public String findMatronName(String nic){
+        User user = userRepository.findByNic(nic).orElseThrow(
+                () -> new EntityNotFoundException("Matron not found with NIC: " + nic));
+
+        return user.getFullName();
     }
 
 }

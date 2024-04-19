@@ -38,6 +38,11 @@ public class ShowWardDetailController {
         return showWardService.showWardDetails(wardName);
     }
 
+    @GetMapping("/ward/{wardNo}")
+    public ShowWardDto showWardDetailsByWard(@PathVariable String wardNo){
+        return showWardService.showWardDetailsByWardNo(wardNo);
+    }
+
     @GetMapping("/show-logged-user-ward/{username}")
     public ShowWardDto showLoggedUserWard(@PathVariable String username){
         return showLoggedUserWardDetailsService.getLoggedUserWardDetails(username);
@@ -56,6 +61,8 @@ public class ShowWardDetailController {
             return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
         }
     }
+
+
 
 
 }
