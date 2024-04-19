@@ -50,21 +50,5 @@ public class LeaveRequestController {
     }
 
 
-    @GetMapping("/request-leave/{nic}")
-    public ResponseEntity<?> getRequestLeaveList(@PathVariable String nic, @RequestParam String positionFilter, @RequestParam String wardFilter) {
-     try{
-         return ResponseEntity.ok(requestLeaveService.getRequestedLeaveByWardAndPosition(nic, positionFilter, wardFilter));
-     }catch (EntityNotFoundException | IllegalArgumentException e){
-         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-     } catch (DataAccessException e) {
-         return ResponseEntity.internalServerError().body("Database error: Please Contact Admin");
-     } catch (Exception e) {
-         return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
-     }
-    }
-
-
-
-
 
 }
