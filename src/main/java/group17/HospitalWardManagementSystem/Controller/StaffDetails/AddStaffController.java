@@ -4,10 +4,9 @@ import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.WardNumbersDto;
 import group17.HospitalWardManagementSystem.Service.StaffDetails.AddStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class AddStaffController {
@@ -25,5 +24,15 @@ public class AddStaffController {
     @GetMapping("/get-ward-numbers")
     public WardNumbersDto getWardNumbers(){
         return new WardNumbersDto(addStaffService.findAllWardNumbers());
+    }
+
+    @GetMapping("/get-existing-user/{nic}")
+    public AddStaffDto getExistingUser(@PathVariable String nic){
+        return addStaffService.getExistingUser(nic);
+    }
+
+    @GetMapping("/get-all-users-nics")
+    public List<String> getAllUserNics(){
+        return addStaffService.retrieveAllUserNics();
     }
 }

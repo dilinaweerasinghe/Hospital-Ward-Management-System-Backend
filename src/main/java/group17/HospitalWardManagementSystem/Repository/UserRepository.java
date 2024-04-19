@@ -32,5 +32,10 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u.nic FROM User u WHERE UPPER(u.Position) = UPPER('Sister')")
     List<String> findAllSisterNics();
 
+    @Query("SELECT u.nic FROM User u WHERE u.Position = 'Nurse' OR u.Position = 'Sister'")
+    List<String> findAllNics();
+
+
+
 }
 
