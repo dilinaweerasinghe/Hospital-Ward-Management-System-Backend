@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ShowToUpdateController {
 
+
+    public final ShowToUpdateService showToUpdateService;
     @Autowired
-    public ShowToUpdateService showToUpdateService;
+    public ShowToUpdateController(ShowToUpdateService showToUpdateService) {
+        this.showToUpdateService = showToUpdateService;
+    }
 
     @GetMapping("/update/{wardNo}")
     public ShowToUpdateDto showStaffFull(@PathVariable String wardNo){

@@ -14,11 +14,16 @@ import java.time.LocalDateTime;
 @Service
 public class RequestLeaveService_SaveData {
 
-    @Autowired
-    RequestLeaveRepository requestLeaveRepository;
+    private final RequestLeaveRepository requestLeaveRepository;
+
+    private final StaffRepository staffRepository;
 
     @Autowired
-    StaffRepository staffRepository;
+    public RequestLeaveService_SaveData(RequestLeaveRepository requestLeaveRepository, StaffRepository staffRepository) {
+        this.requestLeaveRepository = requestLeaveRepository;
+        this.staffRepository = staffRepository;
+    }
+
     public boolean saveLeave(RequestLeaveDto leaveRequestDTO) {
         try {
             RequestLeave requestLeave = new RequestLeave();

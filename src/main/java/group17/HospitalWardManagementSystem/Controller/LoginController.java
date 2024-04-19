@@ -57,9 +57,6 @@ public class LoginController {
     public void initAdmin(){
         registrationService.initUser();
     }
-//
-//    @PostConstruct
-//    public void initMatron(){registerMatronService.RegisterMatron();}
 
     @GetMapping("/send")
     public String Send(){

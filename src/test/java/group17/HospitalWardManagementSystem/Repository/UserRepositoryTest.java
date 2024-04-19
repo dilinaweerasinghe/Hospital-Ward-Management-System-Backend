@@ -5,8 +5,7 @@ import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.TestConfiguration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -31,8 +31,8 @@ public class UserRepositoryTest {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Before("retrieve_data_test")
-    public void setDummyDataToTest(){
+    @BeforeEach
+    public void setupInitialValue(){
         User user1 = User
                 .builder()
                 .nic("200025800891")
@@ -65,7 +65,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void save_data_test(){
+    public void saveDataTest(){
         User user = User
                 .builder()
                 .nic("200025800891")
@@ -82,7 +82,39 @@ public class UserRepositoryTest {
         User savedUser = userRepository.save(user);
         assertNotNull(savedUser);
         assertEquals("Dilina123", savedUser.getUsername());
-
     }
+
+    @Test
+    public void retrieveDataTest(){
+
+        List<User> users = userRepository.findAll();
+        assertEquals(2, users.size(),"Size should be return 2");
+        assertNotNull(users);
+        assertEquals(users.getFirst().getNic(), "200025800891", "Nic did not match");
+        assertEquals(users.get(1).getNic(), "200025800892");
+    }
+
+    @Test
+    public void findByUsernameTest(){
+        User user = userRepository.findByUsername("Dilina123");
+        assertNotNull(user);
+    }
+
+    @Test
+    public void changePositionById(){
+        userRepository.updatePositionByNic("200025800892", UserRole.Currently_None);
+
+        assertEquals(UserRole.Currently_None, userRepository.findById("200025800892").get().getPosition());
+    }
+
+//    User findByUsername(String username);
+//
+//    Optional<User> findByNic(String nic);
+//
+//    Optional<User> findByEmail(String email);
+//
+//    void deleteUserByNic(String nic);
+
+
 
 }

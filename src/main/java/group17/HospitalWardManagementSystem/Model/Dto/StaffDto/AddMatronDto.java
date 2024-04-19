@@ -1,6 +1,5 @@
 package group17.HospitalWardManagementSystem.Model.Dto.StaffDto;
 
-import group17.HospitalWardManagementSystem.Model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +11,12 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShowStaffDto {
+public class AddMatronDto {
     private String nic;
     private String fullName;
+    private String firstName;
+    private String lastName;
+    private LocalDate dob;
     private String email;
     private String mobileNo;
-    private UserRole userRole;
-
 }
