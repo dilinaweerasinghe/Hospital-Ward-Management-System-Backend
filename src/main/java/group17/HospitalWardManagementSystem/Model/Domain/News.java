@@ -25,6 +25,7 @@ public class News {
     @Column(nullable = false)
     private LocalDate pushedDate;
     private String comment;
+
     //
 
 

@@ -18,14 +18,16 @@ import java.util.stream.Collectors;
 @Service
 public class ShowWardService {
 
-    @Autowired
-    private WardRepository wardRepository;
 
+    private final WardRepository wardRepository;
+    private final StaffRepository staffRepository;
+    private final UserRepository userRepository;
     @Autowired
-    private StaffRepository staffRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public ShowWardService(WardRepository wardRepository, StaffRepository staffRepository, UserRepository userRepository) {
+        this.wardRepository = wardRepository;
+        this.staffRepository = staffRepository;
+        this.userRepository = userRepository;
+    }
 
     public ShowWardDto showWardDetails(String wardName){
 
