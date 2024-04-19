@@ -27,7 +27,8 @@ public class News {
 
     private String comment;
 
-    private String imgUrl;
+    @Column(length = 5000)
+    private String imgUrl;//URL of AWS s3 bucket store here
     //
 
 
