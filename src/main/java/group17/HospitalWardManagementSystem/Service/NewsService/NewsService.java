@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class NewsService {
@@ -44,4 +45,6 @@ public class NewsService {
     public String uploadImageToS3(MultipartFile image) throws IOException {
         return amazonService.uploadFile(image);
     }
+
+
 }

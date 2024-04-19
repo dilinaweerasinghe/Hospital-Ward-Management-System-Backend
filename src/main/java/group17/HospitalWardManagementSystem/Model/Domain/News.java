@@ -31,6 +31,4 @@ public class News {
     private String imgUrl;//URL of AWS s3 bucket store here
     //
 
-
-
 }
