@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Repository;
 
 import group17.HospitalWardManagementSystem.Model.Domain.RequestLeave;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
+import group17.HospitalWardManagementSystem.Model.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,8 +25,8 @@ public interface RequestLeaveRepository extends JpaRepository<RequestLeave, Inte
     List<RequestLeave> findRequestLeaveByPositionSister(@Param("nic") String nic, @Param("sisterNic") List<String> sisterNic);
 
     //For matron to perform filter by ward AND filter by position = Nurse function
-    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN s.wardNo w JOIN Matron m WHERE m.nic = :nic AND s.nic NOT IN (:nurseNic)")
-    List<RequestLeave> findRequestLeaveByPositionNurse(@Param("nic") String nic, @Param("nurseNic") List<String> nurseNic);
+    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN User u ON u.nic = s.nic JOIN s.wardNo w JOIN Matron m WHERE m.nic = :nic AND u.Position = :position")
+    List<RequestLeave> findRequestLeaveByPosition(@Param("nic") String nic, @Param("position") UserRole position);
 
     @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN s.wardNo w  WHERE w.wardNo = :ward AND s.nic IN (:sisterNic)")
     List<RequestLeave> findRequestLeaveByWardPositionSister(@Param("ward") String ward, @Param("sisterNic") List<String> sisterNic);
