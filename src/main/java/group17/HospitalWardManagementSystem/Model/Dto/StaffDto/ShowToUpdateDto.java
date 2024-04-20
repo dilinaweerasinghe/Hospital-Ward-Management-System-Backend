@@ -17,9 +17,13 @@ public class ShowToUpdateDto {
     private String firstName;
     private String lastName;
     private LocalDate dob;
+    private String wardNo;
     private String email;
-    private String Position;
+    private String position;
     private String mobileNo;
     private LocalDate serviceStartedDate;
-    private String leaveNum;
+    private String leaveNo;
+    private int remainingVacationLeaves;
+    private int remainingCasualLeaves;
+
 }
