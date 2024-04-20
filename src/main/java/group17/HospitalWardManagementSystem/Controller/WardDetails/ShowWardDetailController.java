@@ -1,6 +1,5 @@
 package group17.HospitalWardManagementSystem.Controller.WardDetails;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardDto;
 import group17.HospitalWardManagementSystem.Service.WardDetails.ShowLoggedUserWardDetailsService;
 import group17.HospitalWardManagementSystem.Service.AdminServices.MatronService;
@@ -10,14 +9,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 public class ShowWardDetailController {
@@ -39,8 +35,45 @@ public class ShowWardDetailController {
     }
 
     @GetMapping("/ward/{wardNo}")
-    public ShowWardDto showWardDetailsByWard(@PathVariable String wardNo){
-        return showWardService.showWardDetailsByWardNo(wardNo);
+    public ResponseEntity<?> getWardDetailsByWardNo(@PathVariable String wardNo){
+        try{
+            return ResponseEntity.ok(showWardService.showWardDetailsByWardNo(wardNo));
+        }catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/wards")
+    public ResponseEntity<?> getWardsDetails(){
+        try{
+            return ResponseEntity.ok(showWardService.showAllWardDetails());
+        }catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/wards/names")
+    public ResponseEntity<?> getAllWardsNames(){
+        try{
+            return ResponseEntity.ok(showWardService.getAllWardNames());
+        }catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
+        }
+
     }
 
     @GetMapping("/show-logged-user-ward/{username}")
