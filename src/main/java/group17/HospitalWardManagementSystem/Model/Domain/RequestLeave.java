@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
+import group17.HospitalWardManagementSystem.Model.LeaveStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,5 +34,8 @@ public class RequestLeave {
 
     @Column(nullable = false)
     private String reason;
+
+    @Enumerated(EnumType.STRING)
+    private LeaveStatus leaveStatus = LeaveStatus.Not_Concerned_Yet;
 
 }

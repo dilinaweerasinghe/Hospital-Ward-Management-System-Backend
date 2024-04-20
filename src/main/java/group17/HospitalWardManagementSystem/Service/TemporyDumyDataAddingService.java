@@ -1,6 +1,7 @@
 package group17.HospitalWardManagementSystem.Service;
 
 import group17.HospitalWardManagementSystem.Model.Domain.*;
+import group17.HospitalWardManagementSystem.Model.LeaveStatus;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,7 +234,7 @@ public class TemporyDumyDataAddingService {
         requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198502020202").get()).leaveBeginDate(LocalDate.parse("2024-05-05")).leaveEndDate(LocalDate.parse("2024-05-07")).requestedDateAndTime(LocalDateTime.parse("2024-04-02T14:45:00")).reason("Reason 3").build());
 
         // Request 4
-        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199707070707").get()).leaveBeginDate(LocalDate.parse("2024-05-10")).leaveEndDate(LocalDate.parse("2024-05-12")).requestedDateAndTime(LocalDateTime.parse("2024-04-05T11:20:00")).reason("Reason 4").build());
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199212121212").get()).leaveBeginDate(LocalDate.parse("2024-05-10")).leaveEndDate(LocalDate.parse("2024-05-12")).requestedDateAndTime(LocalDateTime.parse("2024-04-05T11:20:00")).reason("Reason 4").build());
 
         // Request 5
         requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199504300378").get()).leaveBeginDate(LocalDate.parse("2024-05-15")).leaveEndDate(LocalDate.parse("2024-05-17")).requestedDateAndTime(LocalDateTime.parse("2024-04-10T16:00:00")).reason("Reason 5").build());
@@ -245,7 +246,7 @@ public class TemporyDumyDataAddingService {
         requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199606060606").get()).leaveBeginDate(LocalDate.parse("2024-05-25")).leaveEndDate(LocalDate.parse("2024-05-27")).requestedDateAndTime(LocalDateTime.parse("2024-04-20T13:15:00")).reason("Reason 7").build());
 
         // Request 8
-        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199012250394").get()).leaveBeginDate(LocalDate.parse("2024-05-30")).leaveEndDate(LocalDate.parse("2024-06-01")).requestedDateAndTime(LocalDateTime.parse("2024-04-25T09:00:00")).reason("Reason 8").build());
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198702020303").get()).leaveBeginDate(LocalDate.parse("2024-05-30")).leaveEndDate(LocalDate.parse("2024-06-01")).requestedDateAndTime(LocalDateTime.parse("2024-04-25T09:00:00")).reason("Reason 8").build());
 
         // Request 9
         requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199701010101").get()).leaveBeginDate(LocalDate.parse("2024-06-05")).leaveEndDate(LocalDate.parse("2024-06-07")).requestedDateAndTime(LocalDateTime.parse("2024-05-01T11:45:00")).reason("Reason 9").build());
@@ -267,6 +268,49 @@ public class TemporyDumyDataAddingService {
 
         // Request 15
         requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199009090909").get()).leaveBeginDate(LocalDate.parse("2024-07-06")).leaveEndDate(LocalDate.parse("2024-07-08")).requestedDateAndTime(LocalDateTime.parse("2024-05-30T10:00:00")).reason("Reason 15").build());
+
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199722350456").get()).leaveBeginDate(LocalDate.parse("2024-04-12")).leaveEndDate(LocalDate.parse("2024-04-15")).requestedDateAndTime(LocalDateTime.parse("2024-04-01T09:40:00")).reason("Reason 1").build());
+
+        // Request 2
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198808170591").get()).leaveBeginDate(LocalDate.parse("2024-04-18")).leaveEndDate(LocalDate.parse("2024-04-20")).requestedDateAndTime(LocalDateTime.parse("2024-04-01T09:30:00")).reason("Reason 2").build());
+
+        // Request 3
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199010050189").get()).leaveBeginDate(LocalDate.parse("2024-05-05")).leaveEndDate(LocalDate.parse("2024-05-07")).requestedDateAndTime(LocalDateTime.parse("2024-04-02T14:45:00")).reason("Reason 3").build());
+
+        // Request 4
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199707070707").get()).leaveBeginDate(LocalDate.parse("2024-05-10")).leaveEndDate(LocalDate.parse("2024-05-12")).requestedDateAndTime(LocalDateTime.parse("2024-04-05T11:20:00")).reason("Reason 4").build());
+
+        // Request 5
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198602060707").get()).leaveBeginDate(LocalDate.parse("2024-05-15")).leaveEndDate(LocalDate.parse("2024-05-17")).requestedDateAndTime(LocalDateTime.parse("2024-04-10T16:00:00")).reason("Reason 5").build());
+
+        // Request 6
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199706250696").get()).leaveBeginDate(LocalDate.parse("2024-05-20")).leaveEndDate(LocalDate.parse("2024-05-22")).requestedDateAndTime(LocalDateTime.parse("2024-04-15T10:30:00")).reason("Reason 6").build());
+
+        // Request 7
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199012251203").get()).leaveBeginDate(LocalDate.parse("2024-05-25")).leaveEndDate(LocalDate.parse("2024-05-27")).requestedDateAndTime(LocalDateTime.parse("2024-04-20T13:15:00")).reason("Reason 7").build());
+
+        // Request 8
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199012250394").get()).leaveBeginDate(LocalDate.parse("2024-05-30")).leaveEndDate(LocalDate.parse("2024-06-01")).requestedDateAndTime(LocalDateTime.parse("2024-04-25T09:00:00")).reason("Reason 8").build());
+
+        // Request 9
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199307070404").get()).leaveBeginDate(LocalDate.parse("2024-06-05")).leaveEndDate(LocalDate.parse("2024-06-07")).requestedDateAndTime(LocalDateTime.parse("2024-05-01T11:45:00")).reason("Reason 9").build());
+
+        // Request 10
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198101010505").get()).leaveBeginDate(LocalDate.parse("2024-06-10")).leaveEndDate(LocalDate.parse("2024-06-12")).requestedDateAndTime(LocalDateTime.parse("2024-05-05T14:30:00")).reason("Reason 10").build());
+
+        // Request 11
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199605050606").get()).leaveBeginDate(LocalDate.parse("2024-06-15")).leaveEndDate(LocalDate.parse("2024-06-17")).requestedDateAndTime(LocalDateTime.parse("2024-05-10T17:20:00")).reason("Reason 11").build());
+
+        // Request 12
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("198812120587").get()).leaveBeginDate(LocalDate.parse("2024-06-20")).leaveEndDate(LocalDate.parse("2024-06-22")).requestedDateAndTime(LocalDateTime.parse("2024-05-15T09:45:00")).reason("Reason 12").build());
+
+        // Request 13
+        requestLeaves.add(RequestLeave.builder().staff(staffRepository.findById("199707110986").get()).leaveBeginDate(LocalDate.parse("2024-06-25")).leaveEndDate(LocalDate.parse("2024-06-27")).requestedDateAndTime(LocalDateTime.parse("2024-05-20T12:00:00")).reason("Reason 13").build());
+
+        for (RequestLeave requestLeave : requestLeaves) {
+            // Set the leaveStatus to LeaveStatus.Not_Concerned_Yet
+            requestLeave.setLeaveStatus(LeaveStatus.Not_Concerned_Yet);
+        }
 
         requestLeaveRepository.saveAll(requestLeaves);
     }

@@ -20,19 +20,12 @@ public interface RequestLeaveRepository extends JpaRepository<RequestLeave, Inte
     @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s WHERE s.wardNo = :ward AND s.nic != :nic")
     List<RequestLeave> findRequestLeaveByWard(@Param("ward") Ward ward,@Param("nic") String nic);
 
-    //For matron to perform filter by ward AND filter by position = Sister function
-    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN s.wardNo w JOIN Matron m WHERE m.nic = :nic AND s.nic IN (:sisterNic)")
-    List<RequestLeave> findRequestLeaveByPositionSister(@Param("nic") String nic, @Param("sisterNic") List<String> sisterNic);
-
-    //For matron to perform filter by ward AND filter by position = Nurse function
-    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN User u ON u.nic = s.nic JOIN s.wardNo w JOIN Matron m WHERE m.nic = :nic AND u.Position = :position")
+    //For matron to perform filter by ward AND filter by position
+    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN User u ON u.nic = s.nic JOIN s.wardNo w JOIN w.matron m WHERE m.nic = :nic AND u.Position = :position")
     List<RequestLeave> findRequestLeaveByPosition(@Param("nic") String nic, @Param("position") UserRole position);
 
-    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN s.wardNo w  WHERE w.wardNo = :ward AND s.nic IN (:sisterNic)")
-    List<RequestLeave> findRequestLeaveByWardPositionSister(@Param("ward") String ward, @Param("sisterNic") List<String> sisterNic);
-
-    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN s.wardNo w  WHERE w.wardNo = :ward AND s.nic NOT IN (:nurseNic)")
-    List<RequestLeave> findRequestLeaveByWardPositionNurse(@Param("ward") String ward, @Param("nurseNic") List<String> nurseNic);
+    @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s JOIN User u ON u.nic = s.nic JOIN s.wardNo w  WHERE w.wardNo = :ward AND u.Position = :position")
+    List<RequestLeave> findRequestLeaveByWardAndPosition(@Param("ward") String ward, @Param("position") UserRole position);
 
     @Query("SELECT rl FROM RequestLeave rl JOIN rl.staff s  JOIN s.wardNo w JOIN w.matron m WHERE m.nic = :nic")
     List<RequestLeave>  findRequestLeaveByMatron(@Param("nic") String nic);

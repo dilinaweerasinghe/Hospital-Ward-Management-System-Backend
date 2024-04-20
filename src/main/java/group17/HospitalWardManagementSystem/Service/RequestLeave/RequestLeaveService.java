@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Service.RequestLeave;
 
 import group17.HospitalWardManagementSystem.Model.Domain.*;
 import group17.HospitalWardManagementSystem.Model.Dto.ApproveLeave.ApproveLeaveDto;
+import group17.HospitalWardManagementSystem.Model.Dto.RequestLeaveDto.RequestLeaveDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,14 +20,16 @@ public class RequestLeaveService {
     private final StaffRepository staffRepository;
     private final MatronRepository matronRepository;
     private final WardRepository wardRepository;
+    private final ApprovedLeavesRepository approvedLeavesRepository;
 
     @Autowired
-    public RequestLeaveService(RequestLeaveRepository requestLeaveRepository, UserRepository userRepository, StaffRepository staffRepository, MatronRepository matronRepository, WardRepository wardRepository) {
+    public RequestLeaveService(RequestLeaveRepository requestLeaveRepository, UserRepository userRepository, StaffRepository staffRepository, MatronRepository matronRepository, WardRepository wardRepository, ApprovedLeavesRepository approvedLeavesRepository) {
         this.requestLeaveRepository = requestLeaveRepository;
         this.userRepository = userRepository;
         this.staffRepository = staffRepository;
         this.matronRepository = matronRepository;
         this.wardRepository = wardRepository;
+        this.approvedLeavesRepository = approvedLeavesRepository;
     }
 
     public List<ApproveLeaveDto> getRequestedLeaveListByMatron(String nic){
@@ -45,47 +48,46 @@ public class RequestLeaveService {
                 new EntityNotFoundException("Cannot find your details with NIC: " + nic + ". Contact admin to resolve!"));
 
         List<RequestLeave> requestLeaves = new ArrayList<>();
+        List<ApprovedLeaves> approvedLeaves = new ArrayList<>();
+
         if(user.getPosition().equals(UserRole.Sister)){
             Staff staff = staffRepository.findById(nic).orElseThrow(() ->
                     new EntityNotFoundException("Cannot find your details with NIC: " + nic + ". Contact admin to resolve!"));
             requestLeaves = requestLeaveRepository.findRequestLeaveByWard(staff.getWardNo(), nic);
-            if(requestLeaves.isEmpty()){
-                throw new IllegalArgumentException("You haven't any leave request to review!");
-            }
+
 
         } else if (user.getPosition().equals(UserRole.Matron)) {
             Matron matron = matronRepository.findById(nic).orElseThrow(() ->
                     new EntityNotFoundException("Cannot find your details with NIC: " + nic + ". Contact admin to resolve!"));
             if(positionFilter.equals("All") && wardFilter.equals("All")){
                 requestLeaves = requestLeaveRepository.findRequestLeaveByMatron(matron.getNic());
-                if(requestLeaves.isEmpty()){
-                    throw new IllegalArgumentException("You haven't any leave request to review!");
-                }
+
 
             } else if (positionFilter.equals("All")) {
                 Ward ward = wardRepository.findById(wardFilter).orElseThrow(() ->
                         new EntityNotFoundException("Cannot find ward details with ward No: " + wardFilter
                                 + ". Contact admin to resolve!"));
                 requestLeaves = requestLeaveRepository.findRequestLeaveByWard(ward);
-                if(requestLeaves.isEmpty()){
-                    throw new IllegalArgumentException("You haven't any leave request to review!");
-                }
+
 
             } else if (wardFilter.equals("All")) {
                 if(positionFilter.equals("Sister")){
                     requestLeaves = requestLeaveRepository.findRequestLeaveByPosition(nic, UserRole.Sister);
+
                 }
                 if(positionFilter.equals("Nurse")){
-                    requestLeaves = requestLeaveRepository.findRequestLeaveByPosition(nic,UserRole.Nurse);
+
                 }
             }else{
-//                List<String> sisterNic = userRepository.findAllNicByPosition(UserRole.Sister);
-//                if(positionFilter.equals("Sister")){
-//                   requestLeaves = requestLeaveRepository.findRequestLeaveByWardPositionSister(wardFilter,sisterNic);
-//                }
-//                if(positionFilter.equals("Nurse")){
-//                  requestLeaves = requestLeaveRepository.findRequestLeaveByPositionNurse(wardFilter,sisterNic);
-//                }
+               if(positionFilter.equals("Sister")){
+                  requestLeaves = requestLeaveRepository.findRequestLeaveByWardAndPosition(nic, UserRole.Sister);
+                }
+               if(positionFilter.equals("Nurse")){
+                  requestLeaves = requestLeaveRepository.findRequestLeaveByWardAndPosition(wardFilter,UserRole.Nurse);
+                }
+            }
+            if(requestLeaves.isEmpty()){
+                throw new IllegalArgumentException("You haven't any leave request to review!");
             }
 
 
@@ -93,6 +95,10 @@ public class RequestLeaveService {
             throw new IllegalArgumentException("You haven't access to review Leave Requests!");
         }
         return mappingToApprovedLeaveDto(requestLeaves);
+    }
+
+    public List<ApproveLeaveDto> getRequestLeaveByPosition(String nic, UserRole position){
+        return mappingToApprovedLeaveDto(requestLeaveRepository.findRequestLeaveByPosition(nic, position));
     }
 
 
