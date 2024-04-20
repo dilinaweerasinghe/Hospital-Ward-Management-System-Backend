@@ -72,21 +72,20 @@ public class RequestLeaveService {
                 }
 
             } else if (wardFilter.equals("All")) {
-                List<String> sisterNic = userRepository.findAllNicByPosition(UserRole.Sister);
                 if(positionFilter.equals("Sister")){
-                    requestLeaves = requestLeaveRepository.findRequestLeaveByPositionSister(nic, sisterNic);
+                    requestLeaves = requestLeaveRepository.findRequestLeaveByPosition(nic, UserRole.Sister);
                 }
                 if(positionFilter.equals("Nurse")){
-                    requestLeaves = requestLeaveRepository.findRequestLeaveByPositionNurse(nic, sisterNic);
+                    requestLeaves = requestLeaveRepository.findRequestLeaveByPosition(nic,UserRole.Nurse);
                 }
             }else{
-                List<String> sisterNic = userRepository.findAllNicByPosition(UserRole.Sister);
-                if(positionFilter.equals("Sister")){
-                   requestLeaves = requestLeaveRepository.findRequestLeaveByWardPositionSister(wardFilter,sisterNic);
-                }
-                if(positionFilter.equals("Nurse")){
-                  requestLeaves = requestLeaveRepository.findRequestLeaveByPositionNurse(wardFilter,sisterNic);
-                }
+//                List<String> sisterNic = userRepository.findAllNicByPosition(UserRole.Sister);
+//                if(positionFilter.equals("Sister")){
+//                   requestLeaves = requestLeaveRepository.findRequestLeaveByWardPositionSister(wardFilter,sisterNic);
+//                }
+//                if(positionFilter.equals("Nurse")){
+//                  requestLeaves = requestLeaveRepository.findRequestLeaveByPositionNurse(wardFilter,sisterNic);
+//                }
             }
 
 
@@ -114,5 +113,7 @@ public class RequestLeaveService {
 
         return requestedLeaveList;
     }
+
+
 
 }
