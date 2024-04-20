@@ -36,24 +36,12 @@ public class AmazonService {
         amazonS3Client.putObject(bucketName,fileName,fileObj);
 
 
-        String fileUrl = amazonS3Client.getUrl(bucketName, fileName).toString();
+        String fileUrl = amazonS3Client.getUrl(bucketName, fileName ).toString();
         return fileUrl;
 
     }
 
-    public File downloadFile(String bucketName, String key) throws IOException {
-        S3Object object = amazonS3Client.getObject(bucketName, key);
-        File file = new File(key); // You can specify a different file path/name here if needed
-        FileOutputStream outputStream = new FileOutputStream(file);
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = object.getObjectContent().read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-        outputStream.close();
-        object.close();
-        return file;
-    }
+//
 
     public String deleteFile(String filename){
         amazonS3Client.deleteObject(bucketName,filename);
