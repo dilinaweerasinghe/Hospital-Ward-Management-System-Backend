@@ -1,9 +1,7 @@
 package group17.HospitalWardManagementSystem.Service.StaffDetails;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.ShowStaffDto;
-import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ShowStaffService {
+public class ShowAllStaffWardService {
 
     public final UserRepository userRepository;
 
@@ -23,7 +21,7 @@ public class ShowStaffService {
 
     public final WardRepository wardRepository;
     @Autowired
-    public ShowStaffService(UserRepository userRepository, StaffRepository staffRepository, WardRepository wardRepository) {
+    public ShowAllStaffWardService(UserRepository userRepository, StaffRepository staffRepository, WardRepository wardRepository) {
         this.userRepository = userRepository;
         this.staffRepository = staffRepository;
         this.wardRepository = wardRepository;

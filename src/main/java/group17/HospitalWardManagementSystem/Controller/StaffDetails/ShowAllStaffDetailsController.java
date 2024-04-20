@@ -1,7 +1,6 @@
 package group17.HospitalWardManagementSystem.Controller.StaffDetails;
 
-import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.ShowStaffDto;
-import group17.HospitalWardManagementSystem.Service.StaffDetails.ShowStaffService;
+import group17.HospitalWardManagementSystem.Service.StaffDetails.ShowAllStaffWardService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -11,12 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-public class ShowStaffDetailsController {
+public class ShowAllStaffDetailsController {
     @Autowired
-    public ShowStaffService showStaffService;
+    public ShowAllStaffWardService showStaffService;
 
     @RequestMapping("/show-staff/{wardNo}")
     public ResponseEntity<?> showStaffData(@PathVariable String wardNo){
@@ -30,5 +27,7 @@ public class ShowStaffDetailsController {
             return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
         }
     }
+
+
 
 }
