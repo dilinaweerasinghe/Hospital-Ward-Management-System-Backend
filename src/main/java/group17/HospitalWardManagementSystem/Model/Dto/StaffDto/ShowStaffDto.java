@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Dto.StaffDto;
 
+import group17.HospitalWardManagementSystem.Model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ public class ShowStaffDto {
     private String fullName;
     private String email;
     private String mobileNo;
+    private UserRole userRole;
 
 }

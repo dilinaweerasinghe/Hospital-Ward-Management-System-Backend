@@ -6,17 +6,19 @@ import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.AddStaffDto;
 import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.MailDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
-import group17.HospitalWardManagementSystem.Repository.AddStaffRepository;
-import group17.HospitalWardManagementSystem.Repository.AddUserRepository;
-import group17.HospitalWardManagementSystem.Repository.WardRepository;
+import group17.HospitalWardManagementSystem.Repository.*;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +45,14 @@ public class AddStaffService {
     @Autowired
     private UsernameGenerateService usernameGenerateService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
+
+
+    @Transactional
     public String staffSave(AddStaffDto addStaffDto){
 
         User user=new User();
@@ -50,6 +60,17 @@ public class AddStaffService {
         Ward ward= wardRepository.findByWardNo(addStaffDto.getWardNo());
         ward.setNumberOfNurses(ward.getNumberOfNurses()+1);
 
+
+        if(Objects.equals(addStaffDto.getPosition(), "Sister")){
+            Staff existingSister = staffRepository.findSisterByWard(ward);
+            if(existingSister != null && (!Objects.equals(existingSister.getNic(), addStaffDto.getNic()))){
+                User existingUser = userRepository.findById(existingSister.getNic()).orElseThrow(()-> new EntityNotFoundException("User can not find for given nic"));
+                existingUser.setUsername(null);
+                existingUser.setPassword(null);
+                staffRepository.deleteById(existingSister.getNic());
+
+            }
+        }
 
 
         String password=passwordGenerateService.passwordGenerate();
@@ -107,6 +128,50 @@ public class AddStaffService {
     public List<String> findAllWardNumbers(){
         List<Ward> wards = wardRepository.findAll();
         return wards.stream().map(Ward::getWardNo).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public AddStaffDto getExistingUser(String nic){
+        System.out.println(nic);
+        Optional<User> user= userRepository.findByNic(nic);
+        if(user.isPresent()){
+            User existingUser = user.get();
+            Staff staff = staffRepository.findByNic(nic);
+            AddStaffDto addStaffDto = new AddStaffDto();
+
+            addStaffDto.setFirstName(existingUser.getFirstName());
+            addStaffDto.setLastName(existingUser.getLastName());
+            addStaffDto.setFullName(existingUser.getFullName());
+            addStaffDto.setNic(existingUser.getNic());
+            addStaffDto.setDob(existingUser.getDob());
+            addStaffDto.setEmail(existingUser.getEmail());
+            addStaffDto.setPosition(existingUser.getPosition().toString());
+            addStaffDto.setMobileNo(existingUser.getMobileNo());
+
+            if(staff != null ){
+                addStaffDto.setServiceStartedDate(staff.getServiceStartedDate());
+                addStaffDto.setWardNo(staff.getWardNo().getWardNo());
+                addStaffDto.setLeaveNum(staff.getLeaveNum());
+                addStaffDto.setRemainingCasualLeaves(staff.getRemainingCasualLeaves());
+                addStaffDto.setRemainingVacationLeave(staff.getRemainingVacationLeave());
+            }
+            else{
+                addStaffDto.setServiceStartedDate(null);
+                addStaffDto.setWardNo(null);
+                addStaffDto.setLeaveNum(null);
+                addStaffDto.setRemainingCasualLeaves(0);
+                addStaffDto.setRemainingVacationLeave(0);
+            }
+            return addStaffDto;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public List<String> retrieveAllUserNics(){
+        List<String> nics = userRepository.findAllNics();
+        return nics;
     }
 
 

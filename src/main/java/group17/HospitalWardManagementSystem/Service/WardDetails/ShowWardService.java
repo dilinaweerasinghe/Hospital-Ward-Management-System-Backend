@@ -3,29 +3,31 @@ package group17.HospitalWardManagementSystem.Service.WardDetails;
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
-import group17.HospitalWardManagementSystem.Model.Dto.StaffDto.WardNumbersDto;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardDto;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ShowWardService {
 
-    @Autowired
-    private WardRepository wardRepository;
 
+    private final WardRepository wardRepository;
+    private final StaffRepository staffRepository;
+    private final UserRepository userRepository;
     @Autowired
-    private StaffRepository staffRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public ShowWardService(WardRepository wardRepository, StaffRepository staffRepository, UserRepository userRepository) {
+        this.wardRepository = wardRepository;
+        this.staffRepository = staffRepository;
+        this.userRepository = userRepository;
+    }
 
     public ShowWardDto showWardDetails(String wardName){
 
@@ -37,8 +39,61 @@ public class ShowWardService {
         wardDto.setWardName(targetWard.getWardName());
         wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
         wardDto.setSisterName(findSister(targetWard));
+        wardDto.setMatronName(findMatronName(targetWard.getMatron().getNic()));
 
         return wardDto;
+
+    }
+
+    public List<String> getAllWardNames(){
+        List<String> wardNames = new ArrayList<>();
+
+        List<Ward> wards = wardRepository.findAll();
+        if(wards.isEmpty()){
+            throw new IllegalArgumentException("There is not exist any ward!");
+        }
+
+        for(Ward ward : wards){
+            wardNames.add(ward.getWardName());
+        }
+        return wardNames;
+    }
+
+    public ShowWardDto showWardDetailsByWardNo(String wardNo){
+
+        ShowWardDto wardDto=new ShowWardDto();
+
+        Ward targetWard = wardRepository.findById(wardNo).orElseThrow(()->new EntityNotFoundException("Cannot found ward details under ward No: " + wardNo));
+
+        wardDto.setWardNo(targetWard.getWardNo());
+        wardDto.setWardName(targetWard.getWardName());
+        wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
+        wardDto.setSisterName(findSister(targetWard));
+        wardDto.setMatronName(findMatronName(targetWard.getMatron().getNic()));
+
+        return wardDto;
+
+    }
+
+    public List<ShowWardDto> showAllWardDetails(){
+
+        List<ShowWardDto> wardDtos = new ArrayList<>();
+        List<Ward> wards = wardRepository.findAll();
+
+        if(wards.isEmpty()){
+            throw new IllegalArgumentException("Ward list is empty!");
+        }
+
+        for(Ward targetWard : wards) {
+            ShowWardDto wardDto = new ShowWardDto();
+            wardDto.setWardNo(targetWard.getWardNo());
+            wardDto.setWardName(targetWard.getWardName());
+            wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
+            wardDto.setSisterName(findSister(targetWard));
+            wardDto.setMatronName(findMatronName(targetWard.getMatron().getNic()));
+            wardDtos.add(wardDto);
+        }
+        return wardDtos;
 
     }
 
@@ -68,6 +123,13 @@ public class ShowWardService {
             return null;
 
         }
+    }
+
+    public String findMatronName(String nic){
+        User user = userRepository.findByNic(nic).orElseThrow(
+                () -> new EntityNotFoundException("Matron not found with NIC: " + nic));
+
+        return user.getFullName();
     }
 
 }

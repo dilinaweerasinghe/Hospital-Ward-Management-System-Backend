@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SisterDtoForMatron {
+public class FullStaffMmeberDetailsDto {
     private String fullName;
     private String firstName;
     private String lastName;

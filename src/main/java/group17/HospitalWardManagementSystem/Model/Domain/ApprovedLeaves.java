@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Domain;
 
+import group17.HospitalWardManagementSystem.Model.LeaveStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,9 +22,6 @@ public class ApprovedLeaves {
     private Staff staff;
 
     @Column(nullable = false)
-    private int noOfRequestedDates;
-
-    @Column(nullable = false)
     private LocalDate leaveBeginDate;
 
     @Column(nullable = false)
@@ -36,5 +34,5 @@ public class ApprovedLeaves {
     private String reason;
 
     @Column(nullable = false)
-    private LocalDate dueDate;
+    private LeaveStatus status;
 }
