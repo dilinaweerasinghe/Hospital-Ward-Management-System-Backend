@@ -26,8 +26,6 @@ public class ProDetailsLoadDto {
 
     private String username;
 
-    //private String password;
-
     private LocalDate dob;
 
     private String email;
