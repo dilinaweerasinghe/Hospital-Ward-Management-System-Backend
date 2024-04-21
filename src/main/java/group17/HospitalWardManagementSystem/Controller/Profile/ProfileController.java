@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Controller.Profile;
 
+import group17.HospitalWardManagementSystem.Model.Dto.Profile.ProDetailsLoadDto;
 import group17.HospitalWardManagementSystem.Service.Profile.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,15 @@ public class ProfileController {
         try{
             return ResponseEntity.ok(profileService.retrieveProPicture(nic));
         }catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/load-details/{nic}")
+    public ResponseEntity<?> loadProDetails(@PathVariable String nic){
+        try {
+            return ResponseEntity.ok(profileService.retrieveProDetails(nic));
+        }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }

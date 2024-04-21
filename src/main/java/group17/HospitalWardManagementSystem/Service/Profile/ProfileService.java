@@ -1,8 +1,12 @@
 package group17.HospitalWardManagementSystem.Service.Profile;
 
 import group17.HospitalWardManagementSystem.Model.Domain.ProPicture;
+import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Dto.Profile.ProDetailsLoadDto;
+import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.ProPictureRepository;
+import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.Amazon.AmazonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,9 @@ public class ProfileService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
 
    //@Transactional
     public void addProfilePicture(MultipartFile file,String nic){
@@ -57,6 +64,35 @@ public class ProfileService {
         }
     }
 
+    public ProDetailsLoadDto retrieveProDetails(String nic){
+        ProDetailsLoadDto proDetailsLoadDto=new ProDetailsLoadDto();
+        User user=findUser(nic);
+        Staff staff=findStaff(nic);
+
+        proDetailsLoadDto.setNic(user.getNic());
+        proDetailsLoadDto.setFullName(user.getFullName());
+        proDetailsLoadDto.setUsername(user.getUsername());
+        proDetailsLoadDto.setDob(user.getDob());
+        proDetailsLoadDto.setEmail(user.getEmail());
+        proDetailsLoadDto.setMobileNo(user.getMobileNo());
+        if(user.getPosition().equals(UserRole.Admin)){
+            proDetailsLoadDto.setPosition("Admin");
+        } else if (user.getPosition().equals(UserRole.Matron)) {
+            proDetailsLoadDto.setPosition("Matron");
+        } else if (user.getPosition().equals(UserRole.Sister)) {
+            proDetailsLoadDto.setPosition("Sister");
+        } else if (user.getPosition().equals(UserRole.Nurse)) {
+            proDetailsLoadDto.setPosition("Nurse");
+        }else{
+            proDetailsLoadDto.setPosition("Currently No confirm");
+        }
+        proDetailsLoadDto.setServiceStartedDate(staff.getServiceStartedDate());
+        proDetailsLoadDto.setRemainingCasualLeaves(staff.getRemainingCasualLeaves());
+        proDetailsLoadDto.setRemainingVacationLeave(staff.getRemainingVacationLeave());
+
+        return proDetailsLoadDto;
+    }
+
     public String uploadImageToS3(MultipartFile file){
         return amazonService.uploadFile(file);
     }
@@ -66,5 +102,9 @@ public class ProfileService {
 
     public Optional<ProPicture> findProPicture(User user){
         return proPictureRepository.findByUser(user);
+    }
+
+    public Staff findStaff(String nic){
+        return staffRepository.findByNic(nic);
     }
 }
