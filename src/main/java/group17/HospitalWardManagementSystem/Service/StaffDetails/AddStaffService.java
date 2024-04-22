@@ -10,6 +10,7 @@ import group17.HospitalWardManagementSystem.Repository.*;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.PasswordGenerateService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.UsernameGenerateService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class AddStaffService {
     private StaffRepository staffRepository;
 
 
-    //@Transactional
+    @Transactional
     public String staffSave(AddStaffDto addStaffDto){
 
         User user=new User();
@@ -63,7 +64,11 @@ public class AddStaffService {
         if(Objects.equals(addStaffDto.getPosition(), "Sister")){
             Staff existingSister = staffRepository.findSisterByWard(ward);
             if(existingSister != null && (!Objects.equals(existingSister.getNic(), addStaffDto.getNic()))){
+                User existingUser = userRepository.findById(existingSister.getNic()).orElseThrow(()-> new EntityNotFoundException("User can not find for given nic"));
+                existingUser.setUsername(null);
+                existingUser.setPassword(null);
                 staffRepository.deleteById(existingSister.getNic());
+
             }
         }
 
