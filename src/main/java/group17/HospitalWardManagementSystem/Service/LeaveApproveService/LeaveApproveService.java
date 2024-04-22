@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -107,6 +108,16 @@ public class LeaveApproveService {
                 .build();
     }
 
+    public List<PreviousLeaveDetailsDto> getPreviousLeaveDetails(int leaveId){
+        RequestLeave requestLeave = requestLeaveRepository.findById(leaveId).orElseThrow(()->
+                new EntityNotFoundException("Cannot found request leave details. Please contact admin!"));
+
+        Staff staff = requestLeave.getStaff();
+
+        Set <ApprovedLeaves> approvedLeaves = staff.getApprovedLeaves();
+
+        return mapApprovedLeavesSetToDtoList(approvedLeaves);
+    }
 
 
 
@@ -135,14 +146,15 @@ public class LeaveApproveService {
             throw new IllegalArgumentException("ApprovedLeaves object cannot be null");
         }
 
-        Staff staff = approvedLeave.getStaff();
-        String staffName = (staff != null) ? staff.getNic() : "Unknown";
+        Period period = Period.between( approvedLeave.getLeaveBeginDate(), approvedLeave.getLeaveEndDate());
+
 
         return PreviousLeaveDetailsDto.builder()
                 .leaveId(approvedLeave.getLeaveId())
-                .name(staffName)
+                .numberOfLeaveDays(period.getDays())
                 .leaveBeginDate(approvedLeave.getLeaveBeginDate())
                 .Reason(approvedLeave.getReason())
+                .leaveStatus(approvedLeave.getStatus())
                 .build();
     }
 

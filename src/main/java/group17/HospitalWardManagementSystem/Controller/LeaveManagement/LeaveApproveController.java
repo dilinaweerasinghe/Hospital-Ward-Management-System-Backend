@@ -102,4 +102,17 @@ public class LeaveApproveController {
         }
     }
 
+    @GetMapping("/more/previousRecode/{leaveId}")
+    public ResponseEntity<?> getPreviousLeaveRecord(@PathVariable int leaveId){
+        try{
+            return ResponseEntity.ok(leaveApproveService.getPreviousLeaveDetails(leaveId));
+        }catch (EntityNotFoundException | IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
+    }
+
 }
