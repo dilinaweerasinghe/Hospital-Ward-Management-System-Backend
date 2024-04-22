@@ -45,11 +45,12 @@ public class User {
 
     //private String leaveNum;
     @Column(nullable = false)
-
     private String mobileNo;
 
     @OneToMany(mappedBy = "user")
     private List<ServiceDetails> serviceDetails;
+
+    private LocalDate careerStatedDate;
 
 
 }

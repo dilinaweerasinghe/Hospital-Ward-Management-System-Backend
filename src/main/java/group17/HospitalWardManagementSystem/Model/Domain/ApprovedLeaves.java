@@ -17,6 +17,7 @@ public class ApprovedLeaves {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int leaveId;
+
     @ManyToOne
     @JoinColumn(name = "staff_nic",referencedColumnName = "nic")
     private Staff staff;
