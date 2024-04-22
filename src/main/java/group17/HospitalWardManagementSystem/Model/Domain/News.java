@@ -24,10 +24,11 @@ public class News {
     private User newsAdder;
     @Column(nullable = false)
     private LocalDate pushedDate;
+
     private String comment;
 
+    @Column(length = 5000)
+    private String imgUrl;//URL of AWS s3 bucket store here
     //
-
-
 
 }
