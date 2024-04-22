@@ -17,7 +17,7 @@ public class StaffController {
         this.staffService = staffService;
     }
 
-    @DeleteMapping("/staff/{nic}")
+    @DeleteMapping("/delete-nurse/{nic}")
     public ResponseEntity<?> deleteStaffMember(@PathVariable String nic){
         try{
             staffService.deleteStaffMember(nic);
