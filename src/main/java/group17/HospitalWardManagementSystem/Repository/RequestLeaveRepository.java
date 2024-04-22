@@ -5,9 +5,11 @@ import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.LeaveStatus;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,5 +35,10 @@ public interface RequestLeaveRepository extends JpaRepository<RequestLeave, Inte
 
     @Query("SELECT rl FROM RequestLeave  rl JOIN rl.staff s WHERE s.nic = :nic")
     List<RequestLeave> findByNic(@Param("nic") String nic);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE RequestLeave rl SET rl.leaveStatus = :status WHERE rl.leaveId = :leaveId")
+    void updateLeaveStatus(int leaveId, LeaveStatus status);
 
 }

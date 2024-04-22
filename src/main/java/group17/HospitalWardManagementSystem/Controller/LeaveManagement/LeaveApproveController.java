@@ -43,7 +43,7 @@ public class LeaveApproveController {
         }
     }
 
-    @PostMapping("/sister")
+    @PutMapping("/sister")
     public ResponseEntity<?> approveLeaveBySister(@RequestBody int leaveId){
         try{
             leaveApproveService.approveLeaveRequestBySister(leaveId);
@@ -58,9 +58,19 @@ public class LeaveApproveController {
         }
     }
 
-//    @PutMapping("/matron")
-//    public ResponseEntity<?> approveLeaveByMatron(@RequestBody int leaveId){
-//        return null;
-//    }
+    @PutMapping("/matron")
+    public ResponseEntity<?> approveLeaveByMatron(@RequestBody int leaveId){
+        try{
+            leaveApproveService.approveLeaveRequestByMatron(leaveId);
+            return ResponseEntity.ok("Leave is Approved!");
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
+    }
 
 }

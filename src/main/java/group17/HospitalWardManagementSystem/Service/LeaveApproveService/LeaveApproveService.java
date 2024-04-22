@@ -8,6 +8,9 @@ import group17.HospitalWardManagementSystem.Repository.RequestLeaveRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
 
 @Service
 public class LeaveApproveService {
@@ -22,15 +25,23 @@ public class LeaveApproveService {
 
     // Approve Leave Request by Sister
     public void approveLeaveRequestBySister(int leaveID){
-        RequestLeave requestLeave = requestLeaveRepository.findById(leaveID).orElseThrow(()-> new EntityNotFoundException("Cannot found request leave details. Please contact admin!"));
-        ApprovedLeaves approvedLeaves = ApprovedLeaves.builder().leaveId(requestLeave.getLeaveId()).staff(requestLeave.getStaff()).leaveBeginDate(requestLeave.getLeaveBeginDate())
-                .leaveEndDate(requestLeave.getLeaveEndDate()).requestedDateAndTime(requestLeave.getRequestedDateAndTime())
-                .reason(requestLeave.getReason()).status(LeaveStatus.Pending).build();
-
-        approvedLeavesRepository.save(approvedLeaves);
+        RequestLeave requestLeave = requestLeaveRepository.findById(leaveID).orElseThrow(()->
+                new EntityNotFoundException("Cannot found request leave details. Please contact admin!"));
+        requestLeaveRepository.updateLeaveStatus(leaveID, LeaveStatus.Pending);
     }
 
-    public void approveLeaveRequestByMatron(String leaveID){
+    @Transactional
+    public void approveLeaveRequestByMatron(int leaveID) throws SQLException {
+        RequestLeave requestLeave = requestLeaveRepository.findById(leaveID).orElseThrow(()->
+                new EntityNotFoundException("Cannot found request leave details. Please contact admin!"));
+
+        ApprovedLeaves approvedLeaves = ApprovedLeaves.builder().leaveId(leaveID).leaveBeginDate(requestLeave.getLeaveBeginDate())
+                .leaveEndDate(requestLeave.getLeaveEndDate()).requestedDateAndTime(requestLeave.getRequestedDateAndTime())
+                .staff(requestLeave.getStaff()).reason(requestLeave.getReason()).status(LeaveStatus.Approved).build();
+
+            approvedLeavesRepository.save(approvedLeaves);
+
+            requestLeaveRepository.delete(requestLeave);
 
     }
 }
