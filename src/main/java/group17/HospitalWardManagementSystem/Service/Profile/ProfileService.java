@@ -67,7 +67,7 @@ public class ProfileService {
             ProPicture proPicture=findProPicture(findUser(nic)).get();
             return proPicture.getImgUrl();
         }else{
-            throw new RuntimeException("Not profile picture Uploaded");
+            return  "Not profile picture Uploaded";
         }
     }
 
