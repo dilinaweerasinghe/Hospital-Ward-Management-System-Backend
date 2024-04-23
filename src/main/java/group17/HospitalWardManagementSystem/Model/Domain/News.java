@@ -29,6 +29,8 @@ public class News {
 
     @Column(length = 5000)
     private String imgUrl;//URL of AWS s3 bucket store here
-    //
+
+    @Column(length = 5000)
+    private String proImgUrl;
 
 }

@@ -32,19 +32,20 @@ public class AmazonService {
 
     public String uploadFile(MultipartFile file){
         File fileObj=convertMultipartfileToFile(file);
-        String fileName= System.currentTimeMillis()+" "+file.getOriginalFilename();
+        String fileName= System.currentTimeMillis()+"-"+file.getOriginalFilename();
         amazonS3Client.putObject(bucketName,fileName,fileObj);
 
 
-        String fileUrl = amazonS3Client.getUrl(bucketName, fileName ).toString();
+        String fileUrl = amazonS3Client.getUrl(bucketName, fileName).toString();
         return fileUrl;
 
     }
 
 //
 
-    public String deleteFile(String filename){
-        amazonS3Client.deleteObject(bucketName,filename);
+    public String deleteFile(String imageUrl){
+        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        amazonS3Client.deleteObject(bucketName,fileName);
         return "File was deleted";
     }
 

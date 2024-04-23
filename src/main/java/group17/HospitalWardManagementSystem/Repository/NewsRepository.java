@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface NewsRepository extends JpaRepository<News,Long> {
 
-    @Query("select new group17.HospitalWardManagementSystem.Model.Dto.NewsItemDto.NewsDto(A.newsHeader,A.newsDescription,B.fullName,B.Position,A.pushedDate,A.comment,A.imgUrl) from News A inner join A.newsAdder B inner  join Staff C on B.nic=C.nic where C.wardNo=:wardNo order by A.pushedDate limit 5")
+    @Query("select new group17.HospitalWardManagementSystem.Model.Dto.NewsItemDto.NewsDto(A.newsHeader,A.newsDescription,B.fullName,B.Position,A.pushedDate,A.comment,A.imgUrl,A.proImgUrl) from News A inner join A.newsAdder B inner  join Staff C on B.nic=C.nic where C.wardNo=:wardNo order by A.pushedDate limit 5")
     List<NewsDto> findBy(@Param("wardNo")Ward wardNo);
 }

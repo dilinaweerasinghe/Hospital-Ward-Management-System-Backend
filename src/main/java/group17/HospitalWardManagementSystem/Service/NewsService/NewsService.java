@@ -1,10 +1,12 @@
 package group17.HospitalWardManagementSystem.Service.NewsService;
 
 import group17.HospitalWardManagementSystem.Model.Domain.News;
+import group17.HospitalWardManagementSystem.Model.Domain.ProPicture;
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Dto.NewsItemDto.NewsDto;
 import group17.HospitalWardManagementSystem.Repository.NewsRepository;
+import group17.HospitalWardManagementSystem.Repository.ProPictureRepository;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Service.Amazon.AmazonService;
@@ -31,6 +33,10 @@ public class NewsService {
 
     @Autowired
     private AmazonService amazonService;
+
+    @Autowired
+    private ProPictureRepository proPictureRepository;
+
     public void addNews(String newsHeader, String newsDescription, String newsAdderId,String comment,String imageUrl){
 
         News news=new News();
@@ -40,6 +46,7 @@ public class NewsService {
         news.setPushedDate(LocalDate.now());
         news.setComment(comment);
         news.setImgUrl(imageUrl);
+        news.setProImgUrl(findProPicture(findUser(newsAdderId)).getImgUrl());
 
         newsRepository.save(news);
 
@@ -75,6 +82,10 @@ public class NewsService {
 
     public Staff findStaff(String nic){
         return staffRepository.findByNic(nic);
+    }
+
+    public ProPicture findProPicture(User user){
+        return proPictureRepository.findByUser(user).get();
     }
 
 
