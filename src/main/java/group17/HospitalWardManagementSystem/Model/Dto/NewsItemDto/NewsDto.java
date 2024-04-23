@@ -26,4 +26,6 @@ public class NewsDto {
     private String comment;
 
     private String imgUrl;
+
+    private String proImgUrl;
 }

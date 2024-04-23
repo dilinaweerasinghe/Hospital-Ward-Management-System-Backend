@@ -34,7 +34,7 @@ public class User {
     private String password;
     @Column(nullable = false)
     private LocalDate dob;
-//    //@Column(nullable = false)
+    //    //@Column(nullable = false)
 //    private LocalDate serviceStartedDate;
     @Column(nullable = false)
     @Email
