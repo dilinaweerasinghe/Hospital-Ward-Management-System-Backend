@@ -36,6 +36,7 @@ public class RequestLeave {
     private String reason;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private LeaveStatus leaveStatus = LeaveStatus.Not_Concerned_Yet;
 
 }

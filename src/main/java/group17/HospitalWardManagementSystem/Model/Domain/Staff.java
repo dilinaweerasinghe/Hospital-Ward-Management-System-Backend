@@ -19,7 +19,8 @@ public class  Staff {
     private String nic;
 
     @Column(nullable = false)
-    private LocalDate serviceStartedDate;
+    @Builder.Default
+    private LocalDate serviceStartedDate = LocalDate.now();
 
     @Column(nullable = false)
     private String leaveNum;
