@@ -15,4 +15,8 @@ import java.util.List;
 public interface DutyRepository extends JpaRepository<Duty,Long> {
     @Query("SELECT d FROM Duty d JOIN d.staff s WHERE s.nic = :nic AND d.date = :date AND d.dutyTime = :dutyTime")
     List<Duty> findDutiesByStaffAndDate(@Param("nic") String nic, @Param("date") LocalDate date, @Param("dutyTime")DutyTime dutyTime);
+
+    @Query("SELECT d FROM Duty d JOIN d.staff s WHERE s.nic = :nic AND d.date BETWEEN :startDate AND :endDate")
+    List<Duty> findDutiesByStaffAndWeek(@Param("nic") String nic, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 }

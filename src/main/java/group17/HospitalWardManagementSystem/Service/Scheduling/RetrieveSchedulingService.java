@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class RetrieveSchedulingService {
@@ -72,28 +69,44 @@ public class RetrieveSchedulingService {
         }
 
 
-        return null;
+        return mapToCandidateListDto(newCandidateStaffMembers);
     }
 
-    public Boolean isAvailable(Staff staff, LocalDate date){
+    private Boolean isAvailable(Staff staff, LocalDate date){
         List<ApprovedLeaves> approvedLeaves = approvedLeavesRepository.findLeavesByStaffAndDate(staff,date, LeaveStatus.Approved);
         return approvedLeaves.isEmpty();
     }
 
-    public Boolean checkAvailabilityByPreviousShift(Staff staff, LocalDate date, DutyTime dutyTime){
+    private Boolean checkAvailabilityByPreviousShift(Staff staff, LocalDate date, DutyTime dutyTime){
         List<Duty> duties = dutyRepository.findDutiesByStaffAndDate(staff.getNic(), date, dutyTime);
         return duties.isEmpty();
     }
 
-//    public List<CandidateListDto> mapToCandidateListDto(List<Staff> staff){
-//        List<CandidateListDto> candidateListDtos = new ArrayList<>();
-//        for(Staff staff1: staff){
-//            Optional<User> user = userRepository.findById(staff1.getNic());
-//            String fullName = user.isPresent() ? user.get().getFullName() : "Full name unknown";
-//            LocalDate serviceStartedDate =
-//            candidateListDtos.add(CandidateListDto.builder().nic(staff1.getNic()).fullName(fullName).serviceStartedDate(user.).build());
-//        }
-//    }
+    private List<CandidateListDto> mapToCandidateListDto(List<Staff> staff){
+        List<CandidateListDto> candidateListDtos = new ArrayList<>();
+        for(Staff staff1: staff){
+            Optional<User> user = userRepository.findById(staff1.getNic());
+            String fullName = user.isPresent() ? user.get().getFullName() : "Full name unknown";
+            LocalDate date = user.map(User::getCareerStatedDate).orElse(null);
+            List <Duty> duties = dutyRepository.findDutiesByStaffAndWeek(staff1.getNic(), DateUtils.getStartOfWeek(), LocalDate.now());
+            int totalWorkHours = duties.isEmpty() ? 0 : workingHours(duties);
+            candidateListDtos.add(CandidateListDto.builder().nic(staff1.getNic()).fullName(fullName).serviceStartedDate(date).workingHours(totalWorkHours).build());
+        }
+        return candidateListDtos;
+    }
+
+    private int workingHours(List<Duty> duties){
+        int totalHourse = 0;
+        for (Duty duty: duties){
+            if(duty.getDutyTime().equals(DutyTime.Night)){
+                totalHourse += 12;
+            }else {
+                totalHourse += 6;
+            }
+        }
+
+        return totalHourse;
+    }
 }
 
 
