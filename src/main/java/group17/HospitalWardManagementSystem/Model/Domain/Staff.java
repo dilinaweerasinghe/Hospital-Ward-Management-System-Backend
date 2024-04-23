@@ -27,6 +27,9 @@ public class  Staff {
     @OneToMany(mappedBy = "staff")
     private Set<RequestLeave> leaveRequests = new HashSet<>();
 
+    @OneToMany(mappedBy = "staff")
+    private Set<ApprovedLeaves> approvedLeaves = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
     private Ward wardNo;
