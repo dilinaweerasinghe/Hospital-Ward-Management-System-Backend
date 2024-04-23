@@ -16,8 +16,8 @@ public class SchedulingController {
         this.retrieveSchedulingService = retrieveSchedulingService;
     }
 
-    @GetMapping("/candidates/{wardNo}")
-    public ResponseEntity<?> getCandidateNurseList(@PathVariable String wardNo, @RequestParam String shift, @RequestParam String date){
-        return ResponseEntity.ok(retrieveSchedulingService.getCandidateNurseList(wardNo, shift, date));
+    @GetMapping("/candidates/{nic}")
+    public ResponseEntity<?> getCandidateNurseList(@PathVariable String nic, @RequestParam String shift, @RequestParam String date){
+        return ResponseEntity.ok(retrieveSchedulingService.getCandidateNurseList(nic, shift, date));
     }
 }
