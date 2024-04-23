@@ -98,7 +98,8 @@ public class AddStaffService {
         user.setMobileNo(addStaffDto.getMobileNo());
         staff.setNic(addStaffDto.getNic());
         staff.setWardNo(findWard(addStaffDto));
-        staff.setServiceStartedDate(addStaffDto.getServiceStartedDate());
+        //staff.setServiceStartedDate(addStaffDto.getServiceStartedDate());
+        user.setCareerStatedDate(addStaffDto.getServiceStartedDate());
         staff.setLeaveNum(addStaffDto.getLeaveNum());
         staff.setRemainingCasualLeaves(addStaffDto.getRemainingCasualLeaves());
         staff.setRemainingVacationLeave(addStaffDto.getRemainingVacationLeave());

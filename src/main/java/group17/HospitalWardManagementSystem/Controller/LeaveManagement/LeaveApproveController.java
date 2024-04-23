@@ -73,4 +73,46 @@ public class LeaveApproveController {
         }
     }
 
+    @PutMapping("/decline")
+    public ResponseEntity<?> declineLeaveRequest(@RequestBody int leaveId){
+        try{
+            leaveApproveService.declineLeaveRequest(leaveId);
+            return ResponseEntity.ok("Leave Request is Decline!");
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
+    }
+
+    @GetMapping("/more/{leaveId}")
+    public ResponseEntity<?> getLeaveApproveMoreDetails(@PathVariable int leaveId){
+        try{
+            return ResponseEntity.ok(leaveApproveService.getLeaveApproveMoreDetails(leaveId));
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
+    }
+
+    @GetMapping("/more/previousRecode/{leaveId}")
+    public ResponseEntity<?> getPreviousLeaveRecord(@PathVariable int leaveId){
+        try{
+            return ResponseEntity.ok(leaveApproveService.getPreviousLeaveDetails(leaveId));
+        }catch (EntityNotFoundException | IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
+    }
+
 }
