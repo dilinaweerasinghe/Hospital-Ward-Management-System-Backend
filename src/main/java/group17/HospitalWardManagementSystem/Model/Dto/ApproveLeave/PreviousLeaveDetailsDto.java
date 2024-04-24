@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Model.Dto.ApproveLeave;
 
+import group17.HospitalWardManagementSystem.Model.LeaveStatus;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,8 +12,9 @@ import java.time.LocalDate;
 @Builder
 public class PreviousLeaveDetailsDto {
     private int leaveId;
-    private String name;
+    private int numberOfLeaveDays;
     private LocalDate leaveBeginDate;
     private String Reason;
+    private LeaveStatus leaveStatus;
 
 }

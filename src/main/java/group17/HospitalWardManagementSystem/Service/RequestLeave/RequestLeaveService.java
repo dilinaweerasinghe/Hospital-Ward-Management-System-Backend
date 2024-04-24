@@ -60,7 +60,7 @@ public class RequestLeaveService {
                     new EntityNotFoundException("Cannot find your details with NIC: " + nic + ". Contact admin to resolve!"));
             if(positionFilter.equals("All") && wardFilter.equals("All")){
                 List<RequestLeave> requestLeaveSister = requestLeaveRepository.findRequestLeaveByPosition(nic, UserRole.Sister, LeaveStatus.Not_Concerned_Yet);
-                List<RequestLeave> requestLeaveNurse = requestLeaveRepository.findRequestLeaveByPosition(nic, UserRole.Sister, LeaveStatus.Not_Concerned_Yet);
+                List<RequestLeave> requestLeaveNurse = requestLeaveRepository.findRequestLeaveByPosition(nic, UserRole.Nurse, LeaveStatus.Pending);
                 requestLeaves.addAll(requestLeaveSister);
                 requestLeaves.addAll(requestLeaveNurse);
 

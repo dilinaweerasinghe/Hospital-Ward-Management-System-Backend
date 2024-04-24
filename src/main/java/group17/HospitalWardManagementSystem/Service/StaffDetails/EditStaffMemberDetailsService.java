@@ -76,9 +76,10 @@ public class EditStaffMemberDetailsService {
             editedMember.setNic(sisterDto.getNic());
             editedMember.setDob(sisterDto.getBirthdate());
             editedMember.setPosition(sisterDto.getPosition());
+            editedMember.setCareerStatedDate(sisterDto.getServiceStartDate());
 
             staff.setLeaveNum(sisterDto.getLeaveNo());
-            staff.setServiceStartedDate(sisterDto.getServiceStartDate());
+            //staff.setServiceStartedDate(sisterDto.getServiceStartDate());
 
             userRepository.save(editedMember);
             staffRepository.save(staff);
@@ -110,7 +111,8 @@ public class EditStaffMemberDetailsService {
             staff.setWardNo(ward);
             staff.setRemainingCasualLeaves(nurseDto.getRemainingVacationLeaves());
             staff.setRemainingCasualLeaves(nurseDto.getRemainingCasualLeaves());
-            staff.setServiceStartedDate(nurseDto.getServiceStartedDate());
+           // staff.setServiceStartedDate(nurseDto.getServiceStartedDate());
+            member.setCareerStatedDate(nurseDto.getServiceStartedDate());
             staff.setLeaveNum(nurseDto.getLeaveNo());
             //member.setPosition(nurseDto.getPosition());
 

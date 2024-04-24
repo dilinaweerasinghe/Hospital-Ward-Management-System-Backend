@@ -35,5 +35,6 @@ public class ApprovedLeaves {
     private String reason;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private LeaveStatus status;
 }

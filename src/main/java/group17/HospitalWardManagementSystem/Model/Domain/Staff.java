@@ -19,7 +19,8 @@ public class  Staff {
     private String nic;
 
     @Column(nullable = false)
-    private LocalDate serviceStartedDate;
+    @Builder.Default
+    private LocalDate serviceStartedDate = LocalDate.now();
 
     @Column(nullable = false)
     private String leaveNum;
@@ -34,9 +35,9 @@ public class  Staff {
     @JoinColumn(name = "wardNo", referencedColumnName = "wardNo")
     private Ward wardNo;
     @Column(nullable = false)
-    private int remainingCasualLeaves;
+    private int remainingCasualLeaves = 23;
     @Column(nullable = false)
-    private int remainingVacationLeave;
+    private int remainingVacationLeave = 23;
     @ManyToMany(mappedBy = "staff")
     private Set<Duty> duties = new HashSet<>();
 }
