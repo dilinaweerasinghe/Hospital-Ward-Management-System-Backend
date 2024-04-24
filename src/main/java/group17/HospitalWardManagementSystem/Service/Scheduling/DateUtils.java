@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 @Service
 public class DateUtils {
@@ -19,5 +21,9 @@ public class DateUtils {
 
     public static LocalDate getToday() {
         return LocalDate.now();
+    }
+
+    public static String getDayOfWeekName(LocalDate date) {
+        return date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
     }
 }

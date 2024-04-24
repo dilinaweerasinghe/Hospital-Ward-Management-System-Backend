@@ -22,14 +22,16 @@ public class TemporyDumyDataAddingService {
     private final WardRepository wardRepository;
     private final StaffRepository staffRepository;
     private final RequestLeaveRepository requestLeaveRepository;
+    private final CasualityDaysRepository casualityDaysRepository;
     @Autowired
-    public TemporyDumyDataAddingService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository, WardRepository wardRepository, StaffRepository staffRepository, RequestLeaveRepository requestLeaveRepository) {
+    public TemporyDumyDataAddingService(UserRepository userRepository, PasswordEncoder passwordEncoder, MatronRepository matronRepository, WardRepository wardRepository, StaffRepository staffRepository, RequestLeaveRepository requestLeaveRepository, CasualityDaysRepository casualityDaysRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.matronRepository = matronRepository;
         this.wardRepository = wardRepository;
         this.staffRepository = staffRepository;
         this.requestLeaveRepository = requestLeaveRepository;
+        this.casualityDaysRepository = casualityDaysRepository;
     }
 
     public void addNursesData(){
@@ -315,7 +317,164 @@ public class TemporyDumyDataAddingService {
         requestLeaveRepository.saveAll(requestLeaves);
     }
 
+    public void addCasualityDays() {
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W001"))
+                        .monday(true)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(true)
+                        .friday(false)
+                        .saturday(false)
+                        .build()
+        );
 
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W002"))
+                        .monday(false)
+                        .tuesday(true)
+                        .wednesday(false)
+                        .thursday(false)
+                        .friday(true)
+                        .saturday(false)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W003"))
+                        .monday(false)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(false)
+                        .friday(true)
+                        .saturday(true)
+                        .build()
+        );
+
+        // Continue for the rest of the wards
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W004"))
+                        .monday(true)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(false)
+                        .friday(false)
+                        .saturday(true)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W005"))
+                        .monday(false)
+                        .tuesday(true)
+                        .wednesday(false)
+                        .thursday(false)
+                        .friday(true)
+                        .saturday(false)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W006"))
+                        .monday(false)
+                        .tuesday(false)
+                        .wednesday(true)
+                        .thursday(true)
+                        .friday(false)
+                        .saturday(false)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W007"))
+                        .monday(true)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(true)
+                        .friday(false)
+                        .saturday(false)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W008"))
+                        .monday(false)
+                        .tuesday(true)
+                        .wednesday(false)
+                        .thursday(false)
+                        .friday(false)
+                        .saturday(true)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W009"))
+                        .monday(true)
+                        .tuesday(false)
+                        .wednesday(true)
+                        .thursday(false)
+                        .friday(false)
+                        .saturday(false)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W010"))
+                        .monday(false)
+                        .tuesday(false)
+                        .wednesday(true)
+                        .thursday(false)
+                        .friday(false)
+                        .saturday(true)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W011"))
+                        .monday(false)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(true)
+                        .friday(false)
+                        .saturday(true)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W012"))
+                        .monday(false)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(true)
+                        .friday(true)
+                        .saturday(false)
+                        .build()
+        );
+
+        casualityDaysRepository.save(
+                CasualityDays.builder()
+                        .wardNo(wardRepository.findByWardNo("W013"))
+                        .monday(false)
+                        .tuesday(false)
+                        .wednesday(false)
+                        .thursday(true)
+                        .friday(false)
+                        .saturday(true)
+                        .build()
+        );
+    }
 
 
 
