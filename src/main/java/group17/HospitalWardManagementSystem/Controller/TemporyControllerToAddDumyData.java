@@ -24,5 +24,6 @@ public class TemporyControllerToAddDumyData {
         temporyDumyDataAddingService.addStaffDetails();
         temporyDumyDataAddingService.addSistersToTheStaffTable();
         temporyDumyDataAddingService.addRequestLeaves();
+//        temporyDumyDataAddingService.addCasualityDays();
     }
 }
