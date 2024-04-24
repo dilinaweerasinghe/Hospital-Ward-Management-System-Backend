@@ -515,7 +515,7 @@ public class TemporyDumyDataAddingService {
                 .username("user26")
                 .password(passwordEncoder.encode("password26"))
                 .dob(LocalDate.parse("1977-06-15"))
-                .email("tharaka@example.com")
+                .email("nipunaheshansadu@gmail.com")
                 .Position(UserRole.Sister)
                 .mobileNo("234-567-8901")
                 .careerStatedDate(LocalDate.parse("2010-03-15")) // Example within range
