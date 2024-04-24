@@ -19,6 +19,5 @@ public class ProPicture {
     @JoinColumn(name = "user",referencedColumnName = "nic")
     private User user;
 
-
     private String imgUrl;
 }

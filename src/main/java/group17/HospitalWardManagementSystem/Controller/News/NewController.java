@@ -30,7 +30,7 @@ public class NewController {
         try {
             String imageUrl = newsService.uploadImageToS3(image);
             newsService.addNews(newsHeader, newsDescription, newsAdderId,comment,imageUrl);
-            return ResponseEntity.ok(imageUrl);
+            return ResponseEntity.ok("Successfully Posted News...!");
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).body("Failed to add news");

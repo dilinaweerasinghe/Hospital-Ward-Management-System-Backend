@@ -1,14 +1,9 @@
 package group17.HospitalWardManagementSystem.Service.NewsService;
 
-import group17.HospitalWardManagementSystem.Model.Domain.News;
-import group17.HospitalWardManagementSystem.Model.Domain.ProPicture;
-import group17.HospitalWardManagementSystem.Model.Domain.Staff;
-import group17.HospitalWardManagementSystem.Model.Domain.User;
+import group17.HospitalWardManagementSystem.Model.Domain.*;
 import group17.HospitalWardManagementSystem.Model.Dto.NewsItemDto.NewsDto;
-import group17.HospitalWardManagementSystem.Repository.NewsRepository;
-import group17.HospitalWardManagementSystem.Repository.ProPictureRepository;
-import group17.HospitalWardManagementSystem.Repository.StaffRepository;
-import group17.HospitalWardManagementSystem.Repository.UserRepository;
+import group17.HospitalWardManagementSystem.Model.UserRole;
+import group17.HospitalWardManagementSystem.Repository.*;
 import group17.HospitalWardManagementSystem.Service.Amazon.AmazonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +31,9 @@ public class NewsService {
 
     @Autowired
     private ProPictureRepository proPictureRepository;
+
+    @Autowired
+    private MatronRepository matronRepository;
 
     public void addNews(String newsHeader, String newsDescription, String newsAdderId,String comment,String imageUrl){
 
@@ -69,7 +67,14 @@ public class NewsService {
 
     public List<NewsDto> findNewsList(String nic){
         Staff staff=findStaff(nic);
-        return newsRepository.findBy(staff.getWardNo());
+        User user=findUser(nic);
+        Matron matron=matronRepository.findByNic(nic);
+        if(user.getPosition().equals(UserRole.Matron)){
+            return newsRepository.getNewsByNewsAdderOrWard(nic);
+        }else{
+            return newsRepository.findBy(staff.getWardNo());
+        }
+
     }
 
     public User findUser(String id){
