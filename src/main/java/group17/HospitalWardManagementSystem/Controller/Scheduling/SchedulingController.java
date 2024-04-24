@@ -1,6 +1,7 @@
 package group17.HospitalWardManagementSystem.Controller.Scheduling;
 
 import group17.HospitalWardManagementSystem.Model.Dto.Scheduling.AssigningDto;
+import group17.HospitalWardManagementSystem.Service.Scheduling.CreateSchedulingService;
 import group17.HospitalWardManagementSystem.Service.Scheduling.RetrieveSchedulingService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class SchedulingController {
 
     private final RetrieveSchedulingService retrieveSchedulingService;
+    private final CreateSchedulingService createSchedulingService;
 
     @Autowired
-    public SchedulingController(RetrieveSchedulingService retrieveSchedulingService) {
+    public SchedulingController(RetrieveSchedulingService retrieveSchedulingService, CreateSchedulingService createSchedulingService) {
         this.retrieveSchedulingService = retrieveSchedulingService;
+        this.createSchedulingService = createSchedulingService;
     }
 
     @GetMapping("/candidates/{nic}")
@@ -34,8 +37,22 @@ public class SchedulingController {
 
     }
 
+
     @PostMapping("/add/{sisterNic}")
-    public ResponseEntity<?> assignedDuty(@PathVariable String sisterNic, @RequestBody String dutyAssign){
-        return null;
+    public ResponseEntity<?> assignedDuty(@PathVariable String sisterNic, @RequestBody AssigningDto dutyAssign) {
+//        try {
+            createSchedulingService.addNursesToTheDuties(sisterNic, dutyAssign.getNurseNic(), dutyAssign.getDate(), dutyAssign.getDutyTime());
+            return ResponseEntity.ok("Duty Assigning is success!");
+//        } catch (Exception e) {
+//
+//            return ResponseEntity.ok("Fail");
+//        }
+
     }
+
+    @PostMapping("/test/{nic}")
+    public ResponseEntity<?> testController(@PathVariable String nic){
+        return ResponseEntity.ok(nic);
+    }
+
 }
