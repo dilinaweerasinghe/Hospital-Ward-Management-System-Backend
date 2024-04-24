@@ -17,4 +17,6 @@ public class ChangePwdDto{
 
     private String newPassword;
 
+    private String confirmPassword;
+
 }

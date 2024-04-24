@@ -8,10 +8,14 @@ import group17.HospitalWardManagementSystem.Service.PasswordResetTokenService;
 import group17.HospitalWardManagementSystem.Service.GeneralServices.MailService;
 import group17.HospitalWardManagementSystem.Service.UserService;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -40,23 +44,30 @@ public class ResetPasswordController {
     private NewPwdDto newPwdDto;
 
     @PostMapping("/password-reset-request")
-    public String resetPasswordRequest(@RequestBody PasswordResetRequestDto passwordResetRequestDto,
-                                       final HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
-        Optional<User> user=userService.findByEmail(passwordResetRequestDto.getEmail());
-        String passwordResetURL="";
+    public ResponseEntity<String> resetPasswordRequest(@RequestBody PasswordResetRequestDto passwordResetRequestDto,
+                                               final HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
 
-        //String passwordResetToken= UUID.randomUUID().toString();
         String passwordResetToken=passwordGenerateService.passwordGenerate();
+        try{
+            User user = userService.findByEmail(passwordResetRequestDto.getEmail()).orElseThrow(()-> (new EntityNotFoundException("Recovery email not existing in the System!")));
+            String passwordResetURL="";
 
-        if(user.isPresent()){
+            //String passwordResetToken= UUID.randomUUID().toString()
 
-            userService.createPasswordResetTokenForUser(user.get(),passwordResetToken);
-            passwordResetURL=passwordResetEmailLink(user.get(),applicationURL(request),passwordResetToken);
-            return passwordResetURL;
-        }else {
+                userService.createPasswordResetTokenForUser(user,passwordResetToken);
+                passwordResetURL=passwordResetEmailLink(user,applicationURL(request),passwordResetToken);
+                return ResponseEntity.ok(passwordResetURL);
+        }catch (EntityNotFoundException e) {
             userService.findUserByPasswordTokenToDelete(passwordResetToken);
-            return "Enter your correct recovery email";
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch(IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Recovery email not existing in the System!");
+        }catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
         }
+
     }
 
     private String passwordResetEmailLink(User user, String applicationURL, String passwordResetToken) throws MessagingException, UnsupportedEncodingException {
