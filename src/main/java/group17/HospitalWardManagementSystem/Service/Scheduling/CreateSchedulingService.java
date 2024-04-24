@@ -1,11 +1,9 @@
 package group17.HospitalWardManagementSystem.Service.Scheduling;
 
-import group17.HospitalWardManagementSystem.Model.Domain.Duty;
-import group17.HospitalWardManagementSystem.Model.Domain.Staff;
-import group17.HospitalWardManagementSystem.Model.Domain.User;
-import group17.HospitalWardManagementSystem.Model.Domain.Ward;
+import group17.HospitalWardManagementSystem.Model.Domain.*;
 import group17.HospitalWardManagementSystem.Model.DutyTime;
 import group17.HospitalWardManagementSystem.Model.UserRole;
+import group17.HospitalWardManagementSystem.Repository.CasualityDaysRepository;
 import group17.HospitalWardManagementSystem.Repository.DutyRepository;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -23,11 +22,14 @@ public class CreateSchedulingService {
     private final DutyRepository dutyRepository;
     private final UserRepository userRepository;
 
+    private final CasualityDaysRepository casualityDaysRepository;
+
     @Autowired
-    public CreateSchedulingService(StaffRepository staffRepository, DutyRepository dutyRepository, UserRepository userRepository) {
+    public CreateSchedulingService(StaffRepository staffRepository, DutyRepository dutyRepository, UserRepository userRepository, CasualityDaysRepository casualityDaysRepository) {
         this.staffRepository = staffRepository;
         this.dutyRepository = dutyRepository;
         this.userRepository = userRepository;
+        this.casualityDaysRepository = casualityDaysRepository;
     }
 
     public void addNursesToTheDuties(String sisterNic, String nurseNic, LocalDate date, String dutyTime){
@@ -42,25 +44,10 @@ public class CreateSchedulingService {
 
         if(user.getPosition().equals(UserRole.Sister)){
             if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
-                Duty duty = dutyRepository.findByDateAndDutyTime(date, getDutyTime(dutyTime));
-                if(duty.getStaff().isEmpty()){
-                    Set<Staff> staffSet = new HashSet<>();
-                    Staff nurse = staffRepository.findByNic(nurseNic);
-                    if(nurse == null){
-                        throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
-                    }
-                    staffSet.add(nurse);
-                    dutyRepository.addStaffToDuty(duty.getId(), staffSet);
-                }else{
-                    Set<Staff> staffSet = duty.getStaff();
-                    Staff nurse = staffRepository.findByNic(nurseNic);
-                    if(nurse == null){
-                        throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
-                    }
-                    staffSet.add(nurse);
-                    dutyRepository.addStaffToDuty(duty.getId(), staffSet);
-                }
-            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) ) {
+                addStaffMemberToShift(nurseNic, date, dutyTime);
+            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
+                addStaffMemberToShift(nurseNic, date, dutyTime);
+            }else{
 
             }
         }else{
@@ -69,7 +56,31 @@ public class CreateSchedulingService {
 
     }
 
-   // private
+    private void addStaffMemberToShift(String nurseNic, LocalDate date, String dutyTime) {
+        Duty duty = dutyRepository.findByDateAndDutyTime(date, getDutyTime(dutyTime));
+        Set<Staff> staffSet;
+        if(duty == null){
+            staffSet = new HashSet<>();
+            Staff nurse = staffRepository.findByNic(nurseNic);
+            staffSet.add(nurse);
+            Duty newDuty = Duty.builder().date(date).dutyTime(getDutyTime(dutyTime)).staff(staffSet).build();
+            dutyRepository.save(newDuty);
+        }else{
+            if(duty.getStaff() == null){
+                staffSet = new HashSet<>();
+            }else{
+                staffSet = duty.getStaff();
+            }
+            Staff nurse = staffRepository.findByNic(nurseNic);
+            if(nurse == null){
+                throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
+            }
+            staffSet.add(nurse);
+            dutyRepository.addStaffToDuty(duty.getId(), staffSet);
+        }
+    }
+
+    // private
 
    private int getNoOfExistingDuties(String wardNo, LocalDate date, DutyTime dutyTime){
         return dutyRepository.countDutiesByWardNoDateAndDutyTime(wardNo, date, dutyTime);
@@ -102,17 +113,35 @@ public class CreateSchedulingService {
    private Boolean isACasualityDay(Ward ward, LocalDate date){
         boolean isAcasualityDay = false;
         if(DateUtils.getDayOfWeekName(date).equalsIgnoreCase("monday")){
-
+            List<CasualityDays> casualityDays = casualityDaysRepository.findCasualityDaysByMonday(true, ward);
+            if(!casualityDays.isEmpty()){
+                isAcasualityDay = true;
+            }
         } else if (DateUtils.getDayOfWeekName(date).equalsIgnoreCase("tuesday")) {
-
+            List<CasualityDays> casualityDays = casualityDaysRepository.findCasualityDaysByTuesday(true, ward);
+            if(!casualityDays.isEmpty()){
+                isAcasualityDay = true;
+            }
         } else if (DateUtils.getDayOfWeekName(date).equalsIgnoreCase("wednesday")) {
-
+            List<CasualityDays> casualityDays = casualityDaysRepository.findCasualityDaysByWednesday(true, ward);
+            if(!casualityDays.isEmpty()){
+                isAcasualityDay = true;
+            }
         } else if (DateUtils.getDayOfWeekName(date).equalsIgnoreCase("thursday")) {
-
+            List<CasualityDays> casualityDays = casualityDaysRepository.findCasualityDaysByThursday(true, ward);
+            if(!casualityDays.isEmpty()){
+                isAcasualityDay = true;
+            }
         } else if (DateUtils.getDayOfWeekName(date).equalsIgnoreCase("friday")) {
-
+            List<CasualityDays> casualityDays = casualityDaysRepository.findCasualityDaysByFriday(true, ward);
+            if(!casualityDays.isEmpty()){
+                isAcasualityDay = true;
+            }
         } else if (DateUtils.getDayOfWeekName(date).equalsIgnoreCase("saturday")) {
-
+            List<CasualityDays> casualityDays = casualityDaysRepository.findCasualityDaysBySaturday(true, ward);
+            if(!casualityDays.isEmpty()){
+                isAcasualityDay = true;
+            }
         }
 
         return isAcasualityDay;

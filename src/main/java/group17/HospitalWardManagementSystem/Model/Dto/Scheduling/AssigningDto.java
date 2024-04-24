@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class AssigningDto {
-    private String nic;
+    private String nurseNic;
     private LocalDate date;
-    private DutyTime dutyTime;
+    private String dutyTime;
 }
