@@ -690,7 +690,7 @@ public class TemporyDumyDataAddingService {
                 .username("user27")
                 .password(passwordEncoder.encode("password27"))
                 .dob(LocalDate.parse("1994-02-15"))
-                .email("ruchira@example.com")
+                .email("weerasinghe.dilina683@gmail.com")
                 .Position(UserRole.Matron)
                 .mobileNo("234-567-8901")
                 .careerStatedDate(LocalDate.parse("2013-07-30")) // Within the range

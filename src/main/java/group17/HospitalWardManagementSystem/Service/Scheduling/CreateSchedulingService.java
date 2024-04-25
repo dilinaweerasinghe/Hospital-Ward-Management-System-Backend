@@ -10,6 +10,7 @@ import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class CreateSchedulingService {
         this.casualityDaysRepository = casualityDaysRepository;
     }
 
+    @Transactional
     public void addNursesToTheDuties(String sisterNic, String nurseNic, LocalDate date, String dutyTime){
         Staff staff = staffRepository.findById(sisterNic).orElseThrow(() ->
                 (new EntityNotFoundException("Cannot find your details with nic: " + sisterNic + ". Please contact your admin!")));
@@ -43,13 +45,13 @@ public class CreateSchedulingService {
         }
 
         if(user.getPosition().equals(UserRole.Sister)){
-            if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
+//            if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
                 addStaffMemberToShift(nurseNic, date, dutyTime);
-            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
-                addStaffMemberToShift(nurseNic, date, dutyTime);
-            }else{
-
-            }
+//            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
+//                addStaffMemberToShift(nurseNic, date, dutyTime);
+//            }else{
+//                throw new IllegalArgumentException("Duty list already full!");
+//            }
         }else{
             throw new IllegalArgumentException("You cannot recognize as a sister!");
         }
@@ -65,18 +67,21 @@ public class CreateSchedulingService {
             staffSet.add(nurse);
             Duty newDuty = Duty.builder().date(date).dutyTime(getDutyTime(dutyTime)).staff(staffSet).build();
             dutyRepository.save(newDuty);
-        }else{
+        }else if (duty.getId() != null){
+            Staff nurse = staffRepository.findByNic(nurseNic);
             if(duty.getStaff() == null){
                 staffSet = new HashSet<>();
             }else{
                 staffSet = duty.getStaff();
             }
-            Staff nurse = staffRepository.findByNic(nurseNic);
+
             if(nurse == null){
                 throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
             }
             staffSet.add(nurse);
             dutyRepository.addStaffToDuty(duty.getId(), staffSet);
+        }else{
+            throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
         }
     }
 
