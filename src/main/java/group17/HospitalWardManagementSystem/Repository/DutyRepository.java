@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +34,7 @@ public interface DutyRepository extends JpaRepository<Duty,Long> {
     Duty findByDateAndDutyTime(@Param("date") LocalDate date,@Param("dutyTime") DutyTime dutyTime);
 
     @Modifying
+    @Transactional
     @Query("UPDATE Duty d SET d.staff = :staff WHERE d.id = :dutyId")
     void addStaffToDuty(Long dutyId, Set<Staff> staff);
 

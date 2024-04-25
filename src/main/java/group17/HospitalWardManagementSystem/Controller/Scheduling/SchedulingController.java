@@ -38,7 +38,7 @@ public class SchedulingController {
     }
 
 
-    @PostMapping("/add/{sisterNic}")
+    @PutMapping("/add/{sisterNic}")
     public ResponseEntity<?> assignedDuty(@PathVariable String sisterNic, @RequestBody AssigningDto dutyAssign) {
 //        try {
             createSchedulingService.addNursesToTheDuties(sisterNic, dutyAssign.getNurseNic(), dutyAssign.getDate(), dutyAssign.getDutyTime());
