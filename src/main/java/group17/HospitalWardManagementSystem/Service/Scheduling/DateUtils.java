@@ -14,6 +14,11 @@ public class DateUtils {
         return today.with(DayOfWeek.MONDAY);
     }
 
+    public static LocalDate getStartOfWeekForDate(LocalDate date) {
+
+        return date.with(DayOfWeek.MONDAY);
+    }
+
     public static LocalDate getEndOfWeek() {
         LocalDate today = LocalDate.now();
         return today.with(DayOfWeek.FRIDAY);

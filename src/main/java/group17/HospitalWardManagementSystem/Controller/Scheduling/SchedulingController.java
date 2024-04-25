@@ -50,9 +50,17 @@ public class SchedulingController {
 
     }
 
-    @PostMapping("/test/{nic}")
-    public ResponseEntity<?> testController(@PathVariable String nic){
-        return ResponseEntity.ok(nic);
+    @GetMapping("/view/{nicOrWard}")
+    public ResponseEntity<?> getDutyDetails(@PathVariable String nicOrWard, @RequestParam String date){
+        try{
+            return ResponseEntity.ok(retrieveSchedulingService.getDutyDetailsForDate(nicOrWard, date));
+        }catch (EntityNotFoundException | IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
     }
 
 }

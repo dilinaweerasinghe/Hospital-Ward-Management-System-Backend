@@ -312,7 +312,7 @@ public class TemporyDumyDataAddingService {
                 .username("user93")
                 .password(passwordEncoder.encode("password93"))
                 .dob(LocalDate.parse("1981-12-10"))
-                .email("kasun@example.com")
+                .email("kaveen.theekshana2000@gmail.com")
                 .Position(UserRole.Nurse)
                 .mobileNo("012-345-6789")
                 .careerStatedDate(LocalDate.parse("2008-10-25")) // Example date within range
@@ -515,7 +515,7 @@ public class TemporyDumyDataAddingService {
                 .username("user26")
                 .password(passwordEncoder.encode("password26"))
                 .dob(LocalDate.parse("1977-06-15"))
-                .email("nipunaheshansadu@gmail.com")
+                .email("weerasinghedilina.edu@gmail.com")
                 .Position(UserRole.Sister)
                 .mobileNo("234-567-8901")
                 .careerStatedDate(LocalDate.parse("2010-03-15")) // Example within range
@@ -648,7 +648,7 @@ public class TemporyDumyDataAddingService {
                 .username("user1")
                 .password(passwordEncoder.encode("password1"))
                 .dob(LocalDate.parse("1975-05-10"))
-                .email("lakshika@example.com")
+                .email("weerasinghe.dilina683@gmail.com")
                 .Position(UserRole.Matron)
                 .mobileNo("123-456-7890")
                 .careerStatedDate(LocalDate.parse("2010-08-15")) // Within the range
