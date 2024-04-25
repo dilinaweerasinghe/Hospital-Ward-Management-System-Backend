@@ -2,6 +2,7 @@ package group17.HospitalWardManagementSystem.Service.Scheduling;
 
 import group17.HospitalWardManagementSystem.Model.Domain.*;
 import group17.HospitalWardManagementSystem.Model.Dto.Scheduling.CandidateListDto;
+import group17.HospitalWardManagementSystem.Model.Dto.Scheduling.ViewScheduleDto;
 import group17.HospitalWardManagementSystem.Model.DutyTime;
 import group17.HospitalWardManagementSystem.Model.LeaveStatus;
 import group17.HospitalWardManagementSystem.Model.UserRole;
@@ -72,10 +73,38 @@ public class RetrieveSchedulingService {
             }
 
 
-            return mapToCandidateListDto(newCandidateStaffMembers);
+            return mapToCandidateListDto(newCandidateStaffMembers, LocalDate.parse(date));
         }else {
             throw new IllegalArgumentException("You are not recognize as a sister, Please contact admin!");
         }
+
+    }
+
+    public List<ViewScheduleDto> getDutyDetailsForDate(String sisterNic, String date){
+        Staff staff = staffRepository.findById(sisterNic).orElseThrow(()-> (new EntityNotFoundException("Cannot found your details in System")));
+        List<String> morningShiftNames = dutyRepository.findDutyStaffName(staff.getWardNo(), getDutyTime("Morning"), LocalDate.parse(date));
+        List<String> eveningShiftNames = dutyRepository.findDutyStaffName(staff.getWardNo(), getDutyTime("Evening"), LocalDate.parse(date));
+        List<String> nightShiftNames = dutyRepository.findDutyStaffName(staff.getWardNo(), getDutyTime("Night"), LocalDate.parse(date));
+
+        if(morningShiftNames.isEmpty() && eveningShiftNames.isEmpty() && nightShiftNames.isEmpty()){
+            throw new IllegalArgumentException("Scheduling is not created yet");
+
+        }
+        List<ViewScheduleDto> viewScheduleDtos = new ArrayList<>();
+
+        for (int i = 0; i <getLargestSize(morningShiftNames,eveningShiftNames,nightShiftNames); i++){
+
+            String morning, evening, night;
+            morning = morningShiftNames.size() > i ? morningShiftNames.get(i) : " ";
+            evening = eveningShiftNames.size() > i ? eveningShiftNames.get(i) : " ";
+            night = nightShiftNames.size() > i ? nightShiftNames.get(i) : " ";
+
+            ViewScheduleDto viewScheduleDto = new ViewScheduleDto(morning,evening, night);
+            viewScheduleDtos.add(viewScheduleDto);
+        }
+
+        return viewScheduleDtos;
+
 
     }
 
@@ -89,13 +118,13 @@ public class RetrieveSchedulingService {
         return duties.isEmpty();
     }
 
-    private List<CandidateListDto> mapToCandidateListDto(List<Staff> staff){
+    private List<CandidateListDto> mapToCandidateListDto(List<Staff> staff, LocalDate dutuDate){
         List<CandidateListDto> candidateListDtos = new ArrayList<>();
         for(Staff staff1: staff){
             Optional<User> user = userRepository.findById(staff1.getNic());
             String fullName = user.isPresent() ? user.get().getFullName() : "Full name unknown";
             LocalDate date = user.map(User::getCareerStatedDate).orElse(null);
-            List <Duty> duties = dutyRepository.findDutiesByStaffAndWeek(staff1.getNic(), DateUtils.getStartOfWeek(), LocalDate.now());
+            List <Duty> duties = dutyRepository.findDutiesByStaffAndWeek(staff1.getNic(), DateUtils.getStartOfWeekForDate(dutuDate), dutuDate);
             int totalWorkHours = duties.isEmpty() ? 0 : workingHours(duties);
             candidateListDtos.add(CandidateListDto.builder().nic(staff1.getNic()).fullName(fullName).serviceStartedDate(date).workingHours(totalWorkHours).build());
         }
@@ -114,6 +143,27 @@ public class RetrieveSchedulingService {
 
         return totalHourse;
     }
+
+    private DutyTime getDutyTime(String dutyTime){
+        if(dutyTime.equalsIgnoreCase("morning")){
+            return DutyTime.Morning;
+        } else if (dutyTime.equalsIgnoreCase("evening")) {
+            return DutyTime.Evening;
+        } else if (dutyTime.equalsIgnoreCase("night")) {
+            return DutyTime.Night;
+        }else {
+            throw new IllegalArgumentException("Duty shift is invalid");
+        }
+    }
+
+    public int getLargestSize(List<?> list1, List<?> list2, List<?> list3) {
+        int size1 = list1 == null ? 0 : list1.size();
+        int size2 = list2 == null ? 0 : list2.size();
+        int size3 = list3 == null ? 0 : list3.size();
+
+        return Math.max(Math.max(size1, size2), size3);
+    }
 }
+
 
 

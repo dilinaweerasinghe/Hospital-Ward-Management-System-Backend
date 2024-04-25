@@ -51,7 +51,7 @@ public class RegistrationService {
         admin2.setLastName("Weerasinghe");
         admin2.setUsername("Dilina123");
         admin2.setPassword(getEncodedPassword("Dilina@123"));
-        admin2.setEmail("weerasinghe.dilina683@gmail.com");
+        admin2.setEmail("nipunaheshansadu@gmail.com");
         admin2.setPosition(UserRole.Admin);
         admin2.setMobileNo("0715848081");
         admin2.setDob(LocalDate.of(2000,9,14));

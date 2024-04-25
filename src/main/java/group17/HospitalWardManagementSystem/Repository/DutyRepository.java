@@ -3,6 +3,7 @@ package group17.HospitalWardManagementSystem.Repository;
 import group17.HospitalWardManagementSystem.Model.Domain.Duty;
 import group17.HospitalWardManagementSystem.Model.Domain.Matron;
 import group17.HospitalWardManagementSystem.Model.Domain.Staff;
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.DutyTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -34,5 +35,8 @@ public interface DutyRepository extends JpaRepository<Duty,Long> {
     @Modifying
     @Query("UPDATE Duty d SET d.staff = :staff WHERE d.id = :dutyId")
     void addStaffToDuty(Long dutyId, Set<Staff> staff);
+
+    @Query("SELECT u.fullName FROM Duty d JOIN d.staff s JOIN User u ON s.nic = u.nic WHERE s.wardNo = :ward AND d.dutyTime = :dutyTime AND d.date = :date")
+    List<String> findDutyStaffName(@Param("ward")Ward ward, @Param("dutyTime") DutyTime dutyTime, @Param("date") LocalDate date);
 
 }
