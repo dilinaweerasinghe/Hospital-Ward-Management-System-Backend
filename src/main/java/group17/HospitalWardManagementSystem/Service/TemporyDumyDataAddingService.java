@@ -683,7 +683,7 @@ public class TemporyDumyDataAddingService {
                 .build());
 
         matrons.add(User.builder()
-                .nic("199707110986")
+                .nic("199707110987")
                 .fullName("R S D P Fernando")
                 .firstName("Ruchira")
                 .lastName("Fernando")
@@ -729,7 +729,7 @@ public class TemporyDumyDataAddingService {
         matron3.setServiceStartedDate(LocalDate.parse("2004-03-25"));
 
         Matron matron4 = new Matron();
-        matron4.setNic("199707110986");
+        matron4.setNic("199707110987");
         matron4.setServiceStartedDate(LocalDate.parse("2006-03-25"));
 
         Matron matron5 = new Matron();
@@ -824,7 +824,7 @@ public class TemporyDumyDataAddingService {
         wards.add(Ward.builder().wardNo("W002").wardName("Cardiology").matron(matronRepository.findByNic("198312040789")).numberOfNurses(15).morningShift(5).eveningShift(5).nightShift(5).build());
         wards.add(Ward.builder().wardNo("W003").wardName("Oncology").matron(matronRepository.findByNic("198111190167")).numberOfNurses(12).morningShift(4).eveningShift(4).nightShift(4).build());
         wards.add(Ward.builder().wardNo("W004").wardName("Pediatrics").matron(matronRepository.findByNic("198111190167")).numberOfNurses(18).morningShift(6).eveningShift(6).nightShift(6).build());
-        wards.add(Ward.builder().wardNo("W005").wardName("Neurology").matron(matronRepository.findByNic("199707110986")).numberOfNurses(10).morningShift(3).eveningShift(3).nightShift(4).build());
+        wards.add(Ward.builder().wardNo("W005").wardName("Neurology").matron(matronRepository.findByNic("199707110987")).numberOfNurses(10).morningShift(3).eveningShift(3).nightShift(4).build());
         wards.add(Ward.builder().wardNo("W006").wardName("Orthopedics").matron(matronRepository.findByNic("199707110986")).numberOfNurses(22).morningShift(7).eveningShift(7).nightShift(8).build());
         wards.add(Ward.builder().wardNo("W007").wardName("Gastroenterology").matron(matronRepository.findByNic("199303031703")).numberOfNurses(8).morningShift(2).eveningShift(3).nightShift(3).build());
         wards.add(Ward.builder().wardNo("W008").wardName("Maternity").matron(matronRepository.findByNic("199303031703")).numberOfNurses(25).morningShift(8).eveningShift(8).nightShift(9).build());
