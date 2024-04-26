@@ -30,9 +30,16 @@ public class LeaveRequestController {
 
     //Get details that are need to autofill in the leave request form
     @GetMapping("/get-user/{username}")
-    public MemberDto getUserDetails(@PathVariable String username){
-        System.out.println(requestLeaveServiceDisplayData.provideAutoFilings(username));
-        return requestLeaveServiceDisplayData.provideAutoFilings(username);
+    public ResponseEntity<?> getUserDetails(@PathVariable String username){
+        try{
+            return ResponseEntity.ok(requestLeaveServiceDisplayData.provideAutoFilings(username));
+        }catch (EntityNotFoundException | IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
     }
 
     //save request leave
