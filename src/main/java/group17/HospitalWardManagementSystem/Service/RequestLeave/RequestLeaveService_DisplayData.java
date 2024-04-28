@@ -13,20 +13,22 @@ import java.util.Optional;
 @Service
 public class RequestLeaveService_DisplayData {
 
+    private final UserRepository userRepository;
+    private final StaffRepository staffRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private StaffRepository staffRepository;
+    public RequestLeaveService_DisplayData(UserRepository userRepository, StaffRepository staffRepository) {
+        this.userRepository = userRepository;
+        this.staffRepository = staffRepository;
+    }
 
 
-//    @Autowired
-//    public RequestLeaveService_DisplayData(UserRepository userRepository, StaffRepository staffRepository) {
-//        this.userRepository = userRepository;
-//        this.staffRepository = staffRepository;
-//    }
     public MemberDto provideAutoFilings(String username){
         MemberDto memberDto = new MemberDto();
         User user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new IllegalArgumentException("Cannot find your details in Our System. please Contact Admin!");
+        }
         Optional<Staff> staff = staffRepository.findById(user.getNic());
         Staff staffMem;
 
@@ -35,11 +37,11 @@ public class RequestLeaveService_DisplayData {
         if(staff.isPresent()){
             staffMem = staff.get();
             memberDto.setLeaveNum(staffMem.getLeaveNum());
-            memberDto.setNumberOfTakenCasualLeaves(24 - staffMem.getRemainingCasualLeaves());
-            memberDto.setNumberOfTakenVacationLeaves(22 - staffMem.getRemainingVacationLeave());
+            memberDto.setNumberOfTakenCasualLeaves(23 - staffMem.getRemainingCasualLeaves());
+            memberDto.setNumberOfTakenVacationLeaves(23 - staffMem.getRemainingVacationLeave());
 
         }else{
-
+            throw new IllegalArgumentException("Cannot find your details in Our System. please Contact Admin!");
         }
         memberDto.setNic(user.getNic());
         memberDto.setFullName(user.getFullName());

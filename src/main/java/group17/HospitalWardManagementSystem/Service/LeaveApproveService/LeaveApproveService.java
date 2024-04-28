@@ -161,7 +161,7 @@ public class LeaveApproveService {
     // Method to map a list of ApprovedLeaves objects to a list of PreviousLeaveDetailsDto
     public List<PreviousLeaveDetailsDto> mapApprovedLeavesSetToDtoList(Set<ApprovedLeaves> approvedLeavesSet) {
         if (approvedLeavesSet == null || approvedLeavesSet.isEmpty()) {
-            throw new IllegalArgumentException("THis staff member has not previously applied leaves");
+            throw new IllegalArgumentException("This staff member has not previously applied leaves");
         }
 
         List<PreviousLeaveDetailsDto> dtoList = new ArrayList<>();
