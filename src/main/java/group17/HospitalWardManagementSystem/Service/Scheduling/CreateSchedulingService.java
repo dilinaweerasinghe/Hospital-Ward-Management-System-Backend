@@ -45,13 +45,13 @@ public class CreateSchedulingService {
         }
 
         if(user.getPosition().equals(UserRole.Sister)){
-//            if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
+            if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
                 addStaffMemberToShift(nurseNic, date, dutyTime);
-//            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
-//                addStaffMemberToShift(nurseNic, date, dutyTime);
-//            }else{
-//                throw new IllegalArgumentException("Duty list already full!");
-//            }
+            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
+                addStaffMemberToShift(nurseNic, date, dutyTime);
+            }else{
+                throw new IllegalArgumentException("Duty list already full in date: + " + date.toString() + " shift: " + dutyTime);
+            }
         }else{
             throw new IllegalArgumentException("You cannot recognize as a sister!");
         }
@@ -69,17 +69,20 @@ public class CreateSchedulingService {
             dutyRepository.save(newDuty);
         }else if (duty.getId() != null){
             Staff nurse = staffRepository.findByNic(nurseNic);
-            if(duty.getStaff() == null){
+
+            staffSet = duty.getStaff();
+            if (staffSet == null) {
                 staffSet = new HashSet<>();
-            }else{
-                staffSet = duty.getStaff();
             }
 
-            if(nurse == null){
-                throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
+            if (!staffSet.contains(nurse)) {
+                staffSet.add(nurse);
+                for(Staff staff : staffSet){
+                    System.out.println(staff.getNic() + duty.getId());
+                }
+            } else {
+                throw new IllegalArgumentException("Nurse is already assigned to this duty.");
             }
-            staffSet.add(nurse);
-            dutyRepository.addStaffToDuty(duty.getId(), staffSet);
         }else{
             throw  new IllegalArgumentException("cannot find Details of the selected Nurse");
         }
