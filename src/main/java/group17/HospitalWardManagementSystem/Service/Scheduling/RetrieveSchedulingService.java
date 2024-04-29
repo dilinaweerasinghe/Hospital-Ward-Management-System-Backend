@@ -53,8 +53,10 @@ public class RetrieveSchedulingService {
 
                 if(isAvailable(selectedStaff, LocalDate.parse(date))){
                     if(checkAvailabilityByShiftRule(selectedStaff, LocalDate.parse(date), getDutyTime(shift))){
-                       if(getExistenceOfPreviousDuty(selectedStaff, LocalDate.parse(date), getDutyTime(shift))){
-                           newCandidateStaffMembers.add(selectedStaff);
+                       if(checkPositionCorrect(selectedStaff)){
+                          if(!getExistenceOfPreviousDuty(selectedStaff, LocalDate.parse(date), getDutyTime(shift))){
+                              newCandidateStaffMembers.add(selectedStaff);
+                          }
                        }
                     }
                 }
@@ -138,6 +140,12 @@ public class RetrieveSchedulingService {
         }
 
         return availability;
+    }
+
+    private boolean checkPositionCorrect(Staff staff){
+        Optional<User> user = userRepository.findById(staff.getNic());
+        return user.filter(value -> value.getPosition() != UserRole.Sister).isPresent();
+
     }
 
     private List<CandidateListDto> mapToCandidateListDto(List<Staff> staff, LocalDate dutuDate){
