@@ -30,13 +30,19 @@ public interface DutyRepository extends JpaRepository<Duty,Long> {
             @Param("date") LocalDate date,
             @Param("dutyTime") DutyTime dutyTime
     );
-    @Query("SELECT d FROM Duty d WHERE d.date = :date AND d.dutyTime = :dutyTime")
-    Duty findByDateAndDutyTime(@Param("date") LocalDate date,@Param("dutyTime") DutyTime dutyTime);
+//    @Query("SELECT d FROM Duty d WHERE d.date = :date AND d.dutyTime = :dutyTime")
+//    Duty findByDateAndDutyTime(@Param("date") LocalDate date,@Param("dutyTime") DutyTime dutyTime);
+        @Query("SELECT d FROM Duty d WHERE d.date = :date AND d.dutyTime = :dutyTime")
+        Duty findByDateAndDutyTime(@Param("date") LocalDate date, @Param("dutyTime") DutyTime dutyTime);
 
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE Duty d SET d.staff = :staff WHERE d.id = :dutyId")
+//    void addStaffToDuty(Long dutyId, Set<Staff> staff);
     @Modifying
     @Transactional
     @Query("UPDATE Duty d SET d.staff = :staff WHERE d.id = :dutyId")
-    void addStaffToDuty(Long dutyId, Set<Staff> staff);
+    void addStaffToDuty(@Param("dutyId") Long dutyId, @Param("staff") Set<Staff> staff);
 
     @Query("SELECT u.fullName FROM Duty d JOIN d.staff s JOIN User u ON s.nic = u.nic WHERE s.wardNo = :ward AND d.dutyTime = :dutyTime AND d.date = :date")
     List<String> findDutyStaffName(@Param("ward")Ward ward, @Param("dutyTime") DutyTime dutyTime, @Param("date") LocalDate date);

@@ -38,6 +38,6 @@ public class  Staff {
     private int remainingCasualLeaves = 23;
     @Column(nullable = false)
     private int remainingVacationLeave = 23;
-    @ManyToMany(mappedBy = "staff")
+    @ManyToMany(mappedBy = "staff" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Duty> duties = new HashSet<>();
 }
