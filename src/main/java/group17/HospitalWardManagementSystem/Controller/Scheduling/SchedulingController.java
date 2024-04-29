@@ -1,6 +1,7 @@
 package group17.HospitalWardManagementSystem.Controller.Scheduling;
 
 import group17.HospitalWardManagementSystem.Model.Dto.Scheduling.AssigningDto;
+import group17.HospitalWardManagementSystem.Model.DutyTime;
 import group17.HospitalWardManagementSystem.Service.Scheduling.CreateSchedulingService;
 import group17.HospitalWardManagementSystem.Service.Scheduling.RetrieveSchedulingService;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,6 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/scheduling")
@@ -62,5 +65,10 @@ public class SchedulingController {
             return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
         }
     }
+
+//    @GetMapping("/test")
+//    public ResponseEntity<?> TestController(){
+//        return ResponseEntity.ok(retrieveSchedulingService.getExistenceOfPreviousDutyTest("198805080808", LocalDate.parse("2024-01-25"), DutyTime.Morning));
+//    }
 
 }

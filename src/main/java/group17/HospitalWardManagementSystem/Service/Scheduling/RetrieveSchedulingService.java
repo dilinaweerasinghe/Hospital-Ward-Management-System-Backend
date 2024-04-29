@@ -34,9 +34,10 @@ public class RetrieveSchedulingService {
     }
 
     public List<CandidateListDto> getCandidateNurseList(String nic, String shift, String date){
-        Staff sister = staffRepository.findByNic(nic);
+        Staff sister = staffRepository.findById(nic).orElseThrow(() ->
+                new EntityNotFoundException("You are not recognize as a sister with " + nic + " , Please contact admin!"));
         User sisterU = userRepository.findByNic(nic).orElseThrow(() ->
-                new EntityNotFoundException("Cannot find user with user nic: " + nic));
+                new EntityNotFoundException("Cannot find user details with user nic: " + nic));
         if(sisterU.getPosition().equals(UserRole.Sister)){
             Ward ward = sister.getWardNo();
 
@@ -45,30 +46,16 @@ public class RetrieveSchedulingService {
             Set<Staff> staff = ward.getStaff();
 
             if(staff.isEmpty()){
-                throw new IllegalArgumentException("Staff members are not assigned yet");
+                throw new IllegalArgumentException("Staff members are not assigned to the ward yet");
             }
 
             for(Staff selectedStaff : staff){
 
                 if(isAvailable(selectedStaff, LocalDate.parse(date))){
-                    if(shift.equals("Morning")){
-                        if(checkAvailabilityByPreviousShift(selectedStaff,LocalDate.parse(date).minusDays(1), DutyTime.Evening)
-                                && checkAvailabilityByPreviousShift(selectedStaff,LocalDate.parse(date).minusDays(1), DutyTime.Night)){
-
-                            newCandidateStaffMembers.add(selectedStaff);
-                        }
-                    } else if (shift.equals("Evening")) {
-                        if(checkAvailabilityByPreviousShift(selectedStaff,LocalDate.parse(date), DutyTime.Morning)
-                                && checkAvailabilityByPreviousShift(selectedStaff,LocalDate.parse(date).minusDays(1), DutyTime.Night)){
-
-                            newCandidateStaffMembers.add(selectedStaff);
-                        }
-                    } else if (shift.equals("Night")) {
-                        if(checkAvailabilityByPreviousShift(selectedStaff,LocalDate.parse(date), DutyTime.Morning)
-                                && checkAvailabilityByPreviousShift(selectedStaff,LocalDate.parse(date), DutyTime.Evening)){
-
-                            newCandidateStaffMembers.add(selectedStaff);
-                        }
+                    if(checkAvailabilityByShiftRule(selectedStaff, LocalDate.parse(date), getDutyTime(shift))){
+                        newCandidateStaffMembers.add(selectedStaff);
+                    }else {
+                        throw new IllegalArgumentException("No candidate nurses for this shift please re-schedule!");
                     }
                 }
             }
@@ -110,13 +97,47 @@ public class RetrieveSchedulingService {
     }
 
     private Boolean isAvailable(Staff staff, LocalDate date){
+
         List<ApprovedLeaves> approvedLeaves = approvedLeavesRepository.findLeavesByStaffAndDate(staff,date, LeaveStatus.Approved);
         return approvedLeaves.isEmpty();
     }
 
-    private Boolean checkAvailabilityByPreviousShift(Staff staff, LocalDate date, DutyTime dutyTime){
+    private boolean getExistenceOfPreviousDuty(Staff staff, LocalDate date, DutyTime dutyTime){
         List<Duty> duties = dutyRepository.findDutiesByStaffAndDate(staff.getNic(), date, dutyTime);
-        return duties.isEmpty();
+        return !duties.isEmpty();
+    }
+
+
+    public boolean checkAvailabilityByShiftRule(Staff staff, LocalDate date, DutyTime dutyTime){
+        boolean availability = true;
+        switch (dutyTime){
+            case DutyTime.Morning -> {
+                if(getExistenceOfPreviousDuty(staff,date.minusDays(1), DutyTime.Night) &&
+                        (getExistenceOfPreviousDuty(staff, date.minusDays(1), DutyTime.Evening) ||
+                        getExistenceOfPreviousDuty(staff, date, DutyTime.Evening)) || (getExistenceOfPreviousDuty(staff, date, DutyTime.Evening) && getExistenceOfPreviousDuty(staff, date, DutyTime.Night))){
+
+                    availability = false;
+                }
+            }
+            case DutyTime.Evening -> {
+                if(getExistenceOfPreviousDuty(staff,date, DutyTime.Morning) &&
+                        (getExistenceOfPreviousDuty(staff, date.minusDays(1), DutyTime.Night) ||
+                                getExistenceOfPreviousDuty(staff, date, DutyTime.Night)) || (getExistenceOfPreviousDuty(staff, date, DutyTime.Night) && getExistenceOfPreviousDuty(staff, date.plusDays(1), DutyTime.Morning))){
+
+                    availability = false;
+                }
+            }
+            case DutyTime.Night -> {
+                if(getExistenceOfPreviousDuty(staff,date, DutyTime.Evening) &&
+                        (getExistenceOfPreviousDuty(staff, date, DutyTime.Morning) ||
+                                getExistenceOfPreviousDuty(staff, date.plusDays(1), DutyTime.Morning)) || (getExistenceOfPreviousDuty(staff, date.plusDays(1), DutyTime.Morning) && getExistenceOfPreviousDuty(staff, date.plusDays(1), DutyTime.Evening))){
+
+                    availability = false;
+                }
+            }
+        }
+
+        return availability;
     }
 
     private List<CandidateListDto> mapToCandidateListDto(List<Staff> staff, LocalDate dutuDate){

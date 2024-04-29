@@ -45,13 +45,13 @@ public class CreateSchedulingService {
         }
 
         if(user.getPosition().equals(UserRole.Sister)){
-//            if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
+            if(getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < getMaxNurses(dutyTime, ward)){
                 addStaffMemberToShift(nurseNic, date, dutyTime);
-//            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
-//                addStaffMemberToShift(nurseNic, date, dutyTime);
-//            }else{
-//                throw new IllegalArgumentException("Duty list already full!");
-//            }
+            } else if (getNoOfExistingDuties(ward.getWardNo(), date, getDutyTime(dutyTime)) < (getMaxNurses(dutyTime, ward) + 2) && isACasualityDay(ward, date) ) {
+                addStaffMemberToShift(nurseNic, date, dutyTime);
+            }else{
+                throw new IllegalArgumentException("Duty list already full!");
+            }
         }else{
             throw new IllegalArgumentException("You cannot recognize as a sister!");
         }
