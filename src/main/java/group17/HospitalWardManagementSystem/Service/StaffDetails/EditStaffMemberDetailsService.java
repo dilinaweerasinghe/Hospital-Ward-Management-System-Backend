@@ -48,7 +48,7 @@ public class EditStaffMemberDetailsService {
             showSisterDto.setPosition(sister.getPosition());
             showSisterDto.setLeaveNo(staff.getLeaveNum());
             showSisterDto.setBirthdate(sister.getDob());
-            showSisterDto.setServiceStartDate(staff.getServiceStartedDate());
+            showSisterDto.setServiceStartDate(sister.getCareerStatedDate());
             showSisterDto.setFullName(sister.getFullName());
             showSisterDto.setFirstName(sister.getFirstName());
             showSisterDto.setLastName(sister.getLastName());
