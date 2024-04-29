@@ -1,5 +1,6 @@
 package group17.HospitalWardManagementSystem.Controller.WardDetails;
 
+import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.EditWardDto;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardMore;
 import group17.HospitalWardManagementSystem.Service.WardDetails.EditWardService;
@@ -26,7 +27,8 @@ public class EditWardController {
     @PutMapping("/ward/edit/admin/{wardNo}")
     public ResponseEntity<?> updateByAdmin(@PathVariable String wardNo, @RequestBody ShowWardMore value){
         try {
-            return ResponseEntity.ok(editWardService.updateWard(wardNo, value));
+            Ward ward = editWardService.updateWard(wardNo, value);
+            return ResponseEntity.ok("Ward with ward No: " + ward.getWardNo() + "successfully updated!");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (DataAccessException e) {
