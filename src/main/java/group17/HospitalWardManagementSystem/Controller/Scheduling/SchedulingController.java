@@ -43,13 +43,17 @@ public class SchedulingController {
 
     @PutMapping("/add/{sisterNic}")
     public ResponseEntity<?> assignedDuty(@PathVariable String sisterNic, @RequestBody AssigningDto dutyAssign) {
-//        try {
+        try {
             createSchedulingService.addNursesToTheDuties(sisterNic, dutyAssign.getNurseNic(), dutyAssign.getDate(), dutyAssign.getDutyTime());
             return ResponseEntity.ok("Duty Assigning is success!");
-//        } catch (Exception e) {
-//
-//            return ResponseEntity.ok("Fail");
-//        }
+        }catch (EntityNotFoundException | IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Fail");
+        }
 
     }
 

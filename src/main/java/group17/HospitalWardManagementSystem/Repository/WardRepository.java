@@ -16,4 +16,6 @@ public interface WardRepository extends JpaRepository<Ward,String> {
     Ward findByWardName(String wardName);
     @Query("SELECT DISTINCT w.wardNo FROM Ward w INNER JOIN w.matron m WHERE m.nic = :nic")
     List<String> findWardNoByMatronId(@Param("nic") String nic);
+
+
 }
