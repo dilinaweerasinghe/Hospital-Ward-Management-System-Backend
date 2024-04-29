@@ -53,9 +53,9 @@ public class RetrieveSchedulingService {
 
                 if(isAvailable(selectedStaff, LocalDate.parse(date))){
                     if(checkAvailabilityByShiftRule(selectedStaff, LocalDate.parse(date), getDutyTime(shift))){
-                        newCandidateStaffMembers.add(selectedStaff);
-                    }else {
-                        throw new IllegalArgumentException("No candidate nurses for this shift please re-schedule!");
+                       if(getExistenceOfPreviousDuty(selectedStaff, LocalDate.parse(date), getDutyTime(shift))){
+                           newCandidateStaffMembers.add(selectedStaff);
+                       }
                     }
                 }
             }
