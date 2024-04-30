@@ -28,4 +28,6 @@ public interface CasualityDaysRepository extends JpaRepository<CasualityDays, Lo
 
     @Query("SELECT c FROM CasualityDays c WHERE c.saturday = :isSaturday AND c.wardNo = :ward")
     List<CasualityDays> findCasualityDaysBySaturday(@Param("isSaturday") boolean isSaturday , @Param("ward")Ward ward);
+
+    CasualityDays findByWardNo(Ward ward);
 }
