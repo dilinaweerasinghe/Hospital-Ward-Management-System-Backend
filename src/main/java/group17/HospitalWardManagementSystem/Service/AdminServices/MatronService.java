@@ -5,6 +5,7 @@ import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.GetMatronDto;
 import group17.HospitalWardManagementSystem.Model.Dto.Matron.MatronDto;
+import group17.HospitalWardManagementSystem.Model.Dto.Matron.SelectMatronDto;
 import group17.HospitalWardManagementSystem.Model.UserRole;
 import group17.HospitalWardManagementSystem.Repository.MatronRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
@@ -131,6 +132,17 @@ public class MatronService implements IMatronService {
 
 
 
+    }
+
+    public List<SelectMatronDto> getAllMatronNicAndName(){
+        List<Matron> matrons = matronRepository.findAll();
+        List<SelectMatronDto> selectMatronDtos = new ArrayList<>();
+        for(Matron matron : matrons){
+            Optional<User> user = userRepository.findById(matron.getNic());
+            selectMatronDtos.add(SelectMatronDto.builder().name(user.isPresent() ? user.get().getFullName(): "Not Found").nic(matron.getNic()).build());
+        }
+
+        return selectMatronDtos;
     }
 
 

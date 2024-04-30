@@ -98,6 +98,37 @@ public class RetrieveSchedulingService {
 
     }
 
+
+
+    public List<ViewScheduleDto> getDutyDetailsForDateForMatron(String wardNo, String date){
+        //Staff staff = staffRepository.findById(sisterNic).orElseThrow(()-> (new EntityNotFoundException("Cannot found your details in System")));
+        Ward wardGet = wardRepository.findById(wardNo).orElseThrow(() -> new EntityNotFoundException("Cannot find ward details with ward No: " + wardNo));
+        List<String> morningShiftNames = dutyRepository.findDutyStaffName(wardGet, getDutyTime("Morning"), LocalDate.parse(date));
+        List<String> eveningShiftNames = dutyRepository.findDutyStaffName(wardGet, getDutyTime("Evening"), LocalDate.parse(date));
+        List<String> nightShiftNames = dutyRepository.findDutyStaffName(wardGet, getDutyTime("Night"), LocalDate.parse(date));
+
+        if(morningShiftNames.isEmpty() && eveningShiftNames.isEmpty() && nightShiftNames.isEmpty()){
+            throw new IllegalArgumentException("Scheduling is not created yet");
+
+        }
+        List<ViewScheduleDto> viewScheduleDtos = new ArrayList<>();
+
+        for (int i = 0; i <getLargestSize(morningShiftNames,eveningShiftNames,nightShiftNames); i++){
+
+            String morning, evening, night;
+            morning = morningShiftNames.size() > i ? morningShiftNames.get(i) : " ";
+            evening = eveningShiftNames.size() > i ? eveningShiftNames.get(i) : " ";
+            night = nightShiftNames.size() > i ? nightShiftNames.get(i) : " ";
+
+            ViewScheduleDto viewScheduleDto = new ViewScheduleDto(morning,evening, night);
+            viewScheduleDtos.add(viewScheduleDto);
+        }
+
+        return viewScheduleDtos;
+
+
+    }
+
     private Boolean isAvailable(Staff staff, LocalDate date){
 
         List<ApprovedLeaves> approvedLeaves = approvedLeavesRepository.findLeavesByStaffAndDate(staff,date, LeaveStatus.Approved);

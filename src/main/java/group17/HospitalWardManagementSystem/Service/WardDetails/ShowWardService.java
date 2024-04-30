@@ -4,6 +4,7 @@ import group17.HospitalWardManagementSystem.Model.Domain.Staff;
 import group17.HospitalWardManagementSystem.Model.Domain.User;
 import group17.HospitalWardManagementSystem.Model.Domain.Ward;
 import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardDto;
+import group17.HospitalWardManagementSystem.Model.Dto.WardDto.ShowWardMore;
 import group17.HospitalWardManagementSystem.Repository.StaffRepository;
 import group17.HospitalWardManagementSystem.Repository.UserRepository;
 import group17.HospitalWardManagementSystem.Repository.WardRepository;
@@ -89,8 +90,13 @@ public class ShowWardService {
             wardDto.setWardNo(targetWard.getWardNo());
             wardDto.setWardName(targetWard.getWardName());
             wardDto.setNumberOfNurses(targetWard.getNumberOfNurses());
-            wardDto.setSisterName(findSister(targetWard));
-            wardDto.setMatronName(findMatronName(targetWard.getMatron().getNic()));
+            String sisterName = findSister(targetWard);
+            wardDto.setSisterName(sisterName != null ? sisterName : "Not Assigned");
+            wardDto.setMatronName(
+                    targetWard.getMatron() == null
+                            ? "Not Assigned"
+                            : findMatronName(targetWard.getMatron().getNic())
+            );
             wardDtos.add(wardDto);
         }
         return wardDtos;
@@ -106,7 +112,6 @@ public class ShowWardService {
         if (staff != null) {
             return findSisterName(staff.getNic());
         } else {
-            System.out.println("FindSister error");
             return null; // or handle the case where staff is null
         }
     }
@@ -130,6 +135,26 @@ public class ShowWardService {
                 () -> new EntityNotFoundException("Matron not found with NIC: " + nic));
 
         return user.getFullName();
+    }
+
+    public ShowWardMore getWardMoreDetails(String wardNo){
+        ShowWardMore showWardMore = new ShowWardMore();
+        Ward ward = wardRepository.findById(wardNo).orElseThrow(
+                () -> new EntityNotFoundException("Ward not found with Ward No: " + wardNo)
+        );
+
+        showWardMore.setWardName(ward.getWardName());
+        showWardMore.setMatronName(ward.getMatron() == null
+                ? "Not Assigned"
+                : findMatronName(ward.getMatron().getNic()));
+        showWardMore.setMatronNic(ward.getMatron() == null
+                ? "Not Assigned" : ward.getMatron().getNic());
+        showWardMore.setNumberOfNurses(ward.getNumberOfNurses());
+        showWardMore.setMorningShiftNurses(ward.getMorningShift());
+        showWardMore.setEveningShiftNurses(ward.getEveningShift());
+        showWardMore.setNightShiftNurses(ward.getNightShift());
+
+        return showWardMore;
     }
 
 }

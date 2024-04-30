@@ -95,6 +95,21 @@ public class ShowWardDetailController {
         }
     }
 
+    @GetMapping("wards/more/{wardNo}")
+    public ResponseEntity<?> getWardMoreDetails(@PathVariable String wardNo){
+        try {
+            return ResponseEntity.ok(showWardService.getWardMoreDetails(wardNo));
+        } catch (IllegalArgumentException | EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
+        }
+    }
+
+
+
 
 
 

@@ -21,9 +21,11 @@ import java.util.Set;
 public class MatronController {
 
     private final IMatronService matronService;
+    private final  MatronService adminMatronService;
     @Autowired
-    public MatronController(MatronService matronService){
+    public MatronController(MatronService matronService, MatronService adminMatronService){
         this.matronService = matronService;
+        this.adminMatronService = adminMatronService;
     }
     @PostMapping("/matron/add")
     public ResponseEntity<String> AddMatron(@RequestBody MatronDto matronDto){
@@ -41,6 +43,19 @@ public class MatronController {
             String result = matronService.deleteMatronService(nic);
 
             return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/matron/all")
+    public ResponseEntity<?> retrieveMatronNicAndName(){
+        try {
+            return ResponseEntity.ok(adminMatronService.getAllMatronNicAndName());
         } catch (EntityNotFoundException | IllegalStateException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (DataAccessException e) {
