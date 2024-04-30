@@ -28,8 +28,8 @@ public class MailService {
         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
 
         simpleMailMessage.setFrom(fromMail);
-        simpleMailMessage.setSubject(mailDto.getUsername());
-        simpleMailMessage.setText(mailDto.getPassword());
+        simpleMailMessage.setSubject("Your Account Credentials");
+        simpleMailMessage.setText("Your username: "+ mailDto.getUsername() + " Your password: " + mailDto.getPassword());
         simpleMailMessage.setTo(email);
 
         javaMailSender.send(simpleMailMessage);

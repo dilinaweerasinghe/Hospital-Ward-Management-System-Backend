@@ -75,4 +75,18 @@ public class SchedulingController {
 //        return ResponseEntity.ok(retrieveSchedulingService.getExistenceOfPreviousDutyTest("198805080808", LocalDate.parse("2024-01-25"), DutyTime.Morning));
 //    }
 
+    @GetMapping("/view/matron{ward}")
+    public ResponseEntity<?> getDutyDetailsForMatron(@PathVariable String ward, @RequestParam String date){
+        try{
+            return ResponseEntity.ok(retrieveSchedulingService.getDutyDetailsForDateForMatron(ward, date));
+        }catch (EntityNotFoundException | IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (DataAccessException e) {
+            return ResponseEntity.internalServerError().body( e.getStackTrace());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An unexpected error occurred: Please contact admin" );
+        }
+    }
+
+
 }
