@@ -9,6 +9,7 @@ import java.util.Locale;
 
 @Service
 public class DateUtils {
+    
     public static LocalDate getStartOfWeek() {
         LocalDate today = LocalDate.now();
         return today.with(DayOfWeek.MONDAY);
